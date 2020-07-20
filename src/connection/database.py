@@ -30,34 +30,34 @@ def get_users_name(type_):
 
         if type_ == 'Characters, NPCs & Monsters':
             cursor.execute('SELECT name FROM users WHERE type=1')
-            characters = get_names(cursor)
+            characters = get_list(cursor)
 
             cursor.execute('SELECT name FROM users WHERE type=2')
-            npcs = get_names(cursor)
+            npcs = get_list(cursor)
 
             cursor.execute('SELECT name FROM users WHERE type=3')
-            monsters = get_names(cursor)
+            monsters = get_list(cursor)
 
             result = characters + npcs + monsters
         elif type_ == 'Characters & NPCs':
             cursor.execute('SELECT name FROM users WHERE type=1')
-            characters = get_names(cursor)
+            characters = get_list(cursor)
 
             cursor.execute('SELECT name FROM users WHERE type=2')
-            npcs = get_names(cursor)
+            npcs = get_list(cursor)
 
             result = characters + npcs
         elif type_ == 'NPCs & Monsters':
             cursor.execute('SELECT name FROM users WHERE type=2')
-            npcs = get_names(cursor)
+            npcs = get_list(cursor)
 
             cursor.execute('SELECT name FROM users WHERE type=3')
-            monsters = get_names(cursor)
+            monsters = get_list(cursor)
 
             result = npcs + monsters
         else:
             cursor.execute('SELECT name FROM users WHERE type=?', (type_,))
-            result = get_names(cursor)
+            result = get_list(cursor)
 
     return result
 
