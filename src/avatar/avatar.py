@@ -1,0 +1,41 @@
+from src.connection.database import add_user
+
+
+class Avatar:
+    def __init__(self, name, type_, health, adrenaline, class_, armor, weapon, physical_ability, titles, abilities, proficiency, description):
+        self.name = name
+        self.type_ = type_
+        self.health = health
+        self.adrenaline = adrenaline
+        self.class_ = class_
+        self.armor = armor
+        self.weapon = weapon
+        self.physical_ability = physical_ability
+        self.titles = titles
+        self.abilities = abilities
+        self.proficiency = proficiency
+        self.description = description
+
+        self.avatar = {
+            'name': self.name,
+            'type': self.type_,
+            'health': self.health,
+            'adrenaline': self.adrenaline,
+            'class': self.class_,
+            'armor': self.armor,
+            'weapon': self.weapon,
+            'physical_ability': self.physical_ability,
+            'titles': self.titles,
+            'abilities': self.abilities,
+            'proficiency': self.proficiency,
+            'description': self.description
+        }
+
+    def get_avatar(self):
+        return self.avatar
+
+    def create_character(self):
+        return add_user(self.get_avatar())
+
+    def create_monster(self):
+        return add_user(self.get_avatar())
