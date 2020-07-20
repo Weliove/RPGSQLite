@@ -2,20 +2,20 @@ from src.connection.database import *
 
 
 def get_avatar_type():
-    types = sorted(("Character", "Npc", "Monster"))
+    types = ("Character", "Npc", "Monster")
     return sorted(types)
 
 
 def get_item_types():
-    return get_entities('items_types')
+    return ['None']  # get_entities('items_types')
 
 
 def get_special_armors():
-    return get_specific_items(None, 1)
+    return get_specific_items('', 1)
 
 
 def get_special_weapons():
-    return get_specific_items(None, 2)
+    return get_specific_items('', 2)
 
 
 def get_avatar_classes():

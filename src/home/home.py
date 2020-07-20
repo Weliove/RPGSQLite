@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from src.connection.database import get_users_name
+from src.connection.database import get_users_name, get_specific_items, get_search_entities
 from src.home.home_widget import HomeWidget
 
 
@@ -75,8 +75,8 @@ class Home(ttk.Frame):
 
     def search(self):
         name = self.home_widgets.name.get()
-        search_type = self.home_widgets.type_choice.get()
+        type_ = self.home_widgets.type_choice.get()
 
-        search_type_result = self.home_widgets.type_values.index(search_type) + 1
+        search_result = get_search_entities(name, type_)
 
-        print(get_users_name(search_type_result))
+        print(search_result)

@@ -7,7 +7,7 @@ class HomeWidget(ttk.Frame):
         super().__init__(container)
 
         # --- Type values for search ---
-        self.type_values = ("Character", "NPC", "Monster", "Weapon", "Armor", "Title", "Ability")
+        self.type_values = ("Character", "NPC", "Monster", "Armor", "Weapon", "Title", "Ability", "Wiki")
 
         # --- Attributes ---
         self.name = tk.StringVar()
