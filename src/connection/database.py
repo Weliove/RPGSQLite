@@ -60,7 +60,7 @@ def get_user_attributes(cursor):
         'abilities': row[8],
         'proficiency': row[9],
         'description': row[10]
-    } for row in cursor.fetchall()]
+    } for row in cursor.fetchall()][0]
 
 
 def get_users_name(name, type_):
@@ -97,6 +97,16 @@ def get_entity(name, type_):
         cursor.execute(f'SELECT * FROM {db_entity} WHERE name=?', (name,))
         if db_entity == 'users':
             entity = get_user_attributes(cursor)
+
+    return entity
+
+
+def get_entity_name_by_id(id_, db_entity):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute(f'SELECT name FROM {db_entity} WHERE id=?', (id_,))
+        entity = get_list(cursor)
 
     return entity
 

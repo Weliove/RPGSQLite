@@ -80,8 +80,6 @@ class Home(ttk.Frame):
 
         search_result = get_search_entities(name, type_)
 
-        print(type_)
-
         if search_result:
             self.parent.show_search(search_result, type_)
             self.home_widgets.name.set('')

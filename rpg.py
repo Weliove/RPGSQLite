@@ -5,6 +5,7 @@ import tkinter.font as font
 
 from src import Home
 from src import CreateAvatar
+from src.interface.interface import Interface
 from src.search.search import Search
 
 
@@ -27,9 +28,12 @@ class RPG(tk.Tk):
 
         self.create_avatar_frame = CreateAvatar(self, lambda: self.show_frame(Home))
 
+        self.interface_frame = None
+
         self.frames[Home] = self.home_frame
         self.frames[CreateAvatar] = self.create_avatar_frame
         self.frames[Search] = self.search_frame
+        self.frames[Interface] = self.interface_frame
 
         # --- Show Frame ---
         self.show_frame(Home)
@@ -59,6 +63,15 @@ class RPG(tk.Tk):
 
         self.frames[Search] = self.search_frame
         self.show_frame(Search)
+
+    def show_interface(self, entity, type_):
+        self.check_frame_existence(self.interface_frame)
+
+        self.interface_frame = Interface(self, entity, type_, lambda: self.show_frame(Home))
+        self.interface_frame.grid(row=0, column=0, sticky="NSEW")
+
+        self.frames[Interface] = self.interface_frame
+        self.show_frame(Interface)
 
     def check_frame_existence(self, frame):
         if frame is not None and frame.winfo_exists():

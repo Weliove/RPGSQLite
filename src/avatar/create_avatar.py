@@ -12,8 +12,8 @@ class CreateAvatar(ttk.Frame):
         self.show_home = show_home
 
         # --- Create Widget Frame ---
-        self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
 
         self.create_avatar_scroll = AvatarScroll(self)
         self.create_avatar_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
@@ -32,7 +32,7 @@ class AvatarScroll(tk.Canvas):
         self.screen = tk.Frame(container)
         self.screen.columnconfigure(0, weight=1)
 
-        self.avatar_widgets_frame = AvatarWidget(self.screen)
+        self.avatar_widgets_frame = None
 
         self.scrollable_window = self.create_window((0, 0), window=self.screen, anchor="nw")
 
