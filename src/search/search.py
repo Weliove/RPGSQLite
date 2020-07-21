@@ -1,37 +1,39 @@
 import tkinter as tk
 from tkinter import ttk
 
+from src.connection.database import get_entity
 from src.search.search_widgets import SearchWidget
 
 
 class Search(ttk.Frame):
-    def __init__(self, parent, show_home):
+    def __init__(self, parent, entities_name, type_, show_home):
         super().__init__(parent)
-
-        self.show_home = show_home
 
         # --- Create Widget Frame ---
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
 
-        self.search_scroll = SearchScroll(self)
+        self.search_scroll = SearchScroll(self, entities_name, type_, show_home)
         self.search_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
 
         self.search_scroll.search_container()
 
 
 class SearchScroll(tk.Canvas):
-    def __init__(self, container):
+    def __init__(self, container, entities_name, type_, show_home):
         super().__init__(container, highlightthickness=0)
 
         # --- Custom ---
 
         self.container = container
+        self.entities_name = entities_name
+        self.type_ = type_
+        self.show_home = show_home
 
         self.screen = tk.Frame(container)
         self.screen.columnconfigure(0, weight=1)
 
-        self.search_widgets_frame = SearchWidget(self.screen)
+        self.search_widgets_frame = SearchWidget(self, self.screen, entities_name, show_home)
 
         self.scrollable_window = self.create_window((0, 0), window=self.screen, anchor="nw")
 
@@ -52,35 +54,9 @@ class SearchScroll(tk.Canvas):
 
     def search_container(self):
         # --- Create Widgets ---
-        self.search_widgets_frame = SearchWidget(self.screen)
+        self.search_widgets_frame = SearchWidget(self, self.screen, self.entities_name, self.show_home)
         self.search_widgets_frame.grid(row=0, column=0, sticky="NSEW")
         self.search_widgets_frame.columnconfigure(0, weight=1)
 
-        # --- Create Button Frame ---
-        search_buttons = ttk.Frame(self.screen)
-        search_buttons.grid(row=1, column=0, sticky="EW")
-        search_buttons.columnconfigure(0, weight=1)
-
-        self.create_buttons(search_buttons)
-
-        for child in search_buttons.winfo_children():
-            child.grid_configure(padx=5, pady=5, sticky="EW")
-
-    def create_buttons(self, container):
-        parent = self.container
-
-        choose_entity_button = ttk.Button(
-            container,
-            text="Create",
-            # command=self.create_avatar,
-            cursor="hand2"
-        )
-        choose_entity_button.grid(row=0, column=0)
-
-        back_button = ttk.Button(
-            container,
-            text="← Back",
-            command=parent.show_home,
-            cursor="hand2"
-        )
-        back_button.grid(row=1, column=0)
+    def search_result(self, entity_name):
+        print(get_entity(entity_name, self.type_))

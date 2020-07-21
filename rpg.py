@@ -23,7 +23,7 @@ class RPG(tk.Tk):
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
 
-        self.search_frame = Search(self, lambda: self.show_frame(Home))
+        self.search_frame = Search(self, [], '', lambda: self.show_frame(Home))
 
         self.create_avatar_frame = CreateAvatar(self, lambda: self.show_frame(Home))
 
@@ -51,10 +51,10 @@ class RPG(tk.Tk):
         self.frames[CreateAvatar] = self.create_avatar_frame
         self.show_frame(CreateAvatar)
 
-    def show_search(self):
+    def show_search(self, entities_name, type_):
         self.check_frame_existence(self.search_frame)
 
-        self.search_frame = CreateAvatar(self, lambda: self.show_frame(Home))
+        self.search_frame = Search(self, entities_name, type_, lambda: self.show_frame(Home))
         self.search_frame.grid(row=0, column=0, sticky="NSEW")
 
         self.frames[Search] = self.search_frame

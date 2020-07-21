@@ -87,6 +87,20 @@ def get_user(name):
     return characters
 
 
+def get_entity(name, type_):
+    db_entity = search_database[type_]
+    db_type = search_types[type_]
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute(f'SELECT * FROM {db_entity} WHERE name=?', (name,))
+        if db_entity == 'users':
+            entity = get_user_attributes(cursor)
+
+    return entity
+
+
 # --- OTHERS ---
 def get_search_entities(name, type_):
     entity_name = name.lower()

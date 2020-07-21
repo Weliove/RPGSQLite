@@ -3,6 +3,7 @@ from tkinter import ttk
 
 from src.connection.database import get_users_name, get_specific_items, get_search_entities
 from src.home.home_widget import HomeWidget
+from src.popup_info import popup_showinfo
 
 
 class Home(ttk.Frame):
@@ -79,4 +80,10 @@ class Home(ttk.Frame):
 
         search_result = get_search_entities(name, type_)
 
-        print(search_result)
+        print(type_)
+
+        if search_result:
+            self.parent.show_search(search_result, type_)
+            self.home_widgets.name.set('')
+        else:
+            popup_showinfo(f"{name} not found!")
