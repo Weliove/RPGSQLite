@@ -47,6 +47,7 @@ class SearchScroll(tk.Canvas):
 
         self.bind("<Configure>", configure_window_size)
         self.screen.bind("<Configure>", configure_scroll_region)
+        self.bind_all("<MouseWheel>", self._on_mouse_wheel)
 
         scrollbar = ttk.Scrollbar(container, orient="vertical", command=self.yview)
         scrollbar.grid(row=0, column=1, sticky="NS")
@@ -54,9 +55,12 @@ class SearchScroll(tk.Canvas):
         self.configure(yscrollcommand=scrollbar.set)
         self.yview_moveto(1.0)
 
+    def _on_mouse_wheel(self, event):
+        self.yview_scroll(-int(event.delta/120), "units")
+
     def search_container(self):
         # --- Create Widgets ---
-        self.search_widgets_frame = SearchWidget(self, self.screen, self.entities_name, self.show_home)
+        self.search_widgets_frame = SearchWidget(self, self.screen, self.entities_name, self.type_, self.show_home)
         self.search_widgets_frame.grid(row=0, column=0, sticky="NSEW")
         self.search_widgets_frame.columnconfigure(0, weight=1)
 

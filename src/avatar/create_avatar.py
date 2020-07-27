@@ -2,7 +2,9 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
+from src.avatar.avatar_properties import get_items_ids
 from src.avatar.avatar_widget import AvatarWidget
+from src.popup_info import popup_showinfo
 
 
 class CreateAvatar(ttk.Frame):
@@ -88,6 +90,7 @@ class AvatarScroll(tk.Canvas):
 
     def create_avatar(self):
         widgets = self.avatar_widgets_frame
+        items = []
 
         name = widgets.name.get()
         type_ = widgets.type.get()
@@ -95,32 +98,44 @@ class AvatarScroll(tk.Canvas):
         health = widgets.health.get()
         adrenaline = widgets.adrenaline.get()
         class_ = widgets.class_.get()
-        armor = widgets.armor.get()
-        special_armor = widgets.special_armor.get()
+        class_result = widgets.classes.index(class_)
+        armor = [widgets.armor.get()]
         weapon = self.handle_selection_change(widgets.weapon_entry, widgets.weapons)
-        special_weapon = self.handle_selection_change(widgets.weapon_special_entry, widgets.special_weapons)
         physical_ability = widgets.physical_ability.get()
         title = self.handle_selection_change(widgets.title_entry, widgets.titles)
         ability = self.handle_selection_change(widgets.ability_entry, widgets.abilities)
         proficiency = self.handle_selection_change(widgets.proficiency_entry, widgets.proficiencies)
         description = self.get_text_data(widgets.description_entry)
 
-        avatar = Avatar(name, type_result, health, adrenaline, class_, armor, weapon,
+        if armor != 'None':
+            items += get_items_ids(armor, 1)
+
+        if weapon != 'None':
+            items += get_items_ids(weapon, 2)
+
+        avatar = Avatar(name, type_result, health, adrenaline, class_result, items,
                         physical_ability, title, ability, proficiency, description)
 
-        if type_ == 'Character':
-            avatar.create_character()
+        create_avatar = avatar.create_character()
+
+        if not create_avatar:
+            self.container.show_home()
         else:
-            avatar.create_monster()
+            popup_showinfo(create_avatar)
 
     def handle_selection_change(self, list_widget, total_list):
         selected_indices = list_widget.curselection()
         result_list = []
 
+        if len(selected_indices) == 1 and total_list[0] == 'None':
+            return []
+
         for i in selected_indices:
             result_list.append(total_list[i])
 
-        return tuple(result_list)
+        return result_list
+
+        # return tuple(result_list)
 
     def get_text_data(self, text_widget):
         return text_widget.get("1.0", 'end-1c')

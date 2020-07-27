@@ -3,7 +3,7 @@ from tkinter import ttk
 
 
 class SearchWidget(ttk.Frame):
-    def __init__(self, parent, container, entities_name, show_home):
+    def __init__(self, parent, container, entities_name, type_, show_home):
         super().__init__(container)
 
         self.parent = parent
@@ -16,12 +16,18 @@ class SearchWidget(ttk.Frame):
         search_widget_frame.grid(row=0, column=0, sticky="NSEW")
         search_widget_frame.columnconfigure(0, weight=1)
 
-        self.create_widgets(search_widget_frame, entities_name)
+        self.create_widgets(search_widget_frame, entities_name, type_)
 
         for child in search_widget_frame.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
-    def create_widgets(self, container, entities_name):
+    def create_widgets(self, container, entities_name, type_):
+        result_entity_type = ttk.Label(
+            container,
+            text=type_ + 's'
+        )
+        result_entity_type.grid(column=0, padx=5, pady=5, sticky="EW")
+
         for entity in entities_name:
             entity_button = ttk.Button(
                 container,

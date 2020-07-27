@@ -1,3 +1,5 @@
+import sqlite3
+
 from .database_connection import DatabaseConnection
 
 
@@ -37,30 +39,57 @@ def add_user(entity):
     type_ = entity['type']
     health = entity['health']
     adrenaline = entity['adrenaline']
-    proficiency = convert_array_to_string(entity['proficiency'])
+    class_ = entity['class']
+    physical_ability = entity['physical_ability']
     description = entity['description']
+
+    items_id = entity['items']
+    titles_id = entity['titles']
+    abilities_id = entity['abilities']
+    proficiencies_id = entity['proficiency']
+
+    print(items_id)
+    print(titles_id)
+    print(abilities_id)
+    print(proficiencies_id)
 
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                       (name, type_, health, adrenaline, 1, '0', 'None', 'None', 'None', proficiency, description))
+        try:
+            cursor.execute('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?)',
+                           (name, type_, health, adrenaline, class_, physical_ability, description))
+
+            if len(items_id) > 0:
+                for item in items_id:
+                    cursor.execute('INSERT INTO users_items(item_id, user_name) VALUES (?, ?)', (item, name))
+
+            if len(titles_id) > 0:
+                for title in titles_id:
+                    cursor.execute('INSERT INTO users_titles(title_id, user_name) VALUES (?, ?)', (title, name))
+
+            if len(abilities_id) > 0:
+                for ability in abilities_id:
+                    cursor.execute('INSERT INTO users_abilities(ability_id, user_name) VALUES(?, ?)', (ability, name))
+
+            if len(proficiencies_id) > 0:
+                for proficiency in proficiencies_id:
+                    cursor.execute('INSERT INTO users_proficiencies(proficiency_id, user_name) VALUES (?, ?)',
+                                   (proficiency, name))
+        except sqlite3.Error as error:
+            return error
 
 
-def get_user_attributes(cursor):
-    return [{
-        'name': row[0],
-        'type': row[1],
-        'health': row[2],
-        'adrenaline': row[3],
-        'class': row[4],
-        'items': row[5],
-        'physical_ability': row[6],
-        'title': row[7],
-        'abilities': row[8],
-        'proficiency': row[9],
-        'description': row[10]
-    } for row in cursor.fetchall()][0]
+def get_user_abilities(cursor):
+    pass
+
+
+def get_user_proficiencies(cursor):
+    pass
+
+
+def get_user_titles(cursor):
+    pass
 
 
 def get_users_name(name, type_):
@@ -87,6 +116,41 @@ def get_user(name):
     return characters
 
 
+def get_user_attributes(cursor):
+    return [{
+        'name': row[0],
+        'type': row[1],
+        'health': row[2],
+        'adrenaline': row[3],
+        'class': row[4],
+        'physical_ability': row[5],
+        'description': row[6]
+    } for row in cursor.fetchall()][0]
+
+
+def get_user_items(user_name):
+    items = []
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT item_id FROM users_items WHERE user_name=?', (user_name,))
+        items_id = get_list(cursor)
+
+        for item in items_id:
+            cursor.execute('SELECT * FROM items WHERE id=?', (item,))
+            items += get_items_attributes(cursor)
+
+    return items
+
+
+def get_items_attributes(cursor):
+    return [{
+        'id': row[0],
+        'name': row[1]
+    } for row in cursor.fetchall()]
+
+
 def get_entity(name, type_):
     db_entity = search_database[type_]
     db_type = search_types[type_]
@@ -102,6 +166,9 @@ def get_entity(name, type_):
 
 
 def get_entity_name_by_id(id_, db_entity):
+    if id_ == 0:
+        return 'None'
+
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
@@ -145,21 +212,39 @@ def get_specific_items(name, type_):
         cursor = connection.cursor()
 
         if name == '':
-            cursor.execute('SELECT name FROM items WHERE type=?', (type_,))
+            cursor.execute('SELECT * FROM items WHERE type=?', (type_,))
         else:
-            cursor.execute('SELECT name FROM items WHERE name=?', (name,))
+            cursor.execute('SELECT * FROM items WHERE name=?', (name,))
 
-        entity = get_list(cursor)
+        entity = get_items_attributes(cursor)
 
     return entity
 
 
-def convert_array_to_string(items):
-    result = ''
+# --- CLASSES ---
+def get_classes():
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
 
-    for item in items:
-        result += item
+        cursor.execute(f'SELECT * FROM classes')
 
+        entity = get_classes_attributes(cursor)
+
+    return entity
+
+
+def get_classes_attributes(cursor):
+    return [{
+        'id': row[0],
+        'name': row[1],
+    } for row in cursor.fetchall()]
+
+
+def convert_list_to_string(items):
+    if len(items) == 0:
+        return 'None'
+
+    result = ','.join(map(str, items))
     return result
 
 

@@ -1,23 +1,28 @@
 import tkinter as tk
 from tkinter import ttk
 
-from src.connection.database import get_entity_name_by_id, convert_array_to_string
+from src.avatar.avatar import Avatar
+from src.connection.database import get_entity_name_by_id, convert_list_to_string, get_user_items
 
 
 class UserInterface(ttk.Frame):
     def __init__(self, container, entity, type_, show_home):
         super().__init__(container)
 
-        self.name = 'Name:  ' + entity['name']
+        self.name = entity['name']
+        self.type_ = entity['type']
         self.health = 'Health:  ' + entity['health']
         self.adrenaline = 'Adrenaline:  ' + entity['adrenaline']
-        self.class_ = 'Class:  ' + convert_array_to_string(get_entity_name_by_id(entity['class'], 'classes'))
-        self.items = 'Items:  ' + entity['items']
+        self.class_ = 'Class:  ' + convert_list_to_string(get_entity_name_by_id(entity['class'], 'classes'))
+        self.items = get_user_items(self.name)
         self.physical_ability = 'Physical Ability:  ' + entity['physical_ability']
-        self.title = 'Titles:  ' + entity['title']
-        self.abilities = 'Abilities:  ' + entity['abilities']
-        self.proficiency = 'Proficiencies:  ' + entity['proficiency']
+        self.titles = 'Titles:  None'  # 'Titles:  ' + entity['title']
+        self.abilities = 'Abilities:  None'  # 'Abilities:  ' + entity['abilities']
+        self.proficiency = 'Proficiencies:  None'  # 'Proficiencies:  ' + entity['proficiency']
         self.description = 'Description:  ' + entity['description']
+
+        self.avatar = Avatar(self.name, self.type_, self.health, self.adrenaline, self.class_, self.items,
+                             self.physical_ability, self.titles, self.abilities, self.proficiency, self.description)
 
         self.create_widgets(entity)
 
@@ -27,15 +32,15 @@ class UserInterface(ttk.Frame):
         print(entity)
         name = ttk.Label(
             self,
-            text=self.name
+            text='Name:  ' + self.name
         )
-        name.grid(row=0, column=0, sticky="NSEW")
+        name.grid(row=0, column=0, sticky="EW")
 
         health = ttk.Label(
             self,
             text=self.health
         )
-        health.grid(row=1, column=0, sticky="NSEW")
+        health.grid(row=1, column=0, sticky="EW")
 
         adrenaline = ttk.Label(
             self,
@@ -51,7 +56,7 @@ class UserInterface(ttk.Frame):
 
         items = ttk.Label(
             self,
-            text=self.items
+            text=self.generate_items(self.items)
         )
         items.grid(row=4, column=0, sticky="NSEW")
 
@@ -63,7 +68,7 @@ class UserInterface(ttk.Frame):
 
         title = ttk.Label(
             self,
-            text=self.title
+            text=self.titles
         )
         title.grid(row=6, column=0, sticky="NSEW")
 
@@ -84,6 +89,19 @@ class UserInterface(ttk.Frame):
             text=self.description
         )
         description.grid(row=9, column=0, sticky="NSEW")
+
+    def generate_items(self, items):
+        text = 'Items:'
+
+        if len(items) == 0:
+            return text + ' None'
+
+        text += '\n'
+
+        for item in items:
+            text += '\t' + item['name'] + '\n\n'
+
+        return text
 
     def create_buttons(self, show_home):
         back_button = ttk.Button(

@@ -2,14 +2,14 @@ from src.connection.database import add_user
 
 
 class Avatar:
-    def __init__(self, name, type_, health, adrenaline, class_, armor, weapon, physical_ability, titles, abilities, proficiency, description):
+    def __init__(self, name, type_, health, adrenaline, class_, items, physical_ability, titles, abilities,
+                 proficiency, description):
         self.name = name
         self.type_ = type_
         self.health = health
         self.adrenaline = adrenaline
         self.class_ = class_
-        self.armor = armor
-        self.weapon = weapon
+        self.items = items
         self.physical_ability = physical_ability
         self.titles = titles
         self.abilities = abilities
@@ -22,8 +22,7 @@ class Avatar:
             'health': self.health,
             'adrenaline': self.adrenaline,
             'class': self.class_,
-            'armor': self.armor,
-            'weapon': self.weapon,
+            'items': self.items,
             'physical_ability': self.physical_ability,
             'titles': self.titles,
             'abilities': self.abilities,
@@ -37,5 +36,5 @@ class Avatar:
     def create_character(self):
         return add_user(self.get_avatar())
 
-    def create_monster(self):
-        return add_user(self.get_avatar())
+    def update_user(self):
+        pass
