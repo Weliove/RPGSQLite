@@ -1,4 +1,6 @@
 from src.connection.database import *
+from src.connection.handle_classes import get_classes
+from src.connection.handle_items import get_specific_items
 
 
 def get_avatar_types():
@@ -50,8 +52,17 @@ def get_classes_names():
     return result
 
 
-def get_classes_attributes():
-    return get_classes()
+def get_classes_ids(classes_names):
+    result = []
+    classes = get_classes()
+
+    for class_ in classes_names:
+        for stored_class in classes:
+            if class_ == stored_class['name']:
+                class_id = stored_class['id']
+                result.append(class_id)
+
+    return result
 
 
 def get_proficiencies():

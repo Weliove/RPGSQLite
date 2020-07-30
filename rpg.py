@@ -15,6 +15,8 @@ class RPG(tk.Tk):
 
         self.title("RPG - Home")
 
+        self.resizable(False, False)
+
         self.frames = dict()
 
         # --- Create Frames ---

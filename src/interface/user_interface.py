@@ -2,7 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
-from src.connection.database import get_entity_name_by_id, convert_list_to_string, get_user_items
+from src.connection.database import get_entity_name_by_id, convert_list_to_string
+from src.connection.handle_users import get_user_classes, get_user_items
 
 
 class UserInterface(ttk.Frame):
@@ -13,7 +14,7 @@ class UserInterface(ttk.Frame):
         self.type_ = entity['type']
         self.health = 'Health:  ' + entity['health']
         self.adrenaline = 'Adrenaline:  ' + entity['adrenaline']
-        self.class_ = 'Class:  ' + convert_list_to_string(get_entity_name_by_id(entity['class'], 'classes'))
+        self.class_ = get_user_classes(self.name)
         self.items = get_user_items(self.name)
         self.physical_ability = 'Physical Ability:  ' + entity['physical_ability']
         self.titles = 'Titles:  None'  # 'Titles:  ' + entity['title']
@@ -50,7 +51,7 @@ class UserInterface(ttk.Frame):
 
         class_ = ttk.Label(
             self,
-            text=self.class_
+            text=self.generate_classes(self.class_)
         )
         class_.grid(row=3, column=0, sticky="NSEW")
 
@@ -100,6 +101,19 @@ class UserInterface(ttk.Frame):
 
         for item in items:
             text += '\t' + item['name'] + '\n\n'
+
+        return text
+
+    def generate_classes(self, classes):
+        text = 'Classes:'
+
+        if len(classes) == 0:
+            return text + ' None'
+
+        text += '\n'
+
+        for class_ in classes:
+            text += '\t' + class_['name'] + '\n\n'
 
         return text
 

@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_items_ids
+from src.avatar.avatar_properties import get_items_ids, get_classes_ids
 from src.avatar.avatar_widget import AvatarWidget
 from src.popup_info import popup_showinfo
 
@@ -97,8 +97,8 @@ class AvatarScroll(tk.Canvas):
         type_result = widgets.type_values.index(type_) + 1
         health = widgets.health.get()
         adrenaline = widgets.adrenaline.get()
-        class_ = widgets.class_.get()
-        class_result = widgets.classes.index(class_)
+        class_ = self.handle_selection_change(widgets.class_entry, widgets.classes)
+        class_result = get_classes_ids(class_)
         armor = [widgets.armor.get()]
         weapon = self.handle_selection_change(widgets.weapon_entry, widgets.weapons)
         physical_ability = widgets.physical_ability.get()
@@ -107,16 +107,21 @@ class AvatarScroll(tk.Canvas):
         proficiency = self.handle_selection_change(widgets.proficiency_entry, widgets.proficiencies)
         description = self.get_text_data(widgets.description_entry)
 
-        if armor != 'None':
+        if len(armor) == 1 and armor[0] == 'None':
+            armor = []
+
+        if armor:
             items += get_items_ids(armor, 1)
 
-        if weapon != 'None':
+        if weapon:
             items += get_items_ids(weapon, 2)
 
         avatar = Avatar(name, type_result, health, adrenaline, class_result, items,
                         physical_ability, title, ability, proficiency, description)
 
         create_avatar = avatar.create_character()
+
+        print(items)
 
         if not create_avatar:
             self.container.show_home()
@@ -127,15 +132,13 @@ class AvatarScroll(tk.Canvas):
         selected_indices = list_widget.curselection()
         result_list = []
 
-        if len(selected_indices) == 1 and total_list[0] == 'None':
+        if len(selected_indices) == 0 or (len(selected_indices) == 1 and selected_indices[0] == 'None'):
             return []
 
         for i in selected_indices:
             result_list.append(total_list[i])
 
         return result_list
-
-        # return tuple(result_list)
 
     def get_text_data(self, text_widget):
         return text_widget.get("1.0", 'end-1c')

@@ -1,4 +1,4 @@
-from src.connection.database import add_user
+from src.connection.handle_users import add_user
 
 
 class Avatar:

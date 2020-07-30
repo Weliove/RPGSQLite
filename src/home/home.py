@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from src.connection.database import get_users_name, get_specific_items, get_search_entities
+from src.connection.database import get_search_entities
 from src.home.home_widget import HomeWidget
 from src.popup_info import popup_showinfo
 

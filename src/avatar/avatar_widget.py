@@ -11,7 +11,9 @@ class AvatarWidget(tk.Frame):
         self.font = font.Font(size=11)
 
         self.type_values = get_avatar_types()
+
         self.classes = get_classes_names()
+        self.classes.insert(0, 'None')
 
         self.armors = get_items(1)
         self.armors.insert(0, 'None')
@@ -28,7 +30,7 @@ class AvatarWidget(tk.Frame):
         self.health = tk.StringVar(value=0)
         self.type = tk.StringVar(value=self.type_values[0])
         self.adrenaline = tk.StringVar(value=0)
-        self.class_ = tk.StringVar(value=self.classes[0])
+        self.class_ = tk.StringVar(value=self.classes)
         self.armor = tk.StringVar(value=self.armors[0])
         self.weapon = tk.StringVar(value=self.weapons)
         self.physical_ability = tk.StringVar(value='None')
@@ -37,6 +39,7 @@ class AvatarWidget(tk.Frame):
         self.proficiency = tk.StringVar(value=self.proficiencies)
 
         # --- Widgets ---
+        self.class_entry = tk.Listbox()
         self.weapon_entry = tk.Listbox()
         self.title_entry = tk.Listbox()
         self.ability_entry = tk.Listbox()
@@ -117,13 +120,26 @@ class AvatarWidget(tk.Frame):
         )
         class_label.grid(row=4, column=0, sticky="EW")
 
-        class_entry = ttk.Combobox(
+        self.class_entry = tk.Listbox(
             container,
-            textvariable=self.class_,
-            values=self.classes,
-            state="readonly"
+            listvariable=self.class_,
+            selectmode="extended",
+            exportselection=False,
+            selectbackground="#2CCC5B",
+            highlightcolor="#1DE557",
+            font=self.font,
+            width=1,
+            height=5
         )
-        class_entry.grid(row=4, column=1, sticky="EW")
+        self.class_entry.grid(row=4, column=1, sticky="EW")
+
+        self.class_entry.select_set(0)
+
+        class_scrollbar = ttk.Scrollbar(container, orient="vertical")
+        class_scrollbar.config(command=self.class_entry.yview)
+        class_scrollbar.grid(row=4, column=2, sticky="NS")
+
+        self.class_entry.config(yscrollcommand=class_scrollbar.set)
 
         # --- Armor ---
         armor_label = ttk.Label(
