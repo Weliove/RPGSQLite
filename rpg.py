@@ -6,6 +6,7 @@ import tkinter.font as font
 from src import Home
 from src import CreateAvatar
 from src.interface.interface import Interface
+from src.item.create_item import CreateItem
 from src.search.search import Search
 
 
@@ -22,7 +23,8 @@ class RPG(tk.Tk):
         # --- Create Frames ---
         self.home_frame = Home(
             self,
-            lambda: self.show_create_avatar()
+            lambda: self.show_create_avatar(),
+            lambda: self.show_create_item()
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
 
@@ -30,11 +32,14 @@ class RPG(tk.Tk):
 
         self.create_avatar_frame = CreateAvatar(self, lambda: self.show_frame(Home))
 
+        self.create_item_frame = CreateItem(self, lambda: self.show_frame(Home))
+
         self.interface_frame = None
 
         self.frames[Home] = self.home_frame
         self.frames[CreateAvatar] = self.create_avatar_frame
         self.frames[Search] = self.search_frame
+        self.frames[CreateItem] = self.create_item_frame
         self.frames[Interface] = self.interface_frame
 
         # --- Show Frame ---
@@ -65,6 +70,15 @@ class RPG(tk.Tk):
 
         self.frames[Search] = self.search_frame
         self.show_frame(Search)
+
+    def show_create_item(self):
+        self.check_frame_existence(self.create_item_frame)
+
+        self.create_item_frame = CreateItem(self, lambda: self.show_frame(Home))
+        self.create_item_frame.grid(row=0, column=0, sticky="NSEW")
+
+        self.frames[CreateItem] = self.create_item_frame
+        self.show_frame(CreateItem)
 
     def show_interface(self, entity, type_):
         self.check_frame_existence(self.interface_frame)

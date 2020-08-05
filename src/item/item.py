@@ -1,4 +1,4 @@
-from src.connection.database import add_item
+from src.connection.handle_items import add_item
 
 
 class Item:

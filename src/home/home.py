@@ -7,11 +7,12 @@ from src.popup_info import popup_showinfo
 
 
 class Home(ttk.Frame):
-    def __init__(self, parent, create_avatar):
+    def __init__(self, parent, create_avatar, create_item):
         super().__init__(parent)
 
         self.parent = parent
         self.create_avatar = create_avatar
+        self.create_item = create_item
 
         # --- Create Widget Frame ---
 
@@ -49,6 +50,7 @@ class Home(ttk.Frame):
         create_item_button = ttk.Button(
             container,
             text="Create Item",
+            command=self.create_item,
             cursor="hand2"
         )
         create_item_button.grid(row=2, column=0, sticky="EW")
