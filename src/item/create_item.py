@@ -1,7 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
 
+from src.item.item import Item
+from src.item.item_properties import get_entity_ids
 from src.item.item_widget import ItemWidget
+from src.popup_info import popup_showinfo
 
 
 class CreateItem(ttk.Frame):
@@ -83,7 +86,7 @@ class ItemScroll(tk.Canvas):
 
         add_item_widgets = ttk.Button(
             container,
-            text="Add Item Widgets",
+            text="Add Item",
             command=lambda: self.add_item_frame(),
             cursor="hand2"
         )
@@ -109,13 +112,54 @@ class ItemScroll(tk.Canvas):
         self.item_buttons.grid_configure(row=current_rows)
 
     def create_item(self):
-        pass
+        type_dict = {'Armor': 1, 'Weapon': 2}
+
+        for item_frame in self.item_frames:
+            character = self.handle_selection_change(item_frame.character_entry, item_frame.characters)
+            npc = self.handle_selection_change(item_frame.npc_entry, item_frame.npcs)
+            monster = self.handle_selection_change(item_frame.monster_entry, item_frame.monsters)
+
+            abilities = self.handle_selection_change(item_frame.abilities_entry, item_frame.abilities)
+            abilities_result = get_entity_ids('ability', abilities)
+
+            user = self.choose_user(character, npc, monster)
+
+            name = item_frame.name.get()
+            type_ = type_dict[item_frame.type_.get()]
+            reduction = item_frame.reduction.get()
+            damage = item_frame.damage.get()
+            range_ = item_frame.range_.get()
+            health = item_frame.health.get()
+            area = item_frame.area.get()
+            effects = self.get_text_data(item_frame.effects_entry)
+            description = self.get_text_data(item_frame.description_entry)
+
+            item = Item(name, user, type_, reduction, damage, range_, health, area, abilities_result, effects, description)
+
+            create_item = item.create_item()
+
+            if not create_item:
+                self.container.show_home()
+            else:
+                popup_showinfo(create_item)
+
+    def choose_user(self, character, npc, monster):
+        user = ''
+
+        if len(character) > 0:
+            user = character[0]
+        elif len(npc) > 0:
+            user = npc[0]
+        elif len(monster) > 0:
+            user = monster[0]
+
+        return user
 
     def handle_selection_change(self, list_widget, total_list):
         selected_indices = list_widget.curselection()
         result_list = []
 
-        if len(selected_indices) == 0 or (len(selected_indices) == 1 and selected_indices[0] == 'None'):
+        if len(selected_indices) == 0 or (len(selected_indices) == 1 and total_list[selected_indices[0]] == 'None'):
             return []
 
         for i in selected_indices:

@@ -19,20 +19,20 @@ def add_item(item, user_name):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        try:
-            cursor.execute('INSERT INTO items VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                           (name, type_, reduction, damage, range_, health, area, effects, description))
+        cursor.execute('INSERT INTO items (name, type, reduction, damage, range, health, area, effects, description) '
+                       'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                       (name, type_, reduction, damage, range_, health, area, effects, description))
 
-            item_id = cursor.lastrowid
+        item_id = cursor.lastrowid
 
-            if len(abilities_id) > 0:
-                for ability in abilities_id:
-                    cursor.execute('INSERT INTO items_abilities (ability_id, item_id)', (ability, item_id))
+        if len(abilities_id) > 0:
+            for ability in abilities_id:
+                cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability, item_id))
 
-            if user_name != 'None':
-                cursor.execute('INSERT INTO users_items (item_id, user_name)', (item_id, user_name))
-        except sqlite3.Error as error:
-            return error
+        print(user_name)
+
+        if user_name != '':
+            cursor.execute('INSERT INTO users_items (item_id, user_name) VALUES (?, ?)', (item_id, user_name))
 
 
 def get_items_attributes(cursor):

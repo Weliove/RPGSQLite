@@ -10,26 +10,29 @@ class ItemWidget(ttk.Frame):
 
         self.font = font.Font(size=11)
 
-        characters = ['None'] + get_search_entities('', 'Character')
-        npcs = ['None'] + get_search_entities('', 'NPC')
-        monsters = ['None'] + get_search_entities('', 'Monster')
+        self.types_ = ('Armor', 'Weapon')
 
-        abilities = ['None'] + get_search_entities('', 'Ability')
+        self.characters = ['None'] + get_search_entities('', 'Character')
+        self.npcs = ['None'] + get_search_entities('', 'NPC')
+        self.monsters = ['None'] + get_search_entities('', 'Monster')
+
+        self.abilities = ['None'] + get_search_entities('', 'Ability')
 
         # --- Attributes ---
 
         self.item = 'Item ' + item_frame_number
         self.name = tk.StringVar()
+        self.type_ = tk.StringVar(value=self.types_[0])
         self.reduction = tk.StringVar(value='0')
         self.damage = tk.StringVar(value='0')
-        self.range = tk.StringVar(value='0')
+        self.range_ = tk.StringVar(value='0')
         self.health = tk.StringVar(value='0')
         self.area = tk.StringVar(value='0')
 
-        self.characters = tk.StringVar(value=characters)
-        self.npcs = tk.StringVar(value=npcs)
-        self.monsters = tk.StringVar(value=monsters)
-        self.abilities = tk.StringVar(value=abilities)
+        self.character = tk.StringVar(value=self.characters)
+        self.npc = tk.StringVar(value=self.npcs)
+        self.monster = tk.StringVar(value=self.monsters)
+        self.ability = tk.StringVar(value=self.abilities)
 
         # --- Widgets ---
         self.character_entry = tk.Listbox()
@@ -88,7 +91,7 @@ class ItemWidget(ttk.Frame):
 
         self.character_entry = tk.Listbox(
             container,
-            listvariable=self.characters,
+            listvariable=self.character,
             # selectmode="extended",
             # exportselection=False,
             selectbackground="#2CCC5B",
@@ -117,7 +120,7 @@ class ItemWidget(ttk.Frame):
 
         self.npc_entry = tk.Listbox(
             container,
-            listvariable=self.npcs,
+            listvariable=self.npc,
             # selectmode="extended",
             # exportselection=False,
             selectbackground="#2CCC5B",
@@ -144,7 +147,7 @@ class ItemWidget(ttk.Frame):
 
         self.monster_entry = tk.Listbox(
             container,
-            listvariable=self.monsters,
+            listvariable=self.monster,
             # selectmode="extended",
             # exportselection=False,
             selectbackground="#2CCC5B",
@@ -170,7 +173,10 @@ class ItemWidget(ttk.Frame):
         type_label.grid(row=6, column=0, sticky="EW")
 
         type_entry = ttk.Combobox(
-            container
+            container,
+            textvariable=self.type_,
+            values=self.types_,
+            state="readonly"
         )
         type_entry.grid(row=6, column=1, sticky="EW")
 
@@ -214,7 +220,7 @@ class ItemWidget(ttk.Frame):
 
         range_entry = ttk.Entry(
             container,
-            textvariable=self.range,
+            textvariable=self.range_,
             width=60
         )
         range_entry.grid(row=9, column=1, sticky="EW")
@@ -259,7 +265,7 @@ class ItemWidget(ttk.Frame):
 
         self.abilities_entry = tk.Listbox(
             container,
-            listvariable=self.abilities,
+            listvariable=self.ability,
             selectmode="extended",
             exportselection=False,
             selectbackground="#2CCC5B",

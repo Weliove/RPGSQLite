@@ -5,6 +5,7 @@ import tkinter.font as font
 
 from src import Home
 from src import CreateAvatar
+from src.ability.ability import CreateAbility
 from src.interface.interface import Interface
 from src.item.create_item import CreateItem
 from src.search.search import Search
@@ -24,7 +25,8 @@ class RPG(tk.Tk):
         self.home_frame = Home(
             self,
             lambda: self.show_create_avatar(),
-            lambda: self.show_create_item()
+            lambda: self.show_create_item(),
+            lambda: self.show_create_ability()
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
 
@@ -34,13 +36,18 @@ class RPG(tk.Tk):
 
         self.create_item_frame = CreateItem(self, lambda: self.show_frame(Home))
 
+        self.create_ability_frame = CreateAbility(self, lambda: self.show_frame(Home))
+
         self.interface_frame = None
 
-        self.frames[Home] = self.home_frame
-        self.frames[CreateAvatar] = self.create_avatar_frame
-        self.frames[Search] = self.search_frame
-        self.frames[CreateItem] = self.create_item_frame
-        self.frames[Interface] = self.interface_frame
+        self.frames = {
+            Home: self.home_frame,
+            CreateAvatar: self.create_avatar_frame,
+            Search: self.search_frame,
+            CreateItem: self.create_item_frame,
+            CreateAbility: self.create_ability_frame,
+            Interface: self.interface_frame
+        }
 
         # --- Show Frame ---
         self.show_frame(Home)
@@ -79,6 +86,15 @@ class RPG(tk.Tk):
 
         self.frames[CreateItem] = self.create_item_frame
         self.show_frame(CreateItem)
+
+    def show_create_ability(self):
+        self.check_frame_existence(self.create_ability_frame)
+
+        self.create_ability_frame = CreateAbility(self, lambda: self.show_frame(Home))
+        self.create_ability_frame.grid(row=0, column=0, sticky="NSEW")
+
+        self.frames[CreateAbility] = self.create_ability_frame
+        self.show_frame(CreateAbility)
 
     def show_interface(self, entity, type_):
         self.check_frame_existence(self.interface_frame)

@@ -1,14 +1,13 @@
 from src.connection.database import *
+from src.connection.handle_abilities import get_abilities
 from src.connection.handle_classes import get_classes
 from src.connection.handle_items import get_specific_items
+from src.connection.handle_titles import get_titles
+from src.connection.handle_users import get_proficiencies, get_user_types
 
 
 def get_avatar_types():
     return tuple(("Character", "NPC", "Monster"))
-
-
-def get_item_types():
-    return ['None']
 
 
 def get_items(type_):
@@ -34,14 +33,6 @@ def get_items_ids(items_names, type_):
     return result
 
 
-def get_armors():
-    return get_specific_items('', 1)
-
-
-def get_weapons():
-    return get_specific_items('', 2)
-
-
 def get_classes_names():
     classes = get_classes()
     result = []
@@ -52,37 +43,38 @@ def get_classes_names():
     return result
 
 
-def get_classes_ids(classes_names):
+def get_entity_ids(entity_type, entities_names):
     result = []
-    classes = get_classes()
+    entities = select_entity(entity_type)
 
-    for class_ in classes_names:
-        for stored_class in classes:
-            if class_ == stored_class['name']:
-                class_id = stored_class['id']
-                result.append(class_id)
-
-    return result
-
-
-def get_proficiencies():
-    proficiencies = [
-        "Arcanism",
-        "Manufacturing",
-        "Athletics",
-        "Occult",
-        "Medicine",
-        "Nature",
-        "Survival",
-        "Stealth",
-        "Religion",
-        "Society",
-        "Intimidation",
-        "Logia",
-        "Diplomacy",
-        "Concealment"
-    ]
-    result = sorted(proficiencies)
-    result.insert(0, "None")
+    for entity in entities_names:
+        for stored_entities in entities:
+            if entity == stored_entities['name']:
+                entity_id = stored_entities['id']
+                result.append(entity_id)
 
     return result
+
+
+def select_entity(entity):
+    if entity == 'class':
+        return get_classes()
+    elif entity == 'proficiency':
+        return get_proficiencies()
+    elif entity == 'title':
+        return get_titles()
+    elif entity == 'ability':
+        return get_abilities()
+    else:
+        return None
+
+
+def get_user_types_ids(type_name):
+    type_result = -1
+    types_ = get_user_types()
+
+    for stored_type in types_:
+        if stored_type['name'] == type_name:
+            type_result = stored_type['id']
+
+    return type_result

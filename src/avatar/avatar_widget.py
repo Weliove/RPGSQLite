@@ -12,18 +12,17 @@ class AvatarWidget(tk.Frame):
 
         self.type_values = get_avatar_types()
 
-        self.classes = get_classes_names()
-        self.classes.insert(0, 'None')
+        self.classes = ['None'] + get_classes_names()
 
-        self.armors = get_items(1)
-        self.armors.insert(0, 'None')
+        self.armors = ['None'] + get_items(1)
 
-        self.weapons = get_items(2)
-        self.weapons.insert(0, 'None')
+        self.weapons = ['None'] + get_items(2)
 
-        self.titles = ['None']
-        self.abilities = ['None']
-        self.proficiencies = get_proficiencies()
+        self.titles = ['None'] + get_titles()
+
+        self.abilities = ['None'] + get_abilities()
+
+        self.proficiencies = ['None'] + get_proficiencies()
 
         # --- Attributes ---
         self.name = tk.StringVar()

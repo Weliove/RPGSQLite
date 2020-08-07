@@ -29,32 +29,29 @@ def add_user(entity):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        try:
-            cursor.execute('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)',
-                           (name, type_, health, adrenaline, physical_ability, description))
+        cursor.execute('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)',
+                       (name, type_, health, adrenaline, physical_ability, description))
 
-            if len(classes_id) > 0:
-                for class_ in classes_id:
-                    cursor.execute('INSERT INTO users_classes (class_id, user_name) VALUES (?, ?)', (class_, name))
+        if len(classes_id) > 0:
+            for class_ in classes_id:
+                cursor.execute('INSERT INTO users_classes (class_id, user_name) VALUES (?, ?)', (class_, name))
 
-            if len(items_id) > 0:
-                for item in items_id:
-                    cursor.execute('INSERT INTO users_items (item_id, user_name) VALUES (?, ?)', (item, name))
+        if len(items_id) > 0:
+            for item in items_id:
+                cursor.execute('INSERT INTO users_items (item_id, user_name) VALUES (?, ?)', (item, name))
 
-            if len(titles_id) > 0:
-                for title in titles_id:
-                    cursor.execute('INSERT INTO users_titles (title_id, user_name) VALUES (?, ?)', (title, name))
+        if len(titles_id) > 0:
+            for title in titles_id:
+                cursor.execute('INSERT INTO users_titles (title_id, user_name) VALUES (?, ?)', (title, name))
 
-            if len(abilities_id) > 0:
-                for ability in abilities_id:
-                    cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)', (ability, name))
+        if len(abilities_id) > 0:
+            for ability in abilities_id:
+                cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)', (ability, name))
 
-            if len(proficiencies_id) > 0:
-                for proficiency in proficiencies_id:
-                    cursor.execute('INSERT INTO users_proficiencies (proficiency_id, user_name) VALUES (?, ?)',
-                                   (proficiency, name))
-        except sqlite3.Error as error:
-            return error
+        if len(proficiencies_id) > 0:
+            for proficiency in proficiencies_id:
+                cursor.execute('INSERT INTO users_proficiencies (proficiency_id, user_name) VALUES (?, ?)',
+                               (proficiency, name))
 
 
 def get_users_name(name, type_):
@@ -122,6 +119,42 @@ def get_user_items(user_name):
             items += get_items_attributes(cursor)
 
     return items
+
+
+def get_proficiencies():
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute(f'SELECT * FROM proficiencies')
+
+        entity = get_proficiencies_attributes(cursor)
+
+    return entity
+
+
+def get_proficiencies_attributes(cursor):
+    return [{
+        'id': row[0],
+        'name': row[1]
+    } for row in cursor.fetchall()]
+
+
+def get_user_types():
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute(f'SELECT * FROM users_types')
+
+        entity = get_user_types_attributes(cursor)
+
+    return entity
+
+
+def get_user_types_attributes(cursor):
+    return [{
+        'id': row[0],
+        'name': row[1]
+    } for row in cursor.fetchall()]
 
 
 def get_user_abilities(cursor):

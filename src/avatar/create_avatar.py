@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_items_ids, get_classes_ids
+from src.avatar.avatar_properties import get_items_ids, get_user_types_ids, get_entity_ids
 from src.avatar.avatar_widget import AvatarWidget
 from src.popup_info import popup_showinfo
 
@@ -93,18 +93,29 @@ class AvatarScroll(tk.Canvas):
         items = []
 
         name = widgets.name.get()
+
         type_ = widgets.type.get()
-        type_result = widgets.type_values.index(type_) + 1
+        type_result = get_user_types_ids(type_)
+
         health = widgets.health.get()
         adrenaline = widgets.adrenaline.get()
+
         class_ = self.handle_selection_change(widgets.class_entry, widgets.classes)
-        class_result = get_classes_ids(class_)
+        class_result = get_entity_ids('class', class_)
+
         armor = [widgets.armor.get()]
         weapon = self.handle_selection_change(widgets.weapon_entry, widgets.weapons)
         physical_ability = widgets.physical_ability.get()
+
         title = self.handle_selection_change(widgets.title_entry, widgets.titles)
+        title_result = get_entity_ids('title', title)
+
         ability = self.handle_selection_change(widgets.ability_entry, widgets.abilities)
+        ability_result = get_entity_ids('ability', ability)
+
         proficiency = self.handle_selection_change(widgets.proficiency_entry, widgets.proficiencies)
+        proficiency_result = get_entity_ids('proficiency', proficiency)
+
         description = self.get_text_data(widgets.description_entry)
 
         if len(armor) == 1 and armor[0] == 'None':
@@ -117,11 +128,9 @@ class AvatarScroll(tk.Canvas):
             items += get_items_ids(weapon, 2)
 
         avatar = Avatar(name, type_result, health, adrenaline, class_result, items,
-                        physical_ability, title, ability, proficiency, description)
+                        physical_ability, title_result, ability_result, proficiency_result, description)
 
         create_avatar = avatar.create_character()
-
-        print(items)
 
         if not create_avatar:
             self.container.show_home()
@@ -132,7 +141,7 @@ class AvatarScroll(tk.Canvas):
         selected_indices = list_widget.curselection()
         result_list = []
 
-        if len(selected_indices) == 0 or (len(selected_indices) == 1 and selected_indices[0] == 'None'):
+        if len(selected_indices) == 0 or (len(selected_indices) == 1 and total_list[selected_indices[0]] == 'None'):
             return []
 
         for i in selected_indices:
