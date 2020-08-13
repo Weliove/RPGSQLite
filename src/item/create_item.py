@@ -76,18 +76,18 @@ class ItemScroll(tk.Canvas):
     def create_buttons(self, container):
         parent = self.container
 
-        create_avatar_button = ttk.Button(
+        create_item_button = ttk.Button(
             container,
             text="Create",
             command=self.create_item,
             cursor="hand2"
         )
-        create_avatar_button.grid(row=0, column=0)
+        create_item_button.grid(row=0, column=0)
 
         add_item_widgets = ttk.Button(
             container,
             text="Add Item",
-            command=lambda: self.add_item_frame(),
+            command=self.add_item_frame,
             cursor="hand2"
         )
         add_item_widgets.grid(row=1, column=0)
@@ -102,11 +102,13 @@ class ItemScroll(tk.Canvas):
 
     def add_item_frame(self):
         current_rows = self.screen.grid_size()[1]
-        item_frame_number = str(len(self.item_frames) + 1)
+        frame_number = len(self.item_frames) + 1
+        item_frame_number = str(frame_number)
 
         new_item_frame = ItemWidget(self.screen, item_frame_number)
         new_item_frame.grid(row=current_rows - 1, column=0, sticky="NSEW")
         new_item_frame.columnconfigure(0, weight=1)
+
         self.item_frames.append(new_item_frame)
 
         self.item_buttons.grid_configure(row=current_rows)

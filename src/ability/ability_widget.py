@@ -2,69 +2,67 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.connection.database import get_search_entities
+from src.ability.ability_property import get_items_names
 
 
-class ItemWidget(ttk.Frame):
-    def __init__(self, container, item_frame_number):
+class AbilityWidget(ttk.Frame):
+    def __init__(self, container, ability_frame_number):
         super().__init__(container)
 
         self.font = font.Font(size=11)
 
-        self.types_ = ('Armor', 'Weapon')
+        self.types_ = ('None', 'Character', 'NPC', 'Monster')
 
-        self.characters = ['None'] + get_search_entities('', 'Character')
-        self.npcs = ['None'] + get_search_entities('', 'NPC')
-        self.monsters = ['None'] + get_search_entities('', 'Monster')
-
-        self.abilities = ['None'] + get_search_entities('', 'Ability')
+        self.characters = ['Character'] + get_search_entities('', 'Character')
+        self.npcs = ['NPC'] + get_search_entities('', 'NPC')
+        self.monsters = ['Monster'] + get_search_entities('', 'Monster')
+        self.items = ['Item'] + get_items_names()
 
         # --- Attributes ---
-
-        self.item = 'Item ' + item_frame_number
+        self.ability = 'Ability ' + ability_frame_number
         self.name = tk.StringVar()
         self.type_ = tk.StringVar(value=self.types_[0])
-        self.reduction = tk.StringVar(value='0')
-        self.damage = tk.StringVar(value='0')
-        self.range_ = tk.StringVar(value='0')
-        self.health = tk.StringVar(value='0')
-        self.area = tk.StringVar(value='0')
+        self.casting = tk.StringVar(value='None')
+        self.components = tk.StringVar(value='None')
 
         self.character = tk.StringVar(value=self.characters)
         self.npc = tk.StringVar(value=self.npcs)
         self.monster = tk.StringVar(value=self.monsters)
-        self.ability = tk.StringVar(value=self.abilities)
+        self.item = tk.StringVar(value=self.items)
 
         # --- Widgets ---
         self.character_entry = tk.Listbox()
         self.npc_entry = tk.Listbox()
         self.monster_entry = tk.Listbox()
-        self.abilities_entry = tk.Listbox()
+        self.item_entry = tk.Listbox()
+        self.requirements_entry = tk.Text()
+        self.conditions_entry = tk.Text()
         self.effects_entry = tk.Text()
         self.description_entry = tk.Text()
 
         # --- Frame ---
-        item_widget_frame = ttk.Frame(self)
-        item_widget_frame.grid(row=0, column=0, sticky="NSEW")
-        item_widget_frame.columnconfigure((0, 1), weight=1)
+        ability_widget_frame = ttk.Frame(self)
+        ability_widget_frame.grid(row=0, column=0, sticky="NSEW")
+        ability_widget_frame.columnconfigure((0, 1), weight=1)
 
-        self.create_widgets(item_widget_frame)
+        self.create_widgets(ability_widget_frame)
 
-        for child in item_widget_frame.winfo_children():
+        for child in ability_widget_frame.winfo_children():
             child.grid_configure(padx=5, pady=5)
 
     def create_widgets(self, container):
-        # --- Item ---
+        # --- Ability ---
 
-        item_label = ttk.Label(
+        ability_label = ttk.Label(
             container,
-            text=self.item
+            text=self.ability
         )
-        item_label.grid(row=0, column=0, sticky="EW")
+        ability_label.grid(row=0, column=0, sticky="EW")
 
-        item_separator = ttk.Separator(
+        ability_separator = ttk.Separator(
             container
         )
-        item_separator.grid(row=1, column=0, columnspan=3, sticky="EW")
+        ability_separator.grid(row=1, column=0, columnspan=3, sticky="EW")
 
         # --- Name ---
 
@@ -152,125 +150,104 @@ class ItemWidget(ttk.Frame):
 
         self.monster_entry.config(yscrollcommand=monster_scrollbar.set)
 
-        # --- Type ---
+        # --- Item ---
 
-        type_label = ttk.Label(
+        self.item_entry = tk.Listbox(
             container,
-            text="Type"
-        )
-        type_label.grid(row=6, column=0, sticky="EW")
-
-        type_entry = ttk.Combobox(
-            container,
-            textvariable=self.type_,
-            values=self.types_,
-            state="readonly"
-        )
-        type_entry.grid(row=6, column=1, sticky="EW")
-
-        # --- Reduction ---
-
-        reduction_label = ttk.Label(
-            container,
-            text="Reduction"
-        )
-        reduction_label.grid(row=7, column=0, sticky="EW")
-
-        reduction_entry = ttk.Entry(
-            container,
-            textvariable=self.reduction,
-            width=60
-        )
-        reduction_entry.grid(row=7, column=1, sticky="EW")
-
-        # --- Damage ---
-
-        damage_label = ttk.Label(
-            container,
-            text="Damage"
-        )
-        damage_label.grid(row=8, column=0, sticky="EW")
-
-        damage_entry = ttk.Entry(
-            container,
-            textvariable=self.damage,
-            width=60
-        )
-        damage_entry.grid(row=8, column=1, sticky="EW")
-
-        # --- Range ---
-
-        range_label = ttk.Label(
-            container,
-            text="Range"
-        )
-        range_label.grid(row=9, column=0, sticky="EW")
-
-        range_entry = ttk.Entry(
-            container,
-            textvariable=self.range_,
-            width=60
-        )
-        range_entry.grid(row=9, column=1, sticky="EW")
-
-        # --- Health ---
-
-        health_label = ttk.Label(
-            container,
-            text="Health"
-        )
-        health_label.grid(row=10, column=0, sticky="EW")
-
-        health_entry = ttk.Entry(
-            container,
-            textvariable=self.health,
-            width=60
-        )
-        health_entry.grid(row=10, column=1, sticky="EW")
-
-        # --- Area ---
-
-        area_label = ttk.Label(
-            container,
-            text="Area"
-        )
-        area_label.grid(row=11, column=0, sticky="EW")
-
-        area_entry = ttk.Entry(
-            container,
-            textvariable=self.area,
-            width=60
-        )
-        area_entry.grid(row=11, column=1, sticky="EW")
-
-        # --- Abilities ---
-
-        abilities_label = ttk.Label(
-            container,
-            text="Abilities"
-        )
-        abilities_label.grid(row=12, column=0, sticky="EW")
-
-        self.abilities_entry = tk.Listbox(
-            container,
-            listvariable=self.ability,
-            selectmode="extended",
-            exportselection=False,
+            listvariable=self.item,
+            # selectmode="extended",
+            # exportselection=False,
             selectbackground="#2CCC5B",
             highlightcolor="#1DE557",
             font=self.font,
             width=1,
-            height=5
+            height=4
         )
-        self.abilities_entry.grid(row=12, column=1, sticky="EW")
+        self.item_entry.grid(row=6, column=1, sticky="EW")
 
-        self.abilities_entry.select_set(0)
+        item_scrollbar = ttk.Scrollbar(container, orient="vertical")
+        item_scrollbar.config(command=self.item_entry.yview)
+        item_scrollbar.grid(row=6, column=2, sticky="NS")
 
-        abilities_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        abilities_scrollbar.config(command=self.abilities_entry.yview)
-        abilities_scrollbar.grid(row=12, column=2, sticky="NS")
+        self.item_entry.config(yscrollcommand=item_scrollbar.set)
 
-        self.abilities_entry.config(yscrollcommand=abilities_scrollbar.set)
+        # --- Casting ---
+
+        casting_label = ttk.Label(
+            container,
+            text="Casting"
+        )
+        casting_label.grid(row=7, column=0, sticky="EW")
+
+        casting_entry = ttk.Entry(
+            container,
+            textvariable=self.casting,
+            width=60
+        )
+        casting_entry.grid(row=7, column=1, sticky="EW")
+
+        # --- Components ---
+
+        components_label = ttk.Label(
+            container,
+            text="Components"
+        )
+        components_label.grid(row=8, column=0, sticky="EW")
+
+        components_entry = ttk.Entry(
+            container,
+            textvariable=self.components,
+            width=60
+        )
+        components_entry.grid(row=8, column=1, sticky="EW")
+
+        # --- Requirements ---
+
+        requirements_label = ttk.Label(
+            container,
+            text="Requirements"
+        )
+        requirements_label.grid(row=9, column=0, sticky="EW")
+
+        self.requirements_entry = tk.Text(
+            container,
+            width=1,
+            height=3
+        )
+        self.requirements_entry.grid(row=9, column=1, sticky="EW")
+
+        requirements_scroll = ttk.Scrollbar(
+            container,
+            orient="vertical",
+            command=self.requirements_entry.yview
+        )
+        requirements_scroll.grid(row=9, column=2, sticky="ns")
+
+        self.requirements_entry["yscrollcommand"] = requirements_scroll.set
+
+        # --- Conditions ---
+
+        conditions_label = ttk.Label(
+            container,
+            text="Conditions"
+        )
+        conditions_label.grid(row=10, column=0, sticky="EW")
+
+        self.conditions_entry = tk.Text(
+            container,
+            width=1,
+            height=3
+        )
+        self.conditions_entry.grid(row=10, column=1, sticky="EW")
+
+        conditions_scroll = ttk.Scrollbar(
+            container,
+            orient="vertical",
+            command=self.conditions_entry.yview
+        )
+        conditions_scroll.grid(row=10, column=2, sticky="ns")
+
+        self.conditions_entry["yscrollcommand"] = conditions_scroll.set
 
         # --- Effects ---
 
@@ -278,25 +255,23 @@ class ItemWidget(ttk.Frame):
             container,
             text="Effects"
         )
-        effects_label.grid(row=13, column=0, sticky="EW")
+        effects_label.grid(row=11, column=0, sticky="EW")
 
         self.effects_entry = tk.Text(
             container,
             width=1,
             height=5
         )
-        self.effects_entry.grid(row=13, column=1, sticky="EW")
+        self.effects_entry.grid(row=11, column=1, sticky="EW")
 
         effects_scroll = ttk.Scrollbar(
             container,
             orient="vertical",
             command=self.effects_entry.yview
         )
-        effects_scroll.grid(row=13, column=2, sticky="ns")
+        effects_scroll.grid(row=11, column=2, sticky="ns")
 
         self.effects_entry["yscrollcommand"] = effects_scroll.set
-
-        self.effects_entry.insert(tk.END, 'None')
 
         # --- Description ---
 
@@ -304,22 +279,20 @@ class ItemWidget(ttk.Frame):
             container,
             text="Description"
         )
-        description_label.grid(row=14, column=0, sticky="EW")
+        description_label.grid(row=12, column=0, sticky="EW")
 
         self.description_entry = tk.Text(
             container,
             width=1,
             height=5
         )
-        self.description_entry.grid(row=14, column=1, sticky="EW")
+        self.description_entry.grid(row=12, column=1, sticky="EW")
 
         description_scroll = ttk.Scrollbar(
             container,
             orient="vertical",
             command=self.description_entry.yview
         )
-        description_scroll.grid(row=14, column=2, sticky="ns")
+        description_scroll.grid(row=12, column=2, sticky="ns")
 
         self.description_entry["yscrollcommand"] = description_scroll.set
-
-        self.description_entry.insert(tk.END, 'None')

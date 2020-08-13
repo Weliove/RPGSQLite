@@ -5,7 +5,7 @@ from src.interface.interface_widgets import InterfaceWidget
 
 
 class Interface(ttk.Frame):
-    def __init__(self, parent, entity, type_, show_home):
+    def __init__(self, parent, entity, type_, show_search, show_home):
         super().__init__(parent)
 
         # --- Create Widget Frame ---
@@ -15,7 +15,7 @@ class Interface(ttk.Frame):
         self.interface_scroll = InterfaceScroll(self)
         self.interface_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
 
-        self.interface_scroll.interface_container(entity, type_, show_home)
+        self.interface_scroll.interface_container(entity, type_, show_search, show_home)
 
 
 class InterfaceScroll(tk.Canvas):
@@ -52,8 +52,8 @@ class InterfaceScroll(tk.Canvas):
     def _on_mouse_wheel(self, event):
         self.yview_scroll(-int(event.delta/120), "units")
 
-    def interface_container(self, entity, type_, show_home):
+    def interface_container(self, entity, type_, show_search, show_home):
         # --- Create Widgets ---
-        self.interface_widgets_frame = InterfaceWidget(self.screen, entity, type_, show_home)
+        self.interface_widgets_frame = InterfaceWidget(self.screen, entity, type_, show_search, show_home)
         self.interface_widgets_frame.grid(row=0, column=0, sticky="NSEW")
         self.interface_widgets_frame.columnconfigure(0, weight=1)

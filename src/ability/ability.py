@@ -1,12 +1,27 @@
-import re
-import tkinter as tk
-from tkinter import ttk
-import tkinter.font as font
-
-# Add 3 combo boxes que vão relacionar a habilidade à um Avatar (Character, NPC ou Monster)
-# Add botão para adicionar outras frames de habilidade
+from src.connection.handle_abilities import add_ability
 
 
-class CreateAbility(ttk.Frame):
-    def __init__(self, parent, show_home):
-        super().__init__(parent)
+class Ability:
+    def __init__(self, name, user, type_, casting, components, requirements, conditions, effects, description):
+        self.name = name
+        self.user = user
+        self.type_ = type_
+        self.casting = casting
+        self.components = components
+        self.requirements = requirements
+        self.conditions = conditions
+        self.effects = effects
+        self.description = description
+
+        self.ability = {
+            'name': self.name,
+            'casting': self.casting,
+            'components': self.components,
+            'requirements': self.requirements,
+            'conditions': self.conditions,
+            'effects': self.effects,
+            'description': self.description
+        }
+
+    def add_ability(self):
+        return add_ability(self.ability, self.user)

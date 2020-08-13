@@ -5,7 +5,7 @@ import tkinter.font as font
 
 from src import Home
 from src import CreateAvatar
-from src.ability.ability import CreateAbility
+from src.ability.create_ability import CreateAbility
 from src.interface.interface import Interface
 from src.item.create_item import CreateItem
 from src.search.search import Search
@@ -99,7 +99,7 @@ class RPG(tk.Tk):
     def show_interface(self, entity, type_):
         self.check_frame_existence(self.interface_frame)
 
-        self.interface_frame = Interface(self, entity, type_, lambda: self.show_frame(Home))
+        self.interface_frame = Interface(self, entity, type_, lambda: self.show_frame(Search), lambda: self.show_frame(Home))
         self.interface_frame.grid(row=0, column=0, sticky="NSEW")
 
         self.frames[Interface] = self.interface_frame

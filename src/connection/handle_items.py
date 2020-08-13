@@ -1,6 +1,11 @@
 import sqlite3
 
 from .database_connection import DatabaseConnection
+from .handle_abilities import get_abilities_attributes, get_abilities_by_id
+
+
+def get_list(cursor):
+    return [row[0] for row in cursor.fetchall()]
 
 
 def add_item(item, user_name):
@@ -29,8 +34,6 @@ def add_item(item, user_name):
             for ability in abilities_id:
                 cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability, item_id))
 
-        print(user_name)
-
         if user_name != '':
             cursor.execute('INSERT INTO users_items (item_id, user_name) VALUES (?, ?)', (item_id, user_name))
 
@@ -38,8 +41,42 @@ def add_item(item, user_name):
 def get_items_attributes(cursor):
     return [{
         'id': row[0],
-        'name': row[1]
+        'name': row[1],
+        'type': row[2],
+        'reduction': row[3],
+        'damage': row[4],
+        'range': row[5],
+        'health': row[6],
+        'area': row[7],
+        'effects': row[8],
+        'description': row[9]
     } for row in cursor.fetchall()]
+
+
+def get_item_attributes(cursor):
+    return [{
+        'id': row[0],
+        'name': row[1],
+        'type': row[2],
+        'reduction': row[3],
+        'damage': row[4],
+        'range': row[5],
+        'health': row[6],
+        'area': row[7],
+        'effects': row[8],
+        'description': row[9]
+    } for row in cursor.fetchall()][0]
+
+
+def get_items():
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM items')
+
+        entity = get_items_attributes(cursor)
+
+    return entity
 
 
 def get_specific_items(name, type_):
@@ -54,3 +91,18 @@ def get_specific_items(name, type_):
         entity = get_items_attributes(cursor)
 
     return entity
+
+
+def get_item_abilities(item_id):
+    abilities = []
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT ability_id FROM items_abilities WHERE item_id=?', (item_id,))
+        abilities_id = get_list(cursor)
+
+        for ability in abilities_id:
+            abilities += get_abilities_by_id(ability)
+
+    return abilities

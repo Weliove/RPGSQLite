@@ -28,11 +28,8 @@ class Item:
             'description': self.description
         }
 
-    def get_item(self):
-        return self.item
-
     def create_item(self):
-        return add_item(self.get_item(), self.user)
+        return add_item(self.item, self.user)
 
     def update_item(self):
         pass

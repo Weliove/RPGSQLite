@@ -1,6 +1,7 @@
 import sqlite3
 
 from .database_connection import DatabaseConnection
+from .handle_items import get_items_attributes, get_item_attributes
 from .handle_users import get_user_attributes
 
 
@@ -14,6 +15,7 @@ search_database = {
     'NPC': 'users',
     'Monster': 'users',
     # items
+    'Item': 'items',
     'Armor': 'items',
     'Weapon': 'items',
     # others
@@ -44,6 +46,8 @@ def get_entity(name, type_):
         cursor.execute(f'SELECT * FROM {db_entity} WHERE name=?', (name,))
         if db_entity == 'users':
             entity = get_user_attributes(cursor)
+        elif db_entity == 'items':
+            entity = get_item_attributes(cursor)
 
     return entity
 

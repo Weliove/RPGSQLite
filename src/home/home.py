@@ -66,7 +66,7 @@ class Home(ttk.Frame):
 
         create_title_button = ttk.Button(
             container,
-            text="Create Ability",
+            text="Create Title",
             cursor="hand2"
         )
         create_title_button.grid(row=4, column=0, sticky="EW")

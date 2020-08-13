@@ -30,11 +30,8 @@ class Avatar:
             'description': self.description
         }
 
-    def get_avatar(self):
-        return self.avatar
-
     def create_character(self):
-        return add_user(self.get_avatar())
+        return add_user(self.avatar)
 
     def update_user(self):
         pass

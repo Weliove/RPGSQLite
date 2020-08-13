@@ -1,6 +1,7 @@
 import sqlite3
 
 from .database_connection import DatabaseConnection
+from .handle_abilities import get_abilities_by_id
 
 from .handle_classes import get_classes_attributes
 
@@ -157,8 +158,19 @@ def get_user_types_attributes(cursor):
     } for row in cursor.fetchall()]
 
 
-def get_user_abilities(cursor):
-    pass
+def get_user_abilities(user_name):
+    abilities = []
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT ability_id FROM users_abilities WHERE user_name=?', (user_name,))
+        abilities_id = get_list(cursor)
+
+        for ability in abilities_id:
+            abilities += get_abilities_by_id(ability)
+
+    return abilities
 
 
 def get_user_proficiencies(cursor):

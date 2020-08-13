@@ -22,11 +22,18 @@ class SearchWidget(ttk.Frame):
             child.grid_configure(padx=5, pady=5)
 
     def create_widgets(self, container, entities_name, type_):
+        # --- Title ---
+
         result_entity_type = ttk.Label(
             container,
             text=type_ + 's'
         )
         result_entity_type.grid(column=0, padx=5, pady=5, sticky="EW")
+
+        result_separator = ttk.Separator(
+            container
+        )
+        result_separator.grid(column=0, columnspan=1, sticky="EW")
 
         for entity in entities_name:
             entity_button = ttk.Button(

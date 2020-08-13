@@ -73,6 +73,8 @@ def get_user_types_ids(type_name):
     type_result = -1
     types_ = get_user_types()
 
+    print(types_)
+
     for stored_type in types_:
         if stored_type['name'] == type_name:
             type_result = stored_type['id']
