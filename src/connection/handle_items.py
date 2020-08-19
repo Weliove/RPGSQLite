@@ -1,7 +1,6 @@
-import sqlite3
-
-from .database_connection import DatabaseConnection
-from .handle_abilities import get_abilities_attributes, get_abilities_by_id
+from .database import *
+from .database import DatabaseConnection
+from src.connection.handle_abilities import get_abilities_by_id
 
 
 def get_list(cursor):

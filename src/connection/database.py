@@ -1,8 +1,9 @@
-import sqlite3
-
 from .database_connection import DatabaseConnection
-from .handle_items import get_items_attributes, get_item_attributes
-from .handle_users import get_user_attributes
+from .handle_items import *
+from .handle_users import *
+from .handle_titles import *
+from .handle_abilities import *
+from .handle_proficiencies import *
 
 
 def get_list(cursor):
@@ -48,6 +49,8 @@ def get_entity(name, type_):
             entity = get_user_attributes(cursor)
         elif db_entity == 'items':
             entity = get_item_attributes(cursor)
+        elif db_entity == 'abilities':
+            entity = get_ability_attributes(cursor)
 
     return entity
 
@@ -71,6 +74,8 @@ def get_search_entities(name, type_):
     db_entity = search_database[type_]
     db_type = search_types[type_]
 
+    entity = []
+
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
@@ -78,6 +83,16 @@ def get_search_entities(name, type_):
             if db_entity == 'users' or db_entity == 'items':
                 cursor.execute(f'SELECT name FROM {db_entity} WHERE type=?', (db_type,))
                 entity = get_list(cursor)
+            elif db_entity == 'abilities':
+                characters_abilities = get_abilities_name_by_type(1)
+                npcs_abilities = get_abilities_name_by_type(2)
+                monsters_abilities = get_abilities_name_by_type(3)
+                items_abilities = get_abilities_name_by_type(4)
+
+                entity.append(characters_abilities)
+                entity.append(npcs_abilities)
+                entity.append(monsters_abilities)
+                entity.append(items_abilities)
             else:
                 cursor.execute(f'SELECT name FROM {db_entity}')
                 entity = get_list(cursor)

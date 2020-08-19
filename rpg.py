@@ -7,6 +7,7 @@ from src import Home
 from src import CreateAvatar
 from src.ability.create_ability import CreateAbility
 from src.interface.interface import Interface
+from src.interface.interface_verification import InterfaceVerification
 from src.item.create_item import CreateItem
 from src.search.search import Search
 
@@ -40,13 +41,16 @@ class RPG(tk.Tk):
 
         self.interface_frame = None
 
+        self.interface_verification_frame = None
+
         self.frames = {
             Home: self.home_frame,
             CreateAvatar: self.create_avatar_frame,
             Search: self.search_frame,
             CreateItem: self.create_item_frame,
             CreateAbility: self.create_ability_frame,
-            Interface: self.interface_frame
+            Interface: self.interface_frame,
+            InterfaceVerification: self.interface_verification_frame
         }
 
         # --- Show Frame ---
@@ -54,7 +58,12 @@ class RPG(tk.Tk):
 
     def show_frame(self, container):
         local_title = " "
-        local_title_array = re.findall('[A-Z][^A-Z]*', str(container.__name__))
+
+        if type(type):
+            local_title_array = re.findall('[A-Z][^A-Z]*', str(container.__name__))
+        else:
+            local_title_array = re.findall('[A-Z][^A-Z]*', container)
+
         self.title(f"RPG - {local_title.join(local_title_array)}")
 
         frame = self.frames[container]
@@ -99,11 +108,28 @@ class RPG(tk.Tk):
     def show_interface(self, entity, type_):
         self.check_frame_existence(self.interface_frame)
 
-        self.interface_frame = Interface(self, entity, type_, lambda: self.show_frame(Search), lambda: self.show_frame(Home))
+        self.interface_frame = Interface(self, entity, type_, lambda: self.show_frame(Search),
+                                         lambda: self.show_frame(Home), self.show_interface_verification)
         self.interface_frame.grid(row=0, column=0, sticky="NSEW")
 
         self.frames[Interface] = self.interface_frame
         self.show_frame(Interface)
+
+    def show_interface_verification(self, entity, type_):
+        self.check_frame_existence(self.interface_verification_frame)
+
+        self.interface_verification_frame = InterfaceVerification(
+            self,
+            entity,
+            type_,
+            lambda: self.show_frame(Interface),
+            lambda: self.show_frame(Home),
+            self.show_interface_verification
+        )
+        self.interface_verification_frame.grid(row=0, column=0, sticky="NSEW")
+
+        self.frames[InterfaceVerification] = self.interface_verification_frame
+        self.show_frame(InterfaceVerification)
 
     def check_frame_existence(self, frame):
         if frame is not None and frame.winfo_exists():

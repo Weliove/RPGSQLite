@@ -15,6 +15,7 @@ class Ability:
 
         self.ability = {
             'name': self.name,
+            'type': self.type_,
             'casting': self.casting,
             'components': self.components,
             'requirements': self.requirements,
@@ -23,5 +24,5 @@ class Ability:
             'description': self.description
         }
 
-    def add_ability(self):
+    def create_ability(self):
         return add_ability(self.ability, self.user)

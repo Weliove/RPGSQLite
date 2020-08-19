@@ -21,7 +21,6 @@ class AbilityWidget(ttk.Frame):
         # --- Attributes ---
         self.ability = 'Ability ' + ability_frame_number
         self.name = tk.StringVar()
-        self.type_ = tk.StringVar(value=self.types_[0])
         self.casting = tk.StringVar(value='None')
         self.components = tk.StringVar(value='None')
 
@@ -225,6 +224,8 @@ class AbilityWidget(ttk.Frame):
 
         self.requirements_entry["yscrollcommand"] = requirements_scroll.set
 
+        self.requirements_entry.insert(tk.END, 'None')
+
         # --- Conditions ---
 
         conditions_label = ttk.Label(
@@ -248,6 +249,8 @@ class AbilityWidget(ttk.Frame):
         conditions_scroll.grid(row=10, column=2, sticky="ns")
 
         self.conditions_entry["yscrollcommand"] = conditions_scroll.set
+
+        self.conditions_entry.insert(tk.END, 'None')
 
         # --- Effects ---
 
@@ -273,6 +276,8 @@ class AbilityWidget(ttk.Frame):
 
         self.effects_entry["yscrollcommand"] = effects_scroll.set
 
+        self.effects_entry.insert(tk.END, 'None')
+
         # --- Description ---
 
         description_label = ttk.Label(
@@ -296,3 +301,5 @@ class AbilityWidget(ttk.Frame):
         description_scroll.grid(row=12, column=2, sticky="ns")
 
         self.description_entry["yscrollcommand"] = description_scroll.set
+
+        self.description_entry.insert(tk.END, 'None')

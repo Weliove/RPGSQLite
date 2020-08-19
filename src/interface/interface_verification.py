@@ -1,24 +1,25 @@
 import tkinter as tk
 from tkinter import ttk
 
-from src.interface.interface_widgets import InterfaceWidget
+from src.interface.interface_verification_widgets import InterfaceVerificationWidget
 
 
-class Interface(ttk.Frame):
-    def __init__(self, parent, entity, type_, show_search, show_home, show_interface_verification):
+class InterfaceVerification(ttk.Frame):
+    def __init__(self, parent, entity, type_, show_entity, show_home, show_interface_verification):
         super().__init__(parent)
 
         # --- Create Widget Frame ---
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        self.interface_scroll = InterfaceScroll(self)
-        self.interface_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
+        self.interface_verification_scroll = InterfaceVerificationScroll(self)
+        self.interface_verification_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
 
-        self.interface_scroll.interface_container(entity, type_, show_search, show_home, show_interface_verification)
+        self.interface_verification_scroll.interface_container(entity, type_, show_entity, show_home,
+                                                               show_interface_verification)
 
 
-class InterfaceScroll(tk.Canvas):
+class InterfaceVerificationScroll(tk.Canvas):
     def __init__(self, container):
         super().__init__(container, highlightthickness=0)
 
@@ -52,9 +53,9 @@ class InterfaceScroll(tk.Canvas):
     def _on_mouse_wheel(self, event):
         self.yview_scroll(-int(event.delta/120), "units")
 
-    def interface_container(self, entity, type_, show_search, show_home, show_interface_verification):
+    def interface_container(self, entity, type_, show_entity, show_home, show_interface_verification):
         # --- Create Widgets ---
-        self.interface_widgets_frame = InterfaceWidget(self.screen, entity, type_, show_search, show_home,
-                                                       show_interface_verification)
+        self.interface_widgets_frame = InterfaceVerificationWidget(self.screen, entity, type_, show_entity, show_home,
+                                                                   show_interface_verification)
         self.interface_widgets_frame.grid(row=0, column=0, sticky="NSEW")
         self.interface_widgets_frame.columnconfigure(0, weight=1)

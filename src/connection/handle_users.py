@@ -1,11 +1,7 @@
-import sqlite3
-
-from .database_connection import DatabaseConnection
-from .handle_abilities import get_abilities_by_id
-
+from .database import *
+from .database import DatabaseConnection, get_items_attributes
+from src.connection.handle_abilities import get_abilities_by_id
 from .handle_classes import get_classes_attributes
-
-from .handle_items import get_items_attributes
 
 
 def get_list(cursor):
@@ -122,24 +118,6 @@ def get_user_items(user_name):
     return items
 
 
-def get_proficiencies():
-    with DatabaseConnection('data.db') as connection:
-        cursor = connection.cursor()
-
-        cursor.execute(f'SELECT * FROM proficiencies')
-
-        entity = get_proficiencies_attributes(cursor)
-
-    return entity
-
-
-def get_proficiencies_attributes(cursor):
-    return [{
-        'id': row[0],
-        'name': row[1]
-    } for row in cursor.fetchall()]
-
-
 def get_user_types():
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
@@ -173,8 +151,19 @@ def get_user_abilities(user_name):
     return abilities
 
 
-def get_user_proficiencies(cursor):
-    pass
+def get_user_proficiencies(user_name):
+    proficiencies = []
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT proficiency_id FROM users_proficiencies WHERE user_name=?', (user_name,))
+        proficiencies_id = get_list(cursor)
+
+        for proficiency in proficiencies_id:
+            proficiencies += get_proficiencies_by_id(proficiency)
+
+    return proficiencies
 
 
 def get_user_titles(cursor):

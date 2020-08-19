@@ -1,4 +1,5 @@
-from .database_connection import DatabaseConnection
+from .database import *
+from .database import DatabaseConnection
 
 
 def get_titles():

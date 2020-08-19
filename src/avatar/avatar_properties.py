@@ -1,9 +1,9 @@
-from src.connection.database import *
-from src.connection.handle_abilities import get_abilities
+from src.connection.handle_abilities import get_abilities, get_abilities_name_by_type
 from src.connection.handle_classes import get_classes
 from src.connection.handle_items import get_specific_items
+from src.connection.handle_proficiencies import get_proficiencies
 from src.connection.handle_titles import get_titles
-from src.connection.handle_users import get_proficiencies, get_user_types
+from src.connection.handle_users import get_user_types
 
 
 def get_avatar_types():

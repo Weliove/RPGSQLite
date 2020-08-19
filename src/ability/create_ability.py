@@ -3,7 +3,9 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.font as font
 
+from src.ability.ability import Ability
 from src.ability.ability_widget import AbilityWidget
+from src.popup_info import popup_showinfo
 
 
 class CreateAbility(ttk.Frame):
@@ -113,17 +115,48 @@ class AbilityScroll(tk.Canvas):
         self.ability_buttons.grid_configure(row=current_rows)
 
     def create_ability(self):
-        pass
+        for ability_frame in self.ability_frames:
+            character = self.handle_selection_change(ability_frame.character_entry, ability_frame.characters)
+            npc = self.handle_selection_change(ability_frame.npc_entry, ability_frame.npcs)
+            monster = self.handle_selection_change(ability_frame.monster_entry, ability_frame.monsters)
+            item = self.handle_selection_change(ability_frame.item_entry, ability_frame.items)
 
-    def choose_user(self, character, npc, monster):
-        user = ''
+            user, type_ = self.choose_user(character, npc, monster, item)
+
+            print(f'user: {user} type: {type_}')
+
+            name = ability_frame.name.get()
+            casting = ability_frame.casting.get()
+            components = ability_frame.components.get()
+            requirements = self.get_text_data(ability_frame.requirements_entry)
+            conditions = self.get_text_data(ability_frame.conditions_entry)
+            effects = self.get_text_data(ability_frame.effects_entry)
+            description = self.get_text_data(ability_frame.description_entry)
+
+            ability = Ability(name, user, type_, casting, components, requirements, conditions, effects, description)
+
+            create_ability = ability.create_ability()
+
+            if not create_ability:
+                self.container.show_home()
+            else:
+                popup_showinfo(create_ability)
+
+    def choose_user(self, character, npc, monster, item):
+        user = []
 
         if len(character) > 0:
-            user = character[0]
+            value = (character[0], 1)
+            user.extend(value)
         elif len(npc) > 0:
-            user = npc[0]
+            value = (npc[0], 2)
+            user.extend(value)
         elif len(monster) > 0:
-            user = monster[0]
+            value = (monster[0], 3)
+            user.extend(value)
+        elif len(item) > 0:
+            value = (item[0], 4)
+            user.extend(value)
 
         return user
 

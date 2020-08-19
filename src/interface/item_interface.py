@@ -7,7 +7,7 @@ from src.item.item import Item
 
 
 class ItemInterface(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home):
+    def __init__(self, container, entity, type_, show_search, show_home, show_interface_verification):
         super().__init__(container)
 
         print(entity)
@@ -33,7 +33,7 @@ class ItemInterface(ttk.Frame):
 
         self.create_widgets()
 
-        self.create_buttons(show_search, show_home)
+        self.create_buttons(show_search, show_home, show_interface_verification)
 
     def create_widgets(self):
         # --- Item ---
@@ -128,10 +128,11 @@ class ItemInterface(ttk.Frame):
 
         self.bind("<Configure>", reconfigure_labels)
 
-    def create_buttons(self, show_search, show_home):
+    def create_buttons(self, show_search, show_home, show_interface_verification):
         abilities_button = ttk.Button(
             self,
             text="Verify Abilities",
+            command=lambda: show_interface_verification(self.abilities, 'Ability'),
             state=button_state(self.abilities),
             cursor="hand2"
         )

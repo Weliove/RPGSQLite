@@ -136,7 +136,8 @@ class ItemScroll(tk.Canvas):
             effects = self.get_text_data(item_frame.effects_entry)
             description = self.get_text_data(item_frame.description_entry)
 
-            item = Item(name, user, type_, reduction, damage, range_, health, area, abilities_result, effects, description)
+            item = Item(name, user, type_, reduction, damage, range_, health, area, abilities_result, effects,
+                        description)
 
             create_item = item.create_item()
 

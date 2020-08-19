@@ -24,12 +24,27 @@ def generate_classes(classes):
     class_result = []
 
     if len(classes) == 0:
-        return 'Class: None'
+        return 'Class:  None'
 
     for class_ in classes:
         class_result.append(class_['name'])
 
     text = f'Classes:  {text.join(class_result)}'
+
+    return text
+
+
+def generate_proficiencies(proficiencies):
+    text = ', '
+    proficiencies_result = []
+
+    if len(proficiencies) == 0:
+        return 'Proficiencies:  None'
+
+    for proficiency in proficiencies:
+        proficiencies_result.append(proficiency['name'])
+
+    text = f'Proficiencies:  {text.join(proficiencies_result)}'
 
     return text
 

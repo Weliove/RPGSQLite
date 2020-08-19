@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.connection.database import get_search_entities
+from src.connection.database import get_search_entities, get_abilities_name_by_type
 
 
 class ItemWidget(ttk.Frame):
@@ -16,7 +16,7 @@ class ItemWidget(ttk.Frame):
         self.npcs = ['None'] + get_search_entities('', 'NPC')
         self.monsters = ['None'] + get_search_entities('', 'Monster')
 
-        self.abilities = ['None'] + get_search_entities('', 'Ability')
+        self.abilities = ['None'] + get_abilities_name_by_type(4)
 
         # --- Attributes ---
 
@@ -164,6 +164,7 @@ class ItemWidget(ttk.Frame):
             container,
             textvariable=self.type_,
             values=self.types_,
+            exportselection=False,
             state="readonly"
         )
         type_entry.grid(row=6, column=1, sticky="EW")

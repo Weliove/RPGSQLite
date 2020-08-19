@@ -20,7 +20,9 @@ class AvatarWidget(tk.Frame):
 
         self.titles = ['None'] + get_titles()
 
-        self.abilities = ['None'] + get_abilities()
+        abilities = get_abilities_name_by_type(1) + get_abilities_name_by_type(2) + get_abilities_name_by_type(3)
+
+        self.abilities = ['None'] + abilities
 
         self.proficiencies = ['None'] + get_proficiencies()
 

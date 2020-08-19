@@ -1,6 +1,5 @@
-import sqlite3
-
-from .database_connection import DatabaseConnection
+from .database import *
+from .database import DatabaseConnection
 
 
 # --- CLASSES ---
