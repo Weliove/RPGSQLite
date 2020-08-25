@@ -10,7 +10,7 @@ class AvatarWidget(tk.Frame):
 
         self.font = font.Font(size=11)
 
-        self.type_values = get_avatar_types()
+        self.type_values = ("Character", "NPC", "Monster")
 
         self.classes = ['None'] + get_classes_names()
 

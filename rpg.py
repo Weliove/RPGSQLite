@@ -10,6 +10,7 @@ from src.interface.interface import Interface
 from src.interface.interface_verification import InterfaceVerification
 from src.item.create_item import CreateItem
 from src.search.search import Search
+from src.title.create_title import CreateTitle
 
 
 class RPG(tk.Tk):
@@ -27,7 +28,8 @@ class RPG(tk.Tk):
             self,
             lambda: self.show_create_avatar(),
             lambda: self.show_create_item(),
-            lambda: self.show_create_ability()
+            lambda: self.show_create_ability(),
+            lambda: self.show_create_title()
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
 
@@ -39,6 +41,8 @@ class RPG(tk.Tk):
 
         self.create_ability_frame = CreateAbility(self, lambda: self.show_frame(Home))
 
+        self.create_title_frame = CreateTitle(self, lambda: self.show_frame(Home))
+
         self.interface_frame = None
 
         self.interface_verification_frame = None
@@ -49,6 +53,7 @@ class RPG(tk.Tk):
             Search: self.search_frame,
             CreateItem: self.create_item_frame,
             CreateAbility: self.create_ability_frame,
+            CreateTitle: self.create_title_frame,
             Interface: self.interface_frame,
             InterfaceVerification: self.interface_verification_frame
         }
@@ -104,6 +109,15 @@ class RPG(tk.Tk):
 
         self.frames[CreateAbility] = self.create_ability_frame
         self.show_frame(CreateAbility)
+
+    def show_create_title(self):
+        self.check_frame_existence(self.create_title_frame)
+
+        self.create_title_frame = CreateTitle(self, lambda: self.show_frame(Home))
+        self.create_title_frame.grid(row=0, column=0, sticky="NSEW")
+
+        self.frames[CreateTitle] = self.create_title_frame
+        self.show_frame(CreateTitle)
 
     def show_interface(self, entity, type_):
         self.check_frame_existence(self.interface_frame)

@@ -6,10 +6,6 @@ from src.connection.handle_titles import get_titles
 from src.connection.handle_users import get_user_types
 
 
-def get_avatar_types():
-    return tuple(("Character", "NPC", "Monster"))
-
-
 def get_items(type_):
     items = get_specific_items('', type_)
     result = []
