@@ -62,6 +62,17 @@ def get_abilities_name_by_type(ability_type):
     return entity
 
 
+def get_abilities_by_type(ability_type):
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute(f'SELECT * FROM abilities WHERE type=?', (ability_type,))
+
+        entity = get_abilities_attributes(cursor)
+
+    return entity
+
+
 def get_list(cursor):
     return [row[0] for row in cursor.fetchall()]
 

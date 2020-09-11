@@ -1,4 +1,4 @@
-from src.connection.handle_users import add_user
+from src.connection.handle_users import add_user, update_user
 
 
 class Avatar:
@@ -33,5 +33,5 @@ class Avatar:
     def create_character(self):
         return add_user(self.avatar)
 
-    def update_user(self):
-        pass
+    def update_user(self, current_name):
+        return update_user(self.avatar, current_name)

@@ -6,63 +6,25 @@ from src.connection.handle_titles import get_titles
 from src.connection.handle_users import get_user_types
 
 
-def get_items(type_):
-    items = get_specific_items('', type_)
+def get_entities_names(entities):
     result = []
 
-    for item in items:
-        result.append(item['name'])
+    for entity in entities:
+        result.append(entity['name'])
 
     return result
 
 
-def get_items_ids(items_names, type_):
-    result = []
-    items = get_specific_items('', type_)
-
-    for item in items_names:
-        for stored_item in items:
-            if item == stored_item['name']:
-                item_id = stored_item['id']
-                result.append(item_id)
-
-    return result
-
-
-def get_classes_names():
-    classes = get_classes()
+def get_entities_ids(entities, entities_names):
     result = []
 
-    for item in classes:
-        result.append(item['name'])
-
-    return result
-
-
-def get_entity_ids(entity_type, entities_names):
-    result = []
-    entities = select_entity(entity_type)
-
-    for entity in entities_names:
-        for stored_entities in entities:
-            if entity == stored_entities['name']:
-                entity_id = stored_entities['id']
+    for entity_name in entities_names:
+        for entity in entities:
+            if entity_name == entity['name']:
+                entity_id = entity['id']
                 result.append(entity_id)
 
     return result
-
-
-def select_entity(entity):
-    if entity == 'class':
-        return get_classes()
-    elif entity == 'proficiency':
-        return get_proficiencies()
-    elif entity == 'title':
-        return get_titles()
-    elif entity == 'ability':
-        return get_abilities()
-    else:
-        return None
 
 
 def get_user_types_ids(type_name):

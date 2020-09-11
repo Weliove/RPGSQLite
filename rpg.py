@@ -6,11 +6,13 @@ import tkinter.font as font
 from src import Home
 from src import CreateAvatar
 from src.ability.create_ability import CreateAbility
+from src.edit.edit import Edit
 from src.interface.interface import Interface
 from src.interface.interface_verification import InterfaceVerification
 from src.item.create_item import CreateItem
 from src.search.search import Search
 from src.title.create_title import CreateTitle
+from src.wiki.create_wiki import CreateWiki
 
 
 class RPG(tk.Tk):
@@ -29,7 +31,8 @@ class RPG(tk.Tk):
             lambda: self.show_create_avatar(),
             lambda: self.show_create_item(),
             lambda: self.show_create_ability(),
-            lambda: self.show_create_title()
+            lambda: self.show_create_title(),
+            lambda: self.show_wiki()
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
 
@@ -45,7 +48,11 @@ class RPG(tk.Tk):
 
         self.interface_frame = None
 
+        self.edit_frame = None
+
         self.interface_verification_frame = None
+
+        self.wiki_frame = CreateWiki(self, lambda: self.show_frame(Home))
 
         self.frames = {
             Home: self.home_frame,
@@ -55,7 +62,9 @@ class RPG(tk.Tk):
             CreateAbility: self.create_ability_frame,
             CreateTitle: self.create_title_frame,
             Interface: self.interface_frame,
-            InterfaceVerification: self.interface_verification_frame
+            Edit: self.edit_frame,
+            InterfaceVerification: self.interface_verification_frame,
+            CreateWiki: self.wiki_frame
         }
 
         # --- Show Frame ---
@@ -122,12 +131,28 @@ class RPG(tk.Tk):
     def show_interface(self, entity, type_):
         self.check_frame_existence(self.interface_frame)
 
-        self.interface_frame = Interface(self, entity, type_, lambda: self.show_frame(Search),
-                                         lambda: self.show_frame(Home), self.show_interface_verification)
+        self.interface_frame = Interface(
+            self,
+            entity,
+            type_,
+            lambda: self.show_frame(Search),
+            lambda: self.show_frame(Home),
+            self.show_edit,
+            self.show_interface_verification
+        )
         self.interface_frame.grid(row=0, column=0, sticky="NSEW")
 
         self.frames[Interface] = self.interface_frame
         self.show_frame(Interface)
+
+    def show_edit(self, entity, type_):
+        self.check_frame_existence(self.edit_frame)
+
+        self.edit_frame = Edit(self, entity, type_, self.show_interface, lambda: self.show_frame(Home))
+        self.edit_frame.grid(row=0, column=0, sticky="NSEW")
+
+        self.frames[Edit] = self.edit_frame
+        self.show_frame(Edit)
 
     def show_interface_verification(self, entity, type_):
         self.check_frame_existence(self.interface_verification_frame)
@@ -144,6 +169,15 @@ class RPG(tk.Tk):
 
         self.frames[InterfaceVerification] = self.interface_verification_frame
         self.show_frame(InterfaceVerification)
+
+    def show_wiki(self):
+        self.check_frame_existence(self.wiki_frame)
+
+        self.wiki_frame = CreateWiki(self, lambda: self.show_frame(Home))
+        self.wiki_frame.grid(row=0, column=0, sticky="NSEW")
+
+        self.frames[CreateWiki] = self.wiki_frame
+        self.show_frame(CreateWiki)
 
     def check_frame_existence(self, frame):
         if frame is not None and frame.winfo_exists():

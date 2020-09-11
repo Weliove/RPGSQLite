@@ -15,6 +15,7 @@ search_database = {
     'Character': 'users',
     'NPC': 'users',
     'Monster': 'users',
+    'users': 'users',
     # items
     'Item': 'items',
     'Armor': 'items',
@@ -51,6 +52,8 @@ def get_entity(name, type_):
             entity = get_item_attributes(cursor)
         elif db_entity == 'abilities':
             entity = get_ability_attributes(cursor)
+        elif db_entity == 'titles':
+            entity = get_title_attributes(cursor)
 
     return entity
 
