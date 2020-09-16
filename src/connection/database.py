@@ -20,10 +20,14 @@ search_database = {
     'Item': 'items',
     'Armor': 'items',
     'Weapon': 'items',
+    'items': 'items',
     # others
     'Title': 'titles',
+    'titles': 'titles',
     'Ability': 'abilities',
-    'Wiki': 'wiki'
+    'abilities': 'abilities',
+    'Wiki': 'wiki',
+    'wiki': 'wiki'
 }
 
 search_types = {
@@ -40,7 +44,6 @@ search_types = {
 
 def get_entity(name, type_):
     db_entity = search_database[type_]
-    db_type = search_types[type_]
 
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()

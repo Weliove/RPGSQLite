@@ -1,11 +1,15 @@
 from tkinter import ttk
 
+from src.connection.database import search_database
 from src.title.title import Title
 
 
 class TitleInterface(ttk.Frame):
     def __init__(self, container, entity, type_, show_search, show_home, show_edit):
         super().__init__(container)
+
+        self.entity = entity
+        self.type = search_database[type_]
 
         self.id = entity['id']
         self.name = entity['name']
@@ -16,7 +20,7 @@ class TitleInterface(ttk.Frame):
 
         self.create_widgets()
 
-        self.create_buttons(show_search, show_home)
+        self.create_buttons(show_search, show_home, show_edit)
 
     def create_widgets(self):
         # --- Title ---
@@ -54,7 +58,15 @@ class TitleInterface(ttk.Frame):
 
         self.bind("<Configure>", reconfigure_labels)
 
-    def create_buttons(self, show_search, show_home):
+    def create_buttons(self, show_search, show_home, show_edit):
+        edit_button = ttk.Button(
+            self,
+            text="Edit",
+            command=lambda: show_edit(self.entity, self.type),
+            cursor="hand2"
+        )
+        edit_button.grid(column=0, sticky="EW")
+
         back_button = ttk.Button(
             self,
             text="← Back",

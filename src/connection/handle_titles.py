@@ -20,11 +20,23 @@ def add_title(title, users_names):
                 cursor.execute('INSERT INTO users_titles (title_id, user_name) VALUES (?, ?)', (title_id, user_name))
 
 
+def update_title(title, id_):
+    name = title['name']
+    description = title['description']
+    requirements = title['requirements']
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('UPDATE titles SET name=?, description=?, requirements=? WHERE id=?',
+                       (name, description, requirements, id_))
+
+
 def get_titles():
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute(f'SELECT * FROM titles')
+        cursor.execute('SELECT * FROM titles')
 
         entity = get_titles_attributes(cursor)
 
@@ -35,7 +47,7 @@ def get_titles_by_id(title_id):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute(f'SELECT * FROM titles WHERE id=?', (title_id,))
+        cursor.execute('SELECT * FROM titles WHERE id=?', (title_id,))
 
         entity = get_titles_attributes(cursor)
 

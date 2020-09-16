@@ -7,11 +7,12 @@ from src.connection.database import get_entity
 from src.connection.handle_abilities import get_abilities_by_type
 from src.connection.handle_users import get_user_classes, get_user_items, get_user_abilities, get_user_proficiencies, \
     get_user_titles
+from src.edit.edit_functions import get_text_data, handle_selection_change, set_stored_items
 from src.popup_info import popup_showinfo
 
 
 class EditUser(ttk.Frame):
-    def __init__(self, container, user, show_interface):
+    def __init__(self, container, entity, show_interface):
         super().__init__(container)
 
         self.font = font.Font(size=11)
@@ -39,12 +40,12 @@ class EditUser(ttk.Frame):
         self.proficiencies = ['None'] + get_entities_names(self.proficiencies_total)
 
         # --- User ---
-        self.user_name = user['name']
-        self.user_type_ = user['type']
-        self.user_health = user['health']
-        self.user_adrenaline = user['adrenaline']
-        self.user_physical_ability = user['physical_ability']
-        self.user_description = user['description']
+        self.user_name = entity['name']
+        self.user_type_ = entity['type']
+        self.user_health = entity['health']
+        self.user_adrenaline = entity['adrenaline']
+        self.user_physical_ability = entity['physical_ability']
+        self.user_description = entity['description']
 
         self.user_classes = get_user_classes(self.user_name)
         self.user_items = get_user_items(self.user_name)
@@ -152,7 +153,7 @@ class EditUser(ttk.Frame):
         )
         self.class_entry.grid(row=4, column=1, sticky="EW")
 
-        self.set_stored_items(self.class_entry, self.user_classes, self.classes)
+        set_stored_items(self.class_entry, self.user_classes, self.classes)
 
         # self.class_entry.select_set(0)
 
@@ -197,7 +198,7 @@ class EditUser(ttk.Frame):
         )
         self.weapon_entry.grid(row=6, column=1, sticky="EW")
 
-        self.set_stored_items(self.weapon_entry, self.user_items, self.weapons)
+        set_stored_items(self.weapon_entry, self.user_items, self.weapons)
 
         # self.weapon_entry.select_set(0)
 
@@ -240,7 +241,7 @@ class EditUser(ttk.Frame):
         )
         self.title_entry.grid(row=8, column=1, sticky="EW")
 
-        self.set_stored_items(self.title_entry, self.user_titles, self.titles)
+        set_stored_items(self.title_entry, self.user_titles, self.titles)
 
         # self.title_entry.select_set(0)
 
@@ -270,7 +271,7 @@ class EditUser(ttk.Frame):
         )
         self.ability_entry.grid(row=9, column=1, sticky="EW")
 
-        self.set_stored_items(self.ability_entry, self.user_abilities, self.abilities)
+        set_stored_items(self.ability_entry, self.user_abilities, self.abilities)
 
         # self.ability_entry.select_set(0)
 
@@ -300,7 +301,7 @@ class EditUser(ttk.Frame):
         )
         self.proficiency_entry.grid(row=10, column=1, sticky="EW")
 
-        self.set_stored_items(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
+        set_stored_items(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
 
         # self.proficiency_entry.select_set(0)
 
@@ -346,23 +347,23 @@ class EditUser(ttk.Frame):
         health = self.health.get()
         adrenaline = self.adrenaline.get()
 
-        class_ = self.handle_selection_change(self.class_entry, self.classes)
+        class_ = handle_selection_change(self.class_entry, self.classes)
         class_result = get_entities_ids(self.classes_total, class_)
 
         armor = [self.armor.get()]
-        weapon = self.handle_selection_change(self.weapon_entry, self.weapons)
+        weapon = handle_selection_change(self.weapon_entry, self.weapons)
         physical_ability = self.physical_ability.get()
 
-        title = self.handle_selection_change(self.title_entry, self.titles)
+        title = handle_selection_change(self.title_entry, self.titles)
         title_result = get_entities_ids(self.titles_total, title)
 
-        ability = self.handle_selection_change(self.ability_entry, self.abilities)
+        ability = handle_selection_change(self.ability_entry, self.abilities)
         ability_result = get_entities_ids(self.abilities_total, ability)
 
-        proficiency = self.handle_selection_change(self.proficiency_entry, self.proficiencies)
+        proficiency = handle_selection_change(self.proficiency_entry, self.proficiencies)
         proficiency_result = get_entities_ids(self.proficiencies_total, proficiency)
 
-        description = self.get_text_data(self.description_entry)
+        description = get_text_data(self.description_entry)
 
         if len(armor) == 1 and armor[0] == 'None':
             armor = []
@@ -383,32 +384,6 @@ class EditUser(ttk.Frame):
     def interface(self, name, type_):
         new_user = get_entity(name, type_)
         self.show_interface(new_user, type_)
-
-    def handle_selection_change(self, list_widget, total_list):
-        selected_indices = list_widget.curselection()
-        result_list = []
-
-        if len(selected_indices) == 0 or (len(selected_indices) == 1 and total_list[selected_indices[0]] == 'None'):
-            return []
-
-        for i in selected_indices:
-            result_list.append(total_list[i])
-
-        return result_list
-
-    def get_text_data(self, text_widget):
-        return text_widget.get("1.0", 'end-1c')
-
-    def set_stored_items(self, listbox_widget, stored_entities, total_list):
-        if type(stored_entities) != list or len(stored_entities) == 0:
-            listbox_widget.select_set(0)
-            return
-
-        for entity in stored_entities:
-            if entity in stored_entities:
-                entity_name = entity['name']
-                entity_index = total_list.index(entity_name)
-                listbox_widget.select_set(entity_index)
 
     def generate_armor(self):
         for item in self.user_items:

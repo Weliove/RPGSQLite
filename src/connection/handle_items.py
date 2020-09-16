@@ -37,6 +37,32 @@ def add_item(item, user_name):
             cursor.execute('INSERT INTO users_items (item_id, user_name) VALUES (?, ?)', (item_id, user_name))
 
 
+def update_item(item, id_):
+    name = item['name']
+    type_ = item['type']
+    reduction = item['reduction']
+    damage = item['damage']
+    range_ = item['range']
+    health = item['health']
+    area = item['area']
+    effects = item['effects']
+    description = item['description']
+
+    abilities_id = item['abilities']
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('UPDATE items SET name=?, type=?, reduction=?,'
+                       'damage=?, range=?, health=?, area=?, effects=?, description=? WHERE id=?',
+                       (name, type_, reduction, damage, range_, health, area, effects, description, id_))
+
+        cursor.execute('DELETE FROM items_abilities WHERE item_id=?', (id_,))
+        if len(abilities_id) > 0:
+            for ability in abilities_id:
+                cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability, id_))
+
+
 def get_items_attributes(cursor):
     return [{
         'id': row[0],

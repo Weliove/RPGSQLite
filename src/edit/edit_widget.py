@@ -1,5 +1,7 @@
 from tkinter import ttk
 
+from src.edit.edit_item import EditItem
+from src.edit.edit_title import EditTitle
 from src.edit.edit_user import EditUser
 
 
@@ -26,11 +28,11 @@ class EditWidget(ttk.Frame):
         if entity_type == 'users':
             self.edit_widget_frame = EditUser(self, entity, show_interface)
         elif entity_type == 'items':
-            pass
+            self.edit_widget_frame = EditItem(self, entity, show_interface)
         elif entity_type == 'abilities':
             pass
         elif entity_type == 'titles':
-            pass
+            self.edit_widget_frame = EditTitle(self, entity, show_interface)
 
         self.edit_widget_frame.grid(row=0, column=0, sticky="NSEW")
         self.edit_widget_frame.columnconfigure(0, weight=1)
