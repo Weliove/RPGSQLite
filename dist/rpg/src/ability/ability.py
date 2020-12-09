@@ -1,17 +1,18 @@
-from src.connection.handle_abilities import add_ability
+from src.connection.handle_abilities import add_ability, update_ability
 
 
 class Ability:
-    def __init__(self, name, user, type_, casting, components, requirements, conditions, effects, description):
+    def __init__(self, name, casting, components, requirements, conditions, effects, description, type_=None,
+                 user=None):
         self.name = name
-        self.user = user
-        self.type_ = type_
         self.casting = casting
         self.components = components
         self.requirements = requirements
         self.conditions = conditions
         self.effects = effects
         self.description = description
+        self.type_ = type_
+        self.user = user
 
         self.ability = {
             'name': self.name,
@@ -26,3 +27,6 @@ class Ability:
 
     def create_ability(self):
         return add_ability(self.ability, self.user)
+
+    def update_ability(self, id_):
+        return update_ability(self.ability, id_)

@@ -133,7 +133,7 @@ class AbilityScroll(tk.Canvas):
             effects = self.get_text_data(ability_frame.effects_entry)
             description = self.get_text_data(ability_frame.description_entry)
 
-            ability = Ability(name, user, type_, casting, components, requirements, conditions, effects, description)
+            ability = Ability(name, type_, casting, components, requirements, conditions, effects, description, user)
 
             create_ability = ability.create_ability()
 

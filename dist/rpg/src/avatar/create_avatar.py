@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
-from src.avatar.avatar_properties import get_items_ids, get_user_types_ids, get_entity_ids
+from src.avatar.avatar_properties import get_user_types_ids, get_entities_ids
 from src.avatar.avatar_widget import AvatarWidget
 from src.popup_info import popup_showinfo
 
@@ -101,20 +101,20 @@ class AvatarScroll(tk.Canvas):
         adrenaline = widgets.adrenaline.get()
 
         class_ = self.handle_selection_change(widgets.class_entry, widgets.classes)
-        class_result = get_entity_ids('class', class_)
+        class_result = get_entities_ids(widgets.classes_total, class_)
 
         armor = [widgets.armor.get()]
         weapon = self.handle_selection_change(widgets.weapon_entry, widgets.weapons)
         physical_ability = widgets.physical_ability.get()
 
         title = self.handle_selection_change(widgets.title_entry, widgets.titles)
-        title_result = get_entity_ids('title', title)
+        title_result = get_entities_ids(widgets.titles_total, title)
 
         ability = self.handle_selection_change(widgets.ability_entry, widgets.abilities)
-        ability_result = get_entity_ids('ability', ability)
+        ability_result = get_entities_ids(widgets.abilities_total, ability)
 
         proficiency = self.handle_selection_change(widgets.proficiency_entry, widgets.proficiencies)
-        proficiency_result = get_entity_ids('proficiency', proficiency)
+        proficiency_result = get_entities_ids(widgets.proficiencies_total, proficiency)
 
         description = self.get_text_data(widgets.description_entry)
 
@@ -122,20 +122,17 @@ class AvatarScroll(tk.Canvas):
             armor = []
 
         if armor:
-            items += get_items_ids(armor, 1)
+            items += get_entities_ids(widgets.armors_total, armor)
 
         if weapon:
-            items += get_items_ids(weapon, 2)
+            items += get_entities_ids(widgets.weapons_total, weapon)
 
         avatar = Avatar(name, type_result, health, adrenaline, class_result, items,
                         physical_ability, title_result, ability_result, proficiency_result, description)
 
         create_avatar = avatar.create_character()
 
-        if not create_avatar:
-            self.container.show_home()
-        else:
-            popup_showinfo(create_avatar)
+        self.container.show_home() if not create_avatar else popup_showinfo(create_avatar)
 
     def handle_selection_change(self, list_widget, total_list):
         selected_indices = list_widget.curselection()

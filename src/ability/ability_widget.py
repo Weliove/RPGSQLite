@@ -13,10 +13,10 @@ class AbilityWidget(ttk.Frame):
 
         self.types_ = ('None', 'Character', 'NPC', 'Monster')
 
-        self.characters = ['Character'] + get_search_entities('', 'Character')
-        self.npcs = ['NPC'] + get_search_entities('', 'NPC')
-        self.monsters = ['Monster'] + get_search_entities('', 'Monster')
-        self.items = ['Item'] + get_items_names()
+        self.characters = ['None', 'Character'] + get_search_entities('', 'Character')
+        self.npcs = ['None', 'NPC'] + get_search_entities('', 'NPC')
+        self.monsters = ['None', 'Monster'] + get_search_entities('', 'Monster')
+        self.items = ['None', 'Item'] + get_items_names()
 
         # --- Attributes ---
         self.ability = 'Ability ' + ability_frame_number
@@ -24,16 +24,17 @@ class AbilityWidget(ttk.Frame):
         self.casting = tk.StringVar(value='None')
         self.components = tk.StringVar(value='None')
 
-        self.character = tk.StringVar(value=self.characters)
-        self.npc = tk.StringVar(value=self.npcs)
-        self.monster = tk.StringVar(value=self.monsters)
-        self.item = tk.StringVar(value=self.items)
+        self.character = tk.StringVar(value=self.characters[1])
+        self.npc = tk.StringVar(value=self.npcs[0])
+        self.monster = tk.StringVar(value=self.monsters[0])
+        self.item = tk.StringVar(value=self.items[0])
 
         # --- Widgets ---
-        self.character_entry = tk.Listbox()
-        self.npc_entry = tk.Listbox()
-        self.monster_entry = tk.Listbox()
-        self.item_entry = tk.Listbox()
+        self.character_menu = ttk.Combobox()
+        self.npc_menu = ttk.Combobox()
+        self.monster_menu = ttk.Combobox()
+        self.item_menu = ttk.Combobox()
+
         self.requirements_entry = tk.Text()
         self.conditions_entry = tk.Text()
         self.effects_entry = tk.Text()
@@ -86,89 +87,52 @@ class AbilityWidget(ttk.Frame):
         )
         user_label.grid(row=3, column=0, sticky="EW")
 
-        self.character_entry = tk.Listbox(
+        self.character_menu = ttk.Combobox(
             container,
-            listvariable=self.character,
-            # selectmode="extended",
-            # exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=4
+            name='character',
+            textvariable=self.character,
+            values=self.characters,
+            state="readonly"
         )
-        self.character_entry.grid(row=3, column=1, sticky="EW")
-
-        self.character_entry.select_set(0)
-
-        character_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        character_scrollbar.config(command=self.character_entry.yview)
-        character_scrollbar.grid(row=3, column=2, sticky="NS")
-
-        self.character_entry.config(yscrollcommand=character_scrollbar.set)
+        self.character_menu.grid(row=3, column=1, sticky="EW")
 
         # --- NPC ---
 
-        self.npc_entry = tk.Listbox(
+        self.npc_menu = ttk.Combobox(
             container,
-            listvariable=self.npc,
-            # selectmode="extended",
-            # exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=4
+            name='npc',
+            textvariable=self.npc,
+            values=self.npcs,
+            state="readonly"
         )
-        self.npc_entry.grid(row=4, column=1, sticky="EW")
-
-        npc_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        npc_scrollbar.config(command=self.npc_entry.yview)
-        npc_scrollbar.grid(row=4, column=2, sticky="NS")
-
-        self.npc_entry.config(yscrollcommand=npc_scrollbar.set)
+        self.npc_menu.grid(row=4, column=1, sticky="EW")
 
         # --- Monster ---
 
-        self.monster_entry = tk.Listbox(
+        self.monster_menu = ttk.Combobox(
             container,
-            listvariable=self.monster,
-            # selectmode="extended",
-            # exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=4
+            name='monster',
+            textvariable=self.monster,
+            values=self.monsters,
+            state="readonly"
         )
-        self.monster_entry.grid(row=5, column=1, sticky="EW")
-
-        monster_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        monster_scrollbar.config(command=self.monster_entry.yview)
-        monster_scrollbar.grid(row=5, column=2, sticky="NS")
-
-        self.monster_entry.config(yscrollcommand=monster_scrollbar.set)
+        self.monster_menu.grid(row=5, column=1, sticky="EW")
 
         # --- Item ---
 
-        self.item_entry = tk.Listbox(
+        self.item_menu = ttk.Combobox(
             container,
-            listvariable=self.item,
-            # selectmode="extended",
-            # exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=4
+            name='item',
+            textvariable=self.item,
+            values=self.items,
+            state="readonly"
         )
-        self.item_entry.grid(row=6, column=1, sticky="EW")
+        self.item_menu.grid(row=6, column=1, sticky="EW")
 
-        item_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        item_scrollbar.config(command=self.item_entry.yview)
-        item_scrollbar.grid(row=6, column=2, sticky="NS")
-
-        self.item_entry.config(yscrollcommand=item_scrollbar.set)
+        self.character_menu.bind("<<ComboboxSelected>>", self.selected_value)
+        self.npc_menu.bind("<<ComboboxSelected>>", self.selected_value)
+        self.monster_menu.bind("<<ComboboxSelected>>", self.selected_value)
+        self.item_menu.bind("<<ComboboxSelected>>", self.selected_value)
 
         # --- Casting ---
 
@@ -303,3 +267,25 @@ class AbilityWidget(ttk.Frame):
         self.description_entry["yscrollcommand"] = description_scroll.set
 
         self.description_entry.insert(tk.END, 'None')
+
+    def selected_value(self, event):
+        selected_entity = str(event.widget).split(".")[-1]
+
+        print(selected_entity)
+
+        if selected_entity == 'character':
+            self.npc_menu.current(0)
+            self.monster_menu.current(0)
+            self.item_menu.current(0)
+        elif selected_entity == 'npc':
+            self.character_menu.current(0)
+            self.monster_menu.current(0)
+            self.item_menu.current(0)
+        elif selected_entity == 'monster':
+            self.character_menu.current(0)
+            self.npc_menu.current(0)
+            self.item_menu.current(0)
+        else:
+            self.character_menu.current(0)
+            self.npc_menu.current(0)
+            self.monster_menu.current(0)

@@ -15,14 +15,19 @@ search_database = {
     'Character': 'users',
     'NPC': 'users',
     'Monster': 'users',
+    'users': 'users',
     # items
     'Item': 'items',
     'Armor': 'items',
     'Weapon': 'items',
+    'items': 'items',
     # others
     'Title': 'titles',
+    'titles': 'titles',
     'Ability': 'abilities',
-    'Wiki': 'wiki'
+    'abilities': 'abilities',
+    'Wiki': 'wiki',
+    'wiki': 'wiki'
 }
 
 search_types = {
@@ -39,7 +44,6 @@ search_types = {
 
 def get_entity(name, type_):
     db_entity = search_database[type_]
-    db_type = search_types[type_]
 
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
@@ -51,6 +55,8 @@ def get_entity(name, type_):
             entity = get_item_attributes(cursor)
         elif db_entity == 'abilities':
             entity = get_ability_attributes(cursor)
+        elif db_entity == 'titles':
+            entity = get_title_attributes(cursor)
 
     return entity
 

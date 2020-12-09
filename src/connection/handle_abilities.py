@@ -29,6 +29,24 @@ def add_ability(ability, user):
             cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability_id, item_id))
 
 
+def update_ability(ability, id_):
+    name = ability['name']
+    type_ = ability['type']
+    casting = ability['casting']
+    components = ability['components']
+    requirements = ability['requirements']
+    conditions = ability['conditions']
+    effects = ability['effects']
+    description = ability['description']
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('UPDATE abilities SET name=?, casting=?, components=?, requirements=?, conditions=?,'
+                       'effects=?, description=? WHERE id=?',
+                       (name, casting, components, requirements, conditions, effects, description, id_))
+
+
 def get_abilities():
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()

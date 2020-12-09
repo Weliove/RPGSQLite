@@ -1,22 +1,28 @@
 from tkinter import ttk, RAISED
 
-from src.connection.handle_wiki import get_topics_by_chapter_id
+from src.wiki.wiki import Wiki
 
 
 class WikiChapter(ttk.Frame):
-    def __init__(self, container, chapter, show_home):
+    def __init__(self, container, chapter, wiki: Wiki):
         super().__init__(container)
 
         self.parent = container
+        self.chapter = chapter
+        self.wiki = wiki
+
+        wiki.last_chapter = chapter
 
         print(chapter)
 
         chapter_id = chapter['id']
-        self.topics = get_topics_by_chapter_id(chapter_id)
+        self.topics = self.wiki.get_topics(chapter_id)
 
         print(self.topics)
 
         self.create_widgets(chapter, self.topics)
+
+        self.create_buttons()
 
     def create_widgets(self, chapter, topics):
         chapter_name = chapter['name']
@@ -48,3 +54,25 @@ class WikiChapter(ttk.Frame):
                 text=topic_description
             )
             description.grid(column=0, sticky="EW")
+
+    def create_buttons(self):
+        wiki_separator = ttk.Separator(
+            self
+        )
+        wiki_separator.grid(column=0, columnspan=1, sticky="EW")
+
+        chapter_button = ttk.Button(
+            self,
+            text='Add Topic',
+            command=lambda: self.parent.create_frame('create_topic', self.chapter),
+            cursor='hand2'
+        )
+        chapter_button.grid(column=0, sticky="EW")
+
+        back_button = ttk.Button(
+            self,
+            text='← Back',
+            command=lambda: self.parent.create_frame('section', self.wiki.last_section),
+            cursor='hand2'
+        )
+        back_button.grid(column=0, sticky='EW')

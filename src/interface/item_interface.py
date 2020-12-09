@@ -13,6 +13,7 @@ class ItemInterface(ttk.Frame):
         print(entity)
 
         self.entity = entity
+        self.entity_type = type_
 
         self.types_ = {1: 'Armor', 2: 'Weapon'}
 
@@ -143,7 +144,7 @@ class ItemInterface(ttk.Frame):
         edit_button = ttk.Button(
             self,
             text="Edit",
-            command=lambda: show_edit(self.entity, 'items'),
+            command=lambda: show_edit(self.entity, self.entity_type),
             cursor="hand2"
         )
         edit_button.grid(column=0, sticky="EW")

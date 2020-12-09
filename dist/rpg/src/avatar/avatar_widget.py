@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.avatar.avatar_properties import *
+from src.connection.handle_abilities import get_abilities_by_type
 
 
 class AvatarWidget(tk.Frame):
@@ -10,21 +11,25 @@ class AvatarWidget(tk.Frame):
 
         self.font = font.Font(size=11)
 
-        self.type_values = get_avatar_types()
+        self.type_values = ('Character', 'NPC', 'Monster')
 
-        self.classes = ['None'] + get_classes_names()
+        self.classes_total = get_classes()
+        self.classes = ['None'] + get_entities_names(self.classes_total)
 
-        self.armors = ['None'] + get_items(1)
+        self.armors_total = get_specific_items('', 1)
+        self.armors = ['None'] + get_entities_names(self.armors_total)
 
-        self.weapons = ['None'] + get_items(2)
+        self.weapons_total = get_specific_items('', 2)
+        self.weapons = ['None'] + get_entities_names(self.weapons_total)
 
-        self.titles = ['None'] + get_titles()
+        self.titles_total = get_titles()
+        self.titles = ['None'] + get_entities_names(self.titles_total)
 
-        abilities = get_abilities_name_by_type(1) + get_abilities_name_by_type(2) + get_abilities_name_by_type(3)
+        self.abilities_total = get_abilities_by_type(1) + get_abilities_by_type(2) + get_abilities_by_type(3)
+        self.abilities = ['None'] + get_entities_names(self.abilities_total)
 
-        self.abilities = ['None'] + abilities
-
-        self.proficiencies = ['None'] + get_proficiencies()
+        self.proficiencies_total = get_proficiencies()
+        self.proficiencies = ['None'] + get_entities_names(self.proficiencies_total)
 
         # --- Attributes ---
         self.name = tk.StringVar()

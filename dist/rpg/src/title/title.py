@@ -1,12 +1,12 @@
-from src.connection.handle_titles import add_title
+from src.connection.handle_titles import add_title, update_title
 
 
 class Title:
-    def __init__(self, name, users, requirements, description):
+    def __init__(self, name, requirements, description, users=None):
         self.name = name
-        self.users = users
         self.description = description
         self.requirements = requirements
+        self.users = users
 
         self.title = {
             'name': self.name,
@@ -17,5 +17,5 @@ class Title:
     def create_title(self):
         return add_title(self.title, self.users)
 
-    def update_title(self):
-        pass
+    def update_title(self, id_):
+        return update_title(self.title, id_)

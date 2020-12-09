@@ -132,10 +132,7 @@ class AvatarScroll(tk.Canvas):
 
         create_avatar = avatar.create_character()
 
-        if not create_avatar:
-            self.container.show_home()
-        else:
-            popup_showinfo(create_avatar)
+        self.container.show_home() if not create_avatar else popup_showinfo(create_avatar)
 
     def handle_selection_change(self, list_widget, total_list):
         selected_indices = list_widget.curselection()

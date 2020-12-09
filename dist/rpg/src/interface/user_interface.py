@@ -2,14 +2,18 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
-from src.connection.handle_users import get_user_classes, get_user_items, get_user_abilities, get_user_proficiencies
+from src.connection.handle_users import get_user_classes, get_user_items, get_user_abilities, get_user_proficiencies, \
+    get_user_titles
 from src.interface.interface_functions import button_state, generate_classes, generate_items, generate_abilities, \
-    generate_proficiencies
+    generate_proficiencies, generate_titles
 
 
 class UserInterface(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home, show_interface_verification):
+    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification):
         super().__init__(container)
+
+        self.entity = entity
+        self.entity_type = type_
 
         self.item_types = {1: 'Armor', 2: 'Weapon'}
 
@@ -20,7 +24,7 @@ class UserInterface(ttk.Frame):
         self.class_ = get_user_classes(self.name)
         self.items = get_user_items(self.name)
         self.physical_ability = 'Physical Ability:  ' + entity['physical_ability']
-        self.titles = 'Titles:  None'  # 'Titles:  ' + entity['title']
+        self.titles = get_user_titles(self.name)
         self.abilities = get_user_abilities(self.name)
         self.proficiency = get_user_proficiencies(self.name)
         self.description = 'Description:  ' + entity['description']
@@ -30,7 +34,7 @@ class UserInterface(ttk.Frame):
 
         self.create_widgets()
 
-        self.create_buttons(show_search, show_home, show_interface_verification)
+        self.create_buttons(show_search, show_home, show_edit, show_interface_verification)
 
     def create_widgets(self):
         name = ttk.Label(
@@ -76,7 +80,7 @@ class UserInterface(ttk.Frame):
 
         title = ttk.Label(
             self,
-            text=self.titles
+            text=generate_titles(self.titles)
         )
         title.grid(row=7, column=0, sticky="NSEW")
 
@@ -108,7 +112,7 @@ class UserInterface(ttk.Frame):
 
         self.bind("<Configure>", reconfigure_labels)
 
-    def create_buttons(self, show_search, show_home, show_interface_verification):
+    def create_buttons(self, show_search, show_home, show_edit, show_interface_verification):
         items_button = ttk.Button(
             self,
             text="Verify Items",
@@ -126,6 +130,14 @@ class UserInterface(ttk.Frame):
             cursor="hand2"
         )
         abilities_button.grid(column=0, sticky="EW")
+
+        edit_button = ttk.Button(
+            self,
+            text="Edit",
+            command=lambda: show_edit(self.entity, self.entity_type),
+            cursor="hand2"
+        )
+        edit_button.grid(column=0, sticky="EW")
 
         back_button = ttk.Button(
             self,

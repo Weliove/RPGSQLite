@@ -1,6 +1,7 @@
 from .database import *
 from .database import DatabaseConnection, get_items_attributes
 from src.connection.handle_abilities import get_abilities_by_id
+from src.connection.handle_titles import get_titles_by_id
 from .handle_classes import get_classes_attributes
 
 
@@ -9,19 +10,19 @@ def get_list(cursor):
 
 
 # --- USERS ---
-def add_user(entity):
-    name = entity['name']
-    type_ = entity['type']
-    health = entity['health']
-    adrenaline = entity['adrenaline']
-    physical_ability = entity['physical_ability']
-    description = entity['description']
+def add_user(user):
+    name = user['name']
+    type_ = user['type']
+    health = user['health']
+    adrenaline = user['adrenaline']
+    physical_ability = user['physical_ability']
+    description = user['description']
 
-    classes_id = entity['class']
-    items_id = entity['items']
-    titles_id = entity['titles']
-    abilities_id = entity['abilities']
-    proficiencies_id = entity['proficiency']
+    classes_id = user['class']
+    items_id = user['items']
+    titles_id = user['titles']
+    abilities_id = user['abilities']
+    proficiencies_id = user['proficiency']
 
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
@@ -45,6 +46,54 @@ def add_user(entity):
             for ability in abilities_id:
                 cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)', (ability, name))
 
+        if len(proficiencies_id) > 0:
+            for proficiency in proficiencies_id:
+                cursor.execute('INSERT INTO users_proficiencies (proficiency_id, user_name) VALUES (?, ?)',
+                               (proficiency, name))
+
+
+def update_user(user, current_name):
+    name = user['name']
+    type_ = user['type']
+    health = user['health']
+    adrenaline = user['adrenaline']
+    physical_ability = user['physical_ability']
+    description = user['description']
+
+    classes_id = user['class']
+    items_id = user['items']
+    titles_id = user['titles']
+    abilities_id = user['abilities']
+    proficiencies_id = user['proficiency']
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('UPDATE users SET name=?, type=?, health=?, adrenaline=?, physical_ability=?, description=? '
+                       'WHERE name=?',
+                       (name, type_, health, adrenaline, physical_ability, description, current_name))
+
+        cursor.execute('DELETE FROM users_classes WHERE user_name=?', (current_name,))
+        if len(classes_id) > 0:
+            for class_ in classes_id:
+                cursor.execute('INSERT INTO users_classes (class_id, user_name) VALUES (?, ?)', (class_, name))
+
+        cursor.execute('DELETE FROM users_items WHERE user_name=?', (current_name,))
+        if len(items_id) > 0:
+            for item in items_id:
+                cursor.execute('INSERT INTO users_items (item_id, user_name) VALUES (?, ?)', (item, name))
+
+        cursor.execute('DELETE FROM users_titles WHERE user_name=?', (current_name,))
+        if len(titles_id) > 0:
+            for title in titles_id:
+                cursor.execute('INSERT INTO users_titles (title_id, user_name) VALUES (?, ?)', (title, name))
+
+        cursor.execute('DELETE FROM users_abilities WHERE user_name=?', (current_name,))
+        if len(abilities_id) > 0:
+            for ability in abilities_id:
+                cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES(?, ?)', (ability, name))
+
+        cursor.execute('DELETE FROM users_proficiencies WHERE user_name=?', (current_name,))
         if len(proficiencies_id) > 0:
             for proficiency in proficiencies_id:
                 cursor.execute('INSERT INTO users_proficiencies (proficiency_id, user_name) VALUES (?, ?)',
@@ -166,5 +215,16 @@ def get_user_proficiencies(user_name):
     return proficiencies
 
 
-def get_user_titles(cursor):
-    pass
+def get_user_titles(user_name):
+    titles = []
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT title_id FROM users_titles WHERE user_name=?', (user_name,))
+        titles_id = get_list(cursor)
+
+        for title in titles_id:
+            titles += get_titles_by_id(title)
+
+    return titles

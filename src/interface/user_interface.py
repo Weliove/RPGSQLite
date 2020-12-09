@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.avatar.avatar import Avatar
-from src.connection.database import search_database
 from src.connection.handle_users import get_user_classes, get_user_items, get_user_abilities, get_user_proficiencies, \
     get_user_titles
 from src.interface.interface_functions import button_state, generate_classes, generate_items, generate_abilities, \
@@ -14,9 +13,7 @@ class UserInterface(ttk.Frame):
         super().__init__(container)
 
         self.entity = entity
-        self.type_ = type_
-
-        self.entity_type = search_database[type_]
+        self.entity_type = type_
 
         self.item_types = {1: 'Armor', 2: 'Weapon'}
 

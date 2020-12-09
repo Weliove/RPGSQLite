@@ -2,33 +2,42 @@ from .database import *
 from .database import DatabaseConnection
 
 
-def create_category(name):
+def create_category(name, description) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('INSERT INTO wiki (name) VALUES (?)', (name,))
+        cursor.execute('INSERT INTO wiki (name, description) VALUES (?, ?)', (name, description))
+
+    return True
 
 
-def create_section(name, category_id):
+def create_section(name, description, category_id) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('INSERT INTO wiki_sections (name, category_id) VALUES (?, ?)', (name, category_id))
+        cursor.execute('INSERT INTO wiki_sections (name, description, category_id) VALUES (?, ?, ?)',
+                       (name, description, category_id))
+
+    return True
 
 
-def create_chapter(name, section_id):
+def create_chapter(name, section_id) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('INSERT INTO wiki_chapters (name, section_id) VALUES (?, ?)', (name, section_id))
 
+    return True
 
-def create_topic(name, description, chapter_id):
+
+def create_topic(name, description, chapter_id) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
         cursor.execute('INSERT INTO wiki_topics (name, description, chapter_id) VALUES (?, ?, ?)',
                        (name, description, chapter_id))
+
+    return True
 
 
 def get_categories():
@@ -49,6 +58,28 @@ def get_sections():
         cursor.execute('SELECT * FROM wiki_sections')
 
         sections = get_sections_attributes(cursor)
+
+    return sections
+
+
+def get_chapters():
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM wiki_chapters')
+
+        sections = get_chapters_attributes(cursor)
+
+    return sections
+
+
+def get_topics():
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('SELECT * FROM wiki_topics')
+
+        sections = get_topics_attributes(cursor)
 
     return sections
 
@@ -89,7 +120,8 @@ def get_topics_by_chapter_id(chapter_id):
 def get_categories_attributes(cursor):
     return [{
         'id': row[0],
-        'name': row[1]
+        'name': row[1],
+        'description': row[2]
     } for row in cursor.fetchall()]
 
 
@@ -97,7 +129,8 @@ def get_sections_attributes(cursor):
     return [{
         'id': row[0],
         'name': row[1],
-        'category_id': row[2]
+        'description': row[2],
+        'category_id': row[3]
     } for row in cursor.fetchall()]
 
 

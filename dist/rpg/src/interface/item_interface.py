@@ -7,10 +7,13 @@ from src.item.item import Item
 
 
 class ItemInterface(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home, show_interface_verification):
+    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification):
         super().__init__(container)
 
         print(entity)
+
+        self.entity = entity
+        self.entity_type = type_
 
         self.types_ = {1: 'Armor', 2: 'Weapon'}
 
@@ -33,7 +36,7 @@ class ItemInterface(ttk.Frame):
 
         self.create_widgets()
 
-        self.create_buttons(show_search, show_home, show_interface_verification)
+        self.create_buttons(show_search, show_home, show_edit, show_interface_verification)
 
     def create_widgets(self):
         # --- Item ---
@@ -128,7 +131,7 @@ class ItemInterface(ttk.Frame):
 
         self.bind("<Configure>", reconfigure_labels)
 
-    def create_buttons(self, show_search, show_home, show_interface_verification):
+    def create_buttons(self, show_search, show_home, show_edit, show_interface_verification):
         abilities_button = ttk.Button(
             self,
             text="Verify Abilities",
@@ -137,6 +140,14 @@ class ItemInterface(ttk.Frame):
             cursor="hand2"
         )
         abilities_button.grid(column=0, sticky="EW")
+
+        edit_button = ttk.Button(
+            self,
+            text="Edit",
+            command=lambda: show_edit(self.entity, self.entity_type),
+            cursor="hand2"
+        )
+        edit_button.grid(column=0, sticky="EW")
 
         back_button = ttk.Button(
             self,

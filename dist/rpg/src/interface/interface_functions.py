@@ -34,6 +34,21 @@ def generate_classes(classes):
     return text
 
 
+def generate_titles(titles):
+    text = '\n\t'
+    titles_result = []
+
+    if len(titles) == 0:
+        return 'Titles:  None'
+
+    for title in titles:
+        titles_result.append(title['name'])
+
+    text = f'Titles:\n\t{text.join(titles_result)}'
+
+    return text
+
+
 def generate_proficiencies(proficiencies):
     text = ', '
     proficiencies_result = []

@@ -1,7 +1,8 @@
 import tkinter as tk
 from tkinter import ttk, font
 
-from src.connection.database import get_search_entities, get_abilities_name_by_type
+from src.connection.database import get_search_entities
+from src.connection.handle_abilities import get_abilities_name_by_type
 
 
 class ItemWidget(ttk.Frame):
@@ -19,7 +20,6 @@ class ItemWidget(ttk.Frame):
         self.abilities = ['None'] + get_abilities_name_by_type(4)
 
         # --- Attributes ---
-
         self.item = 'Item ' + item_frame_number
         self.name = tk.StringVar()
         self.type_ = tk.StringVar(value=self.types_[0])

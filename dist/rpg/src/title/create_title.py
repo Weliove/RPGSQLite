@@ -124,7 +124,7 @@ class TitleScroll(tk.Canvas):
             requirements = self.get_text_data(title_frame.requirements_entry)
             description = self.get_text_data(title_frame.description_entry)
 
-            title = Title(name, users, requirements, description)
+            title = Title(name, requirements, description, users)
 
             create_title = title.create_title()
 
