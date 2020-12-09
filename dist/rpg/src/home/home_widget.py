@@ -33,7 +33,7 @@ class HomeWidget(ttk.Frame):
         name_entry = ttk.Entry(
             container,
             textvariable=self.name,
-            width=70
+            width=80
         )
         name_entry.grid(row=0, column=1, sticky="EW")
 
