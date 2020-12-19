@@ -163,6 +163,7 @@ class RPG(tk.Tk):
             type_,
             lambda: self.show_frame(Interface),
             lambda: self.show_frame(Home),
+            self.show_edit,
             self.show_interface_verification
         )
         self.interface_verification_frame.grid(row=0, column=0, sticky="NSEW")

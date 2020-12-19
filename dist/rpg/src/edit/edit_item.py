@@ -180,6 +180,10 @@ class EditItem(ttk.Frame):
         )
         self.abilities_entry.grid(row=7, column=1, sticky="EW")
 
+        print(self.abilities_entry)
+        print(self.item_abilities)
+        print(self.abilities)
+
         set_stored_items(self.abilities_entry, self.item_abilities, self.abilities)
 
         # self.abilities_entry.select_set(0)

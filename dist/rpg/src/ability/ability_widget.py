@@ -285,7 +285,7 @@ class AbilityWidget(ttk.Frame):
             self.character_menu.current(0)
             self.npc_menu.current(0)
             self.item_menu.current(0)
-        else:
+        elif selected_entity == 'item':
             self.character_menu.current(0)
             self.npc_menu.current(0)
             self.monster_menu.current(0)

@@ -7,13 +7,14 @@ from src.interface.user_interface import UserInterface
 
 
 class InterfaceVerificationWidget(ttk.Frame):
-    def __init__(self, container, entities, type_, show_entity, show_home, show_interface_verification):
+    def __init__(self, container, entities, type_, show_entity, show_home, show_edit, show_interface_verification):
         super().__init__(container)
 
         self.entities = entities
         self.type_ = type_
         self.show_entity = show_entity
         self.show_home = show_home
+        self.show_edit = show_edit
         self.show_interface_verification = show_interface_verification
 
         self.frame_number = 0
@@ -29,10 +30,10 @@ class InterfaceVerificationWidget(ttk.Frame):
             current_rows = self.grid_size()[1]
 
             if self.entity_type == 'items':
-                new_frame = ItemInterface(self, entity, self.type_, self.show_entity, self.show_home,
+                new_frame = ItemInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
                                           self.show_interface_verification)
             else:
-                new_frame = AbilityInterface(self, entity, self.type_, self.show_entity, self.show_home,
+                new_frame = AbilityInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
                                              self.show_interface_verification)
 
             new_frame.grid(row=current_rows, column=0, sticky="NSEW")

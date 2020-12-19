@@ -198,7 +198,9 @@ class EditUser(ttk.Frame):
         )
         self.weapon_entry.grid(row=6, column=1, sticky="EW")
 
-        set_stored_items(self.weapon_entry, self.user_items, self.weapons)
+        print(f'>>{self.weapons}')
+
+        set_stored_items(self.weapon_entry, self.get_user_weapons(), self.weapons)
 
         # self.weapon_entry.select_set(0)
 
@@ -335,6 +337,15 @@ class EditUser(ttk.Frame):
         self.description_entry["yscrollcommand"] = description_scroll.set
 
         self.description_entry.insert(tk.END, self.user_description)
+
+    def get_user_weapons(self):
+        weapons = []
+
+        for item in self.user_items:
+            if item['type'] != 1:
+                weapons.append(item)
+
+        return weapons
 
     def edit_entity(self):
         items = []

@@ -5,7 +5,7 @@ from src.interface.interface_verification_widgets import InterfaceVerificationWi
 
 
 class InterfaceVerification(ttk.Frame):
-    def __init__(self, parent, entity, type_, show_entity, show_home, show_interface_verification):
+    def __init__(self, parent, entity, type_, show_entity, show_home, show_edit, show_interface_verification):
         super().__init__(parent)
 
         # --- Create Widget Frame ---
@@ -16,7 +16,7 @@ class InterfaceVerification(ttk.Frame):
         self.interface_verification_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
 
         self.interface_verification_scroll.interface_container(entity, type_, show_entity, show_home,
-                                                               show_interface_verification)
+                                                               show_edit, show_interface_verification)
 
 
 class InterfaceVerificationScroll(tk.Canvas):
@@ -53,9 +53,9 @@ class InterfaceVerificationScroll(tk.Canvas):
     def _on_mouse_wheel(self, event):
         self.yview_scroll(-int(event.delta/120), "units")
 
-    def interface_container(self, entity, type_, show_entity, show_home, show_interface_verification):
+    def interface_container(self, entity, type_, show_entity, show_home, show_edit, show_interface_verification):
         # --- Create Widgets ---
         self.interface_widgets_frame = InterfaceVerificationWidget(self.screen, entity, type_, show_entity, show_home,
-                                                                   show_interface_verification)
+                                                                   show_edit, show_interface_verification)
         self.interface_widgets_frame.grid(row=0, column=0, sticky="NSEW")
         self.interface_widgets_frame.columnconfigure(0, weight=1)

@@ -10,7 +10,7 @@ class ItemInterface(ttk.Frame):
     def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification):
         super().__init__(container)
 
-        print(entity)
+        print(f'>> entity: {entity}')
 
         self.entity = entity
         self.entity_type = type_
@@ -29,7 +29,7 @@ class ItemInterface(ttk.Frame):
         self.description = entity['description']
 
         self.abilities = get_item_abilities(self.id)
-        print(self.abilities)
+        print(f'>>>> abilities: {self.abilities}')
 
         self.item = Item(self.name, self.name, self.type, self.reduction, self.damage, self.range, self.health,
                          self.area, self.abilities, self.effects, self.description)

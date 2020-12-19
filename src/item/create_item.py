@@ -117,9 +117,9 @@ class ItemScroll(tk.Canvas):
         type_dict = {'Armor': 1, 'Weapon': 2}
 
         for item_frame in self.item_frames:
-            character = self.handle_selection_change(item_frame.character_entry, item_frame.characters)
-            npc = self.handle_selection_change(item_frame.npc_entry, item_frame.npcs)
-            monster = self.handle_selection_change(item_frame.monster_entry, item_frame.monsters)
+            character = item_frame.character_menu.get()
+            npc = item_frame.npc_menu.get()
+            monster = item_frame.monster_menu.get()
 
             abilities = self.handle_selection_change(item_frame.abilities_entry, item_frame.abilities)
             abilities_result = get_entity_ids('ability', abilities)
@@ -147,14 +147,14 @@ class ItemScroll(tk.Canvas):
                 popup_showinfo(create_item)
 
     def choose_user(self, character, npc, monster):
-        user = ''
-
-        if len(character) > 0:
-            user = character[0]
-        elif len(npc) > 0:
-            user = npc[0]
-        elif len(monster) > 0:
-            user = monster[0]
+        if character != 'None':
+            user = character
+        elif npc != 'None':
+            user = npc
+        elif monster != 'None':
+            user = monster
+        else:
+            user = 'Character'
 
         return user
 

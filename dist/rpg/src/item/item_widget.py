@@ -13,11 +13,11 @@ class ItemWidget(ttk.Frame):
 
         self.types_ = ('Armor', 'Weapon')
 
-        self.characters = ['None'] + get_search_entities('', 'Character')
-        self.npcs = ['None'] + get_search_entities('', 'NPC')
-        self.monsters = ['None'] + get_search_entities('', 'Monster')
+        self.characters = ['None', 'Character'] + get_search_entities('', 'Character')
+        self.npcs = ['None', 'NPC'] + get_search_entities('', 'NPC')
+        self.monsters = ['None', 'Monster'] + get_search_entities('', 'Monster')
 
-        self.abilities = ['None'] + get_abilities_name_by_type(4)
+        self.abilities = ['None', 'Ability'] + get_abilities_name_by_type(4)
 
         # --- Attributes ---
         self.item = 'Item ' + item_frame_number
@@ -29,15 +29,16 @@ class ItemWidget(ttk.Frame):
         self.health = tk.StringVar(value='0')
         self.area = tk.StringVar(value='0')
 
-        self.character = tk.StringVar(value=self.characters)
-        self.npc = tk.StringVar(value=self.npcs)
-        self.monster = tk.StringVar(value=self.monsters)
+        self.character = tk.StringVar(value=self.characters[1])
+        self.npc = tk.StringVar(value=self.npcs[0])
+        self.monster = tk.StringVar(value=self.monsters[0])
         self.ability = tk.StringVar(value=self.abilities)
 
         # --- Widgets ---
-        self.character_entry = tk.Listbox()
-        self.npc_entry = tk.Listbox()
-        self.monster_entry = tk.Listbox()
+        self.character_menu = ttk.Combobox()
+        self.npc_menu = ttk.Combobox()
+        self.monster_menu = ttk.Combobox()
+
         self.abilities_entry = tk.Listbox()
         self.effects_entry = tk.Text()
         self.description_entry = tk.Text()
@@ -89,68 +90,40 @@ class ItemWidget(ttk.Frame):
         )
         user_label.grid(row=3, column=0, sticky="EW")
 
-        self.character_entry = tk.Listbox(
+        self.character_menu = ttk.Combobox(
             container,
-            listvariable=self.character,
-            # selectmode="extended",
-            # exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=4
+            name='character',
+            textvariable=self.character,
+            values=self.characters,
+            state="readonly"
         )
-        self.character_entry.grid(row=3, column=1, sticky="EW")
-
-        self.character_entry.select_set(0)
-
-        character_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        character_scrollbar.config(command=self.character_entry.yview)
-        character_scrollbar.grid(row=3, column=2, sticky="NS")
-
-        self.character_entry.config(yscrollcommand=character_scrollbar.set)
+        self.character_menu.grid(row=3, column=1, sticky="EW")
 
         # --- NPC ---
 
-        self.npc_entry = tk.Listbox(
+        self.npc_menu = ttk.Combobox(
             container,
-            listvariable=self.npc,
-            # selectmode="extended",
-            # exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=4
+            name='npc',
+            textvariable=self.npc,
+            values=self.npcs,
+            state="readonly"
         )
-        self.npc_entry.grid(row=4, column=1, sticky="EW")
-
-        npc_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        npc_scrollbar.config(command=self.npc_entry.yview)
-        npc_scrollbar.grid(row=4, column=2, sticky="NS")
-
-        self.npc_entry.config(yscrollcommand=npc_scrollbar.set)
+        self.npc_menu.grid(row=4, column=1, sticky="EW")
 
         # --- Monster ---
 
-        self.monster_entry = tk.Listbox(
+        self.monster_menu = ttk.Combobox(
             container,
-            listvariable=self.monster,
-            # selectmode="extended",
-            # exportselection=False,
-            selectbackground="#2CCC5B",
-            highlightcolor="#1DE557",
-            font=self.font,
-            width=1,
-            height=4
+            name='monster',
+            textvariable=self.monster,
+            values=self.monsters,
+            state="readonly"
         )
-        self.monster_entry.grid(row=5, column=1, sticky="EW")
+        self.monster_menu.grid(row=5, column=1, sticky="EW")
 
-        monster_scrollbar = ttk.Scrollbar(container, orient="vertical")
-        monster_scrollbar.config(command=self.monster_entry.yview)
-        monster_scrollbar.grid(row=5, column=2, sticky="NS")
-
-        self.monster_entry.config(yscrollcommand=monster_scrollbar.set)
+        self.character_menu.bind("<<ComboboxSelected>>", self.selected_value)
+        self.npc_menu.bind("<<ComboboxSelected>>", self.selected_value)
+        self.monster_menu.bind("<<ComboboxSelected>>", self.selected_value)
 
         # --- Type ---
 
@@ -324,3 +297,18 @@ class ItemWidget(ttk.Frame):
         self.description_entry["yscrollcommand"] = description_scroll.set
 
         self.description_entry.insert(tk.END, 'None')
+
+    def selected_value(self, event):
+        selected_entity = str(event.widget).split(".")[-1]
+
+        print(selected_entity)
+
+        if selected_entity == 'character':
+            self.npc_menu.current(0)
+            self.monster_menu.current(0)
+        elif selected_entity == 'npc':
+            self.character_menu.current(0)
+            self.monster_menu.current(0)
+        elif selected_entity == 'monster':
+            self.character_menu.current(0)
+            self.npc_menu.current(0)
