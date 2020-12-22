@@ -21,7 +21,10 @@ def add_ability(ability, user):
 
         ability_id = cursor.lastrowid
 
-        if user != 'Character' and user != 'NPC' and user != 'Monster' and (type_ == 1 or type_ == 2 or type_ == 3):
+        user_types = ['Character', 'NPC', 'Monster']
+        ability_types = [1, 2, 3]
+
+        if user not in user_types and type_ in ability_types:
             cursor.execute('INSERT INTO users_abilities (ability_id, user_name) VALUES (?, ?)', (ability_id, user))
         elif user != 'Item' and type_ == 4:
             item = get_specific_items(user, 0)[0]
