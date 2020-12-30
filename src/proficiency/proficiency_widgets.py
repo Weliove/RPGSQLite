@@ -11,7 +11,7 @@ class ProficiencyWidget(ttk.Frame):
 
         # --- Widgets ---
         self.name = tk.StringVar()
-        self.description = tk.StringVar()
+        self.description_entry = tk.Text()
 
         # --- Frame ---
         proficiency_widget_frame = ttk.Frame(self)
@@ -51,3 +51,28 @@ class ProficiencyWidget(ttk.Frame):
             width=60
         )
         name_entry.grid(row=2, column=1, sticky="EW")
+
+        # --- Description ---
+        description_label = ttk.Label(
+            container,
+            text="Description"
+        )
+        description_label.grid(row=3, column=0, sticky="EW")
+
+        self.description_entry = tk.Text(
+            container,
+            width=1,
+            height=5
+        )
+        self.description_entry.grid(row=3, column=1, sticky="EW")
+
+        description_scroll = ttk.Scrollbar(
+            container,
+            orient="vertical",
+            command=self.description_entry.yview
+        )
+        description_scroll.grid(row=3, column=2, sticky="ns")
+
+        self.description_entry["yscrollcommand"] = description_scroll.set
+
+        self.description_entry.insert(tk.END, 'None')

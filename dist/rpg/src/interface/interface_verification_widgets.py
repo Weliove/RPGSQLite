@@ -3,6 +3,7 @@ from tkinter import ttk
 from src.connection.database import search_database
 from src.interface.ability_interface import AbilityInterface
 from src.interface.item_interface import ItemInterface
+from src.interface.title_interface import TitleInterface
 from src.interface.user_interface import UserInterface
 
 
@@ -32,9 +33,13 @@ class InterfaceVerificationWidget(ttk.Frame):
             if self.entity_type == 'items':
                 new_frame = ItemInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
                                           self.show_interface_verification)
-            else:
+            elif self.entity_type == 'abilities':
                 new_frame = AbilityInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
                                              self.show_interface_verification)
+            elif self.entity_type == 'titles':
+                new_frame = TitleInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit)
+            else:
+                new_frame = None
 
             new_frame.grid(row=current_rows, column=0, sticky="NSEW")
             new_frame.columnconfigure(0, weight=1)

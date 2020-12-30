@@ -13,6 +13,8 @@ def get_list(cursor):
 def add_user(user):
     name = user['name']
     type_ = user['type']
+    strength_lv = user['strength_lv']
+    magic_lv = user['magic_lv']
     health = user['health']
     adrenaline = user['adrenaline']
     physical_ability = user['physical_ability']
@@ -27,8 +29,8 @@ def add_user(user):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?)',
-                       (name, type_, health, adrenaline, physical_ability, description))
+        cursor.execute('INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                       (name, type_, strength_lv, magic_lv, health, adrenaline, physical_ability, description))
 
         if len(classes_id) > 0:
             for class_ in classes_id:
@@ -55,6 +57,8 @@ def add_user(user):
 def update_user(user, current_name):
     name = user['name']
     type_ = user['type']
+    strength_lv = user['strength_lv']
+    magic_lv = user['magic_lv']
     health = user['health']
     adrenaline = user['adrenaline']
     physical_ability = user['physical_ability']
@@ -69,9 +73,10 @@ def update_user(user, current_name):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('UPDATE users SET name=?, type=?, health=?, adrenaline=?, physical_ability=?, description=? '
-                       'WHERE name=?',
-                       (name, type_, health, adrenaline, physical_ability, description, current_name))
+        cursor.execute('UPDATE users SET name=?, type=?, strength_lv=?, magic_lv=?, health=?, adrenaline=?, '
+                       'physical_ability=?, description=? WHERE name=?',
+                       (name, type_, strength_lv, magic_lv, health, adrenaline, physical_ability, description,
+                        current_name))
 
         cursor.execute('DELETE FROM users_classes WHERE user_name=?', (current_name,))
         if len(classes_id) > 0:
@@ -128,10 +133,12 @@ def get_user_attributes(cursor):
     return [{
         'name': row[0],
         'type': row[1],
-        'health': row[2],
-        'adrenaline': row[3],
-        'physical_ability': row[4],
-        'description': row[5]
+        'strength_lv': row[2],
+        'magic_lv': row[3],
+        'health': row[4],
+        'adrenaline': row[5],
+        'physical_ability': row[6],
+        'description': row[7]
     } for row in cursor.fetchall()][0]
 
 

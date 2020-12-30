@@ -10,6 +10,7 @@ from src.edit.edit import Edit
 from src.interface.interface import Interface
 from src.interface.interface_verification import InterfaceVerification
 from src.item.create_item import CreateItem
+from src.proficiency.create_proficiency import CreateProficiency
 from src.search.search import Search
 from src.title.create_title import CreateTitle
 from src.wiki.create_wiki import CreateWiki
@@ -32,6 +33,7 @@ class RPG(tk.Tk):
             lambda: self.show_create_item(),
             lambda: self.show_create_ability(),
             lambda: self.show_create_title(),
+            lambda: self.show_create_proficiency(),
             lambda: self.show_wiki()
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
@@ -45,6 +47,8 @@ class RPG(tk.Tk):
         self.create_ability_frame = CreateAbility(self, lambda: self.show_frame(Home))
 
         self.create_title_frame = CreateTitle(self, lambda: self.show_frame(Home))
+
+        self.create_proficiency_frame = CreateProficiency(self, lambda: self.show_frame(Home))
 
         self.interface_frame = None
 
@@ -61,6 +65,7 @@ class RPG(tk.Tk):
             CreateItem: self.create_item_frame,
             CreateAbility: self.create_ability_frame,
             CreateTitle: self.create_title_frame,
+            CreateProficiency: self.create_proficiency_frame,
             Interface: self.interface_frame,
             Edit: self.edit_frame,
             InterfaceVerification: self.interface_verification_frame,
@@ -127,6 +132,15 @@ class RPG(tk.Tk):
 
         self.frames[CreateTitle] = self.create_title_frame
         self.show_frame(CreateTitle)
+
+    def show_create_proficiency(self):
+        self.check_frame_existence(self.create_proficiency_frame)
+
+        self.create_proficiency_frame = CreateProficiency(self, lambda: self.show_frame(Home))
+        self.create_proficiency_frame.grid(row=0, column=0, sticky='NSEW')
+
+        self.frames[CreateProficiency] = self.create_proficiency_frame
+        self.show_frame(CreateProficiency)
 
     def show_interface(self, entity, type_):
         self.check_frame_existence(self.interface_frame)

@@ -19,7 +19,9 @@ class EditUser(ttk.Frame):
 
         self.show_interface = show_interface
 
-        self.type_values = ("Character", "NPC", "Monster")
+        self.type_values = ('Character', 'NPC', 'Monster')
+
+        self.lv_values = ('Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5')
 
         self.classes_total = get_classes()
         self.classes = ['None'] + get_entities_names(self.classes_total)
@@ -42,6 +44,8 @@ class EditUser(ttk.Frame):
         # --- User ---
         self.user_name = entity['name']
         self.user_type_ = entity['type']
+        self.user_strength_lv = entity['strength_lv']
+        self.user_magic_lv = entity['magic_lv']
         self.user_health = entity['health']
         self.user_adrenaline = entity['adrenaline']
         self.user_physical_ability = entity['physical_ability']
@@ -56,12 +60,14 @@ class EditUser(ttk.Frame):
         # --- Attributes ---
         self.name = tk.StringVar(value=self.user_name)
         self.type = tk.StringVar(value=self.type_values[self.user_type_ - 1])
+        self.strength_lv = tk.StringVar(value=self.lv_values[self.user_strength_lv - 1])
+        self.magic_lv = tk.StringVar(value=self.lv_values[self.user_magic_lv - 1])
         self.health = tk.StringVar(value=self.user_health)
         self.adrenaline = tk.StringVar(value=self.user_adrenaline)
         self.class_ = tk.StringVar(value=self.classes)
         self.armor = tk.StringVar(value=self.generate_armor())
         self.weapon = tk.StringVar(value=self.weapons)
-        self.physical_ability = tk.StringVar(value='None')
+        self.physical_ability = tk.StringVar(value=self.user_physical_ability)
         self.title = tk.StringVar(value=self.titles)
         self.ability = tk.StringVar(value=self.abilities)
         self.proficiency = tk.StringVar(value=self.proficiencies)
@@ -106,39 +112,69 @@ class EditUser(ttk.Frame):
         )
         type_entry.grid(row=1, column=1, sticky="EW")
 
+        # --- Strength Level ---
+        strength_lv_label = ttk.Label(
+            self,
+            text='Strength Lv'
+        )
+        strength_lv_label.grid(row=2, column=0, sticky='EW')
+
+        strength_lv_entry = ttk.Combobox(
+            self,
+            textvariable=self.strength_lv,
+            values=self.lv_values,
+            state="readonly"
+        )
+        strength_lv_entry.grid(row=2, column=1, sticky='EW')
+
+        # --- Magic Level ---
+        magic_lv_label = ttk.Label(
+            self,
+            text='Magic Lv'
+        )
+        magic_lv_label.grid(row=3, column=0, sticky='EW')
+
+        magic_lv_entry = ttk.Combobox(
+            self,
+            textvariable=self.magic_lv,
+            values=self.lv_values,
+            state="readonly"
+        )
+        magic_lv_entry.grid(row=3, column=1, sticky='EW')
+
         # --- Health ---
         health_label = ttk.Label(
             self,
             text="Health"
         )
-        health_label.grid(row=2, column=0, sticky="EW")
+        health_label.grid(row=4, column=0, sticky="EW")
 
         health_entry = ttk.Entry(
             self,
             textvariable=self.health,
             width=60
         )
-        health_entry.grid(row=2, column=1, sticky="EW")
+        health_entry.grid(row=4, column=1, sticky="EW")
 
         # --- Adrenaline ---
         adrenaline_label = ttk.Label(
             self,
             text="Adrenaline"
         )
-        adrenaline_label.grid(row=3, column=0, sticky="EW")
+        adrenaline_label.grid(row=5, column=0, sticky="EW")
 
         adrenaline_entry = ttk.Entry(
             self,
             textvariable=self.adrenaline
         )
-        adrenaline_entry.grid(row=3, column=1, sticky="EW")
+        adrenaline_entry.grid(row=5, column=1, sticky="EW")
 
         # --- Class ---
         class_label = ttk.Label(
             self,
             text="Class"
         )
-        class_label.grid(row=4, column=0, sticky="EW")
+        class_label.grid(row=6, column=0, sticky="EW")
 
         self.class_entry = tk.Listbox(
             self,
@@ -151,7 +187,7 @@ class EditUser(ttk.Frame):
             width=1,
             height=5
         )
-        self.class_entry.grid(row=4, column=1, sticky="EW")
+        self.class_entry.grid(row=6, column=1, sticky="EW")
 
         set_stored_items(self.class_entry, self.user_classes, self.classes)
 
@@ -159,7 +195,7 @@ class EditUser(ttk.Frame):
 
         class_scrollbar = ttk.Scrollbar(self, orient="vertical")
         class_scrollbar.config(command=self.class_entry.yview)
-        class_scrollbar.grid(row=4, column=2, sticky="NS")
+        class_scrollbar.grid(row=6, column=2, sticky="NS")
 
         self.class_entry.config(yscrollcommand=class_scrollbar.set)
 
@@ -168,7 +204,7 @@ class EditUser(ttk.Frame):
             self,
             text="Armor"
         )
-        armor_label.grid(row=5, column=0, sticky="EW")
+        armor_label.grid(row=7, column=0, sticky="EW")
 
         armor_entry = ttk.Combobox(
             self,
@@ -176,14 +212,14 @@ class EditUser(ttk.Frame):
             values=self.armors,
             state="readonly"
         )
-        armor_entry.grid(row=5, column=1, sticky="EW")
+        armor_entry.grid(row=7, column=1, sticky="EW")
 
         # --- Weapon ---
         weapon_label = ttk.Label(
             self,
             text="Weapon"
         )
-        weapon_label.grid(row=6, column=0, sticky="EW")
+        weapon_label.grid(row=8, column=0, sticky="EW")
 
         self.weapon_entry = tk.Listbox(
             self,
@@ -196,7 +232,7 @@ class EditUser(ttk.Frame):
             width=1,
             height=5
         )
-        self.weapon_entry.grid(row=6, column=1, sticky="EW")
+        self.weapon_entry.grid(row=8, column=1, sticky="EW")
 
         print(f'>>{self.weapons}')
 
@@ -206,7 +242,7 @@ class EditUser(ttk.Frame):
 
         weapon_scrollbar = ttk.Scrollbar(self, orient="vertical")
         weapon_scrollbar.config(command=self.weapon_entry.yview)
-        weapon_scrollbar.grid(row=6, column=2, sticky="NS")
+        weapon_scrollbar.grid(row=8, column=2, sticky="NS")
 
         self.weapon_entry.config(yscrollcommand=weapon_scrollbar.set)
 
@@ -215,20 +251,20 @@ class EditUser(ttk.Frame):
             self,
             text="Physical Ab."
         )
-        physical_ability_label.grid(row=7, column=0, sticky="EW")
+        physical_ability_label.grid(row=9, column=0, sticky="EW")
 
         physical_ability_entry = ttk.Entry(
             self,
             textvariable=self.physical_ability
         )
-        physical_ability_entry.grid(row=7, column=1, sticky="EW")
+        physical_ability_entry.grid(row=9, column=1, sticky="EW")
 
         # --- Title ---
         title_label = ttk.Label(
             self,
             text="Title"
         )
-        title_label.grid(row=8, column=0, sticky="EW")
+        title_label.grid(row=10, column=0, sticky="EW")
 
         self.title_entry = tk.Listbox(
             self,
@@ -241,7 +277,7 @@ class EditUser(ttk.Frame):
             width=1,
             height=5
         )
-        self.title_entry.grid(row=8, column=1, sticky="EW")
+        self.title_entry.grid(row=10, column=1, sticky="EW")
 
         set_stored_items(self.title_entry, self.user_titles, self.titles)
 
@@ -249,7 +285,7 @@ class EditUser(ttk.Frame):
 
         title_scrollbar = ttk.Scrollbar(self, orient="vertical")
         title_scrollbar.config(command=self.title_entry.yview)
-        title_scrollbar.grid(row=8, column=2, sticky="NS")
+        title_scrollbar.grid(row=10, column=2, sticky="NS")
 
         self.title_entry.config(yscrollcommand=title_scrollbar.set)
 
@@ -258,7 +294,7 @@ class EditUser(ttk.Frame):
             self,
             text="Ability"
         )
-        ability_label.grid(row=9, column=0, sticky="EW")
+        ability_label.grid(row=11, column=0, sticky="EW")
 
         self.ability_entry = tk.Listbox(
             self,
@@ -271,7 +307,7 @@ class EditUser(ttk.Frame):
             width=1,
             height=5
         )
-        self.ability_entry.grid(row=9, column=1, sticky="EW")
+        self.ability_entry.grid(row=11, column=1, sticky="EW")
 
         set_stored_items(self.ability_entry, self.user_abilities, self.abilities)
 
@@ -279,7 +315,7 @@ class EditUser(ttk.Frame):
 
         ability_scrollbar = ttk.Scrollbar(self, orient="vertical")
         ability_scrollbar.config(command=self.ability_entry.yview)
-        ability_scrollbar.grid(row=9, column=2, sticky="NS")
+        ability_scrollbar.grid(row=11, column=2, sticky="NS")
 
         self.ability_entry.config(yscrollcommand=ability_scrollbar.set)
 
@@ -288,7 +324,7 @@ class EditUser(ttk.Frame):
             self,
             text="Proficiency"
         )
-        proficiency_label.grid(row=10, column=0, sticky="EW")
+        proficiency_label.grid(row=12, column=0, sticky="EW")
 
         self.proficiency_entry = tk.Listbox(
             self,
@@ -301,7 +337,7 @@ class EditUser(ttk.Frame):
             width=1,
             height=5
         )
-        self.proficiency_entry.grid(row=10, column=1, sticky="EW")
+        self.proficiency_entry.grid(row=12, column=1, sticky="EW")
 
         set_stored_items(self.proficiency_entry, self.user_proficiencies, self.proficiencies)
 
@@ -309,7 +345,7 @@ class EditUser(ttk.Frame):
 
         proficiency_scrollbar = ttk.Scrollbar(self, orient="vertical")
         proficiency_scrollbar.config(command=self.proficiency_entry.yview)
-        proficiency_scrollbar.grid(row=10, column=2, sticky="NS")
+        proficiency_scrollbar.grid(row=12, column=2, sticky="NS")
 
         self.proficiency_entry.config(yscrollcommand=proficiency_scrollbar.set)
 
@@ -318,21 +354,21 @@ class EditUser(ttk.Frame):
             self,
             text="Description"
         )
-        description_label.grid(row=11, column=0, sticky="EW")
+        description_label.grid(row=13, column=0, sticky="EW")
 
         self.description_entry = tk.Text(
             self,
             width=1,
             height=5
         )
-        self.description_entry.grid(row=11, column=1, sticky="EW")
+        self.description_entry.grid(row=13, column=1, sticky="EW")
 
         description_scroll = ttk.Scrollbar(
             self,
             orient="vertical",
             command=self.description_entry.yview
         )
-        description_scroll.grid(row=11, column=2, sticky="ns")
+        description_scroll.grid(row=13, column=2, sticky="ns")
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 
@@ -354,6 +390,9 @@ class EditUser(ttk.Frame):
 
         type_ = self.type.get()
         type_result = get_user_types_ids(type_)
+
+        strength_lv = int(self.strength_lv.get()[6])
+        magic_lv = int(self.magic_lv.get()[6])
 
         health = self.health.get()
         adrenaline = self.adrenaline.get()
@@ -385,7 +424,7 @@ class EditUser(ttk.Frame):
         if weapon:
             items += get_entities_ids(self.weapons_total, weapon)
 
-        avatar = Avatar(name, type_result, health, adrenaline, class_result, items,
+        avatar = Avatar(name, type_result, strength_lv, magic_lv, health, adrenaline, class_result, items,
                         physical_ability, title_result, ability_result, proficiency_result, description)
 
         edit_avatar = avatar.update_user(self.user_name)

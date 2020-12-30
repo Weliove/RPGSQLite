@@ -31,8 +31,12 @@ class AvatarWidget(tk.Frame):
         self.proficiencies_total = get_proficiencies()
         self.proficiencies = ['None'] + get_entities_names(self.proficiencies_total)
 
+        self.lv_values = ('Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5')
+
         # --- Attributes ---
         self.name = tk.StringVar()
+        self.strength_lv = tk.StringVar(value=self.lv_values[0])
+        self.magic_lv = tk.StringVar(value=self.lv_values[0])
         self.health = tk.StringVar(value=0)
         self.type = tk.StringVar(value=self.type_values[0])
         self.adrenaline = tk.StringVar(value=0)
@@ -92,39 +96,69 @@ class AvatarWidget(tk.Frame):
         )
         type_entry.grid(row=1, column=1, sticky="EW")
 
+        # --- Strength Level ---
+        strength_lv_label = ttk.Label(
+            container,
+            text='Strength Lv'
+        )
+        strength_lv_label.grid(row=2, column=0, sticky='EW')
+
+        strength_lv_entry = ttk.Combobox(
+            container,
+            textvariable=self.strength_lv,
+            values=self.lv_values,
+            state="readonly"
+        )
+        strength_lv_entry.grid(row=2, column=1, sticky='EW')
+
+        # --- Magic Level ---
+        magic_lv_label = ttk.Label(
+            container,
+            text='Magic Lv'
+        )
+        magic_lv_label.grid(row=3, column=0, sticky='EW')
+
+        magic_lv_entry = ttk.Combobox(
+            container,
+            textvariable=self.magic_lv,
+            values=self.lv_values,
+            state="readonly"
+        )
+        magic_lv_entry.grid(row=3, column=1, sticky='EW')
+
         # --- Health ---
         health_label = ttk.Label(
             container,
             text="Health"
         )
-        health_label.grid(row=2, column=0, sticky="EW")
+        health_label.grid(row=4, column=0, sticky="EW")
 
         health_entry = ttk.Entry(
             container,
             textvariable=self.health,
             width=60
         )
-        health_entry.grid(row=2, column=1, sticky="EW")
+        health_entry.grid(row=4, column=1, sticky="EW")
 
         # --- Adrenaline ---
         adrenaline_label = ttk.Label(
             container,
             text="Adrenaline"
         )
-        adrenaline_label.grid(row=3, column=0, sticky="EW")
+        adrenaline_label.grid(row=5, column=0, sticky="EW")
 
         adrenaline_entry = ttk.Entry(
             container,
             textvariable=self.adrenaline
         )
-        adrenaline_entry.grid(row=3, column=1, sticky="EW")
+        adrenaline_entry.grid(row=5, column=1, sticky="EW")
 
         # --- Class ---
         class_label = ttk.Label(
             container,
             text="Class"
         )
-        class_label.grid(row=4, column=0, sticky="EW")
+        class_label.grid(row=6, column=0, sticky="EW")
 
         self.class_entry = tk.Listbox(
             container,
@@ -137,13 +171,13 @@ class AvatarWidget(tk.Frame):
             width=1,
             height=5
         )
-        self.class_entry.grid(row=4, column=1, sticky="EW")
+        self.class_entry.grid(row=6, column=1, sticky="EW")
 
         self.class_entry.select_set(0)
 
         class_scrollbar = ttk.Scrollbar(container, orient="vertical")
         class_scrollbar.config(command=self.class_entry.yview)
-        class_scrollbar.grid(row=4, column=2, sticky="NS")
+        class_scrollbar.grid(row=6, column=2, sticky="NS")
 
         self.class_entry.config(yscrollcommand=class_scrollbar.set)
 
@@ -152,7 +186,7 @@ class AvatarWidget(tk.Frame):
             container,
             text="Armor"
         )
-        armor_label.grid(row=5, column=0, sticky="EW")
+        armor_label.grid(row=7, column=0, sticky="EW")
 
         armor_entry = ttk.Combobox(
             container,
@@ -160,14 +194,14 @@ class AvatarWidget(tk.Frame):
             values=self.armors,
             state="readonly"
         )
-        armor_entry.grid(row=5, column=1, sticky="EW")
+        armor_entry.grid(row=7, column=1, sticky="EW")
 
         # --- Weapon ---
         weapon_label = ttk.Label(
             container,
             text="Weapon"
         )
-        weapon_label.grid(row=6, column=0, sticky="EW")
+        weapon_label.grid(row=8, column=0, sticky="EW")
 
         self.weapon_entry = tk.Listbox(
             container,
@@ -180,13 +214,13 @@ class AvatarWidget(tk.Frame):
             width=1,
             height=5
         )
-        self.weapon_entry.grid(row=6, column=1, sticky="EW")
+        self.weapon_entry.grid(row=8, column=1, sticky="EW")
 
         self.weapon_entry.select_set(0)
 
         weapon_scrollbar = ttk.Scrollbar(container, orient="vertical")
         weapon_scrollbar.config(command=self.weapon_entry.yview)
-        weapon_scrollbar.grid(row=6, column=2, sticky="NS")
+        weapon_scrollbar.grid(row=8, column=2, sticky="NS")
 
         self.weapon_entry.config(yscrollcommand=weapon_scrollbar.set)
 
@@ -195,20 +229,20 @@ class AvatarWidget(tk.Frame):
             container,
             text="Physical Ab."
         )
-        physical_ability_label.grid(row=7, column=0, sticky="EW")
+        physical_ability_label.grid(row=9, column=0, sticky="EW")
 
         physical_ability_entry = ttk.Entry(
             container,
             textvariable=self.physical_ability
         )
-        physical_ability_entry.grid(row=7, column=1, sticky="EW")
+        physical_ability_entry.grid(row=9, column=1, sticky="EW")
 
         # --- Title ---
         title_label = ttk.Label(
             container,
             text="Title"
         )
-        title_label.grid(row=8, column=0, sticky="EW")
+        title_label.grid(row=10, column=0, sticky="EW")
 
         self.title_entry = tk.Listbox(
             container,
@@ -221,12 +255,12 @@ class AvatarWidget(tk.Frame):
             width=1,
             height=5
         )
-        self.title_entry.grid(row=8, column=1, sticky="EW")
+        self.title_entry.grid(row=10, column=1, sticky="EW")
         self.title_entry.select_set(0)
 
         title_scrollbar = ttk.Scrollbar(container, orient="vertical")
         title_scrollbar.config(command=self.title_entry.yview)
-        title_scrollbar.grid(row=8, column=2, sticky="NS")
+        title_scrollbar.grid(row=10, column=2, sticky="NS")
 
         self.title_entry.config(yscrollcommand=title_scrollbar.set)
 
@@ -235,7 +269,7 @@ class AvatarWidget(tk.Frame):
             container,
             text="Ability"
         )
-        ability_label.grid(row=9, column=0, sticky="EW")
+        ability_label.grid(row=11, column=0, sticky="EW")
 
         self.ability_entry = tk.Listbox(
             container,
@@ -248,13 +282,13 @@ class AvatarWidget(tk.Frame):
             width=1,
             height=5
         )
-        self.ability_entry.grid(row=9, column=1, sticky="EW")
+        self.ability_entry.grid(row=11, column=1, sticky="EW")
 
         self.ability_entry.select_set(0)
 
         ability_scrollbar = ttk.Scrollbar(container, orient="vertical")
         ability_scrollbar.config(command=self.ability_entry.yview)
-        ability_scrollbar.grid(row=9, column=2, sticky="NS")
+        ability_scrollbar.grid(row=11, column=2, sticky="NS")
 
         self.ability_entry.config(yscrollcommand=ability_scrollbar.set)
 
@@ -263,7 +297,7 @@ class AvatarWidget(tk.Frame):
             container,
             text="Proficiency"
         )
-        proficiency_label.grid(row=10, column=0, sticky="EW")
+        proficiency_label.grid(row=12, column=0, sticky="EW")
 
         self.proficiency_entry = tk.Listbox(
             container,
@@ -276,13 +310,13 @@ class AvatarWidget(tk.Frame):
             width=1,
             height=5
         )
-        self.proficiency_entry.grid(row=10, column=1, sticky="EW")
+        self.proficiency_entry.grid(row=12, column=1, sticky="EW")
 
         self.proficiency_entry.select_set(0)
 
         proficiency_scrollbar = ttk.Scrollbar(container, orient="vertical")
         proficiency_scrollbar.config(command=self.proficiency_entry.yview)
-        proficiency_scrollbar.grid(row=10, column=2, sticky="NS")
+        proficiency_scrollbar.grid(row=12, column=2, sticky="NS")
 
         self.proficiency_entry.config(yscrollcommand=proficiency_scrollbar.set)
 
@@ -291,21 +325,21 @@ class AvatarWidget(tk.Frame):
             container,
             text="Description"
         )
-        description_label.grid(row=11, column=0, sticky="EW")
+        description_label.grid(row=13, column=0, sticky="EW")
 
         self.description_entry = tk.Text(
             container,
             width=1,
             height=5
         )
-        self.description_entry.grid(row=11, column=1, sticky="EW")
+        self.description_entry.grid(row=13, column=1, sticky="EW")
 
         description_scroll = ttk.Scrollbar(
             container,
             orient="vertical",
             command=self.description_entry.yview
         )
-        description_scroll.grid(row=11, column=2, sticky="ns")
+        description_scroll.grid(row=13, column=2, sticky="ns")
 
         self.description_entry["yscrollcommand"] = description_scroll.set
 

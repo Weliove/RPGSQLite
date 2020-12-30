@@ -207,6 +207,7 @@ imports:
  &#8226;   <a href="#src.interface.interface">src.interface.interface</a>
  &#8226;   <a href="#src.interface.interface_verification">src.interface.interface_verification</a>
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
+ &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
  &#8226;   <a href="#src.search.search">src.search.search</a>
  &#8226;   <a href="#src.title.create_title">src.title.create_title</a>
  &#8226;   <a href="#src.wiki.create_wiki">src.wiki.create_wiki</a>
@@ -7104,7 +7105,7 @@ imports:
  &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib._bootstrap">importlib._bootstrap</a>
  &#8226;   <a href="#importlib._bootstrap_external">importlib._bootstrap_external</a>
- &#8226;   <a href="#importlib.abc">importlib.abc</a>
+ &#8226;   <a href="#importlib.machinery">importlib.machinery</a>
  &#8226;   <a href="#sys">sys</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#warnings">warnings</a>
@@ -7188,8 +7189,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#importlib">importlib</a>
- &#8226;   <a href="#importlib.metadata">importlib.metadata</a>
+    <a href="#importlib.metadata">importlib.metadata</a>
  &#8226;   <a href="#importlib.util">importlib.util</a>
  &#8226;   <a href="#zipimport">zipimport</a>
 
@@ -7211,6 +7211,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#ctypes.util">ctypes.util</a>
+ &#8226;   <a href="#importlib">importlib</a>
  &#8226;   <a href="#importlib.abc">importlib.abc</a>
  &#8226;   <a href="#inspect">inspect</a>
  &#8226;   <a href="#pkgutil">pkgutil</a>
@@ -10189,6 +10190,7 @@ imported by:
  &#8226;   <a href="#src.interface">src.interface</a>
  &#8226;   <a href="#src.item">src.item</a>
  &#8226;   <a href="#src.popup_info">src.popup_info</a>
+ &#8226;   <a href="#src.proficiency">src.proficiency</a>
  &#8226;   <a href="#src.search">src.search</a>
  &#8226;   <a href="#src.title">src.title</a>
  &#8226;   <a href="#src.wiki">src.wiki</a>
@@ -10970,6 +10972,7 @@ imports:
  &#8226;   <a href="#src.interface">src.interface</a>
  &#8226;   <a href="#src.interface.ability_interface">src.interface.ability_interface</a>
  &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
@@ -11041,7 +11044,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#src.interface.interface_widgets">src.interface.interface_widgets</a>
+    <a href="#src.interface.interface_verification_widgets">src.interface.interface_verification_widgets</a>
+ &#8226;   <a href="#src.interface.interface_widgets">src.interface.interface_widgets</a>
 
   </div>
 
@@ -11193,6 +11197,61 @@ imported by:
  &#8226;   <a href="#src.wiki.create_chapter">src.wiki.create_chapter</a>
  &#8226;   <a href="#src.wiki.create_section">src.wiki.create_section</a>
  &#8226;   <a href="#src.wiki.create_topic">src.wiki.create_topic</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.proficiency"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/proficiency/__init__.py" type="text/plain"><tt>src.proficiency</tt></a>
+<span class="moduletype">Package</span>  <div class="import">
+imports:
+    <a href="#src">src</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.proficiency.create_proficiency"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/proficiency/create_proficiency.py" type="text/plain"><tt>src.proficiency.create_proficiency</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.proficiency">src.proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#rpg.py">rpg.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.proficiency.proficiency_widgets"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/proficiency/proficiency_widgets.py" type="text/plain"><tt>src.proficiency.proficiency_widgets</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.proficiency">src.proficiency</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.font">tkinter.font</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
 
   </div>
 
@@ -12452,6 +12511,8 @@ imported by:
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
  &#8226;   <a href="#src.popup_info">src.popup_info</a>
+ &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
  &#8226;   <a href="#src.search.search">src.search.search</a>
  &#8226;   <a href="#src.search.search_widgets">src.search.search_widgets</a>
  &#8226;   <a href="#src.title.create_title">src.title.create_title</a>
@@ -12532,6 +12593,7 @@ imported by:
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
+ &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
  &#8226;   <a href="#src.title.title_widget">src.title.title_widget</a>
  &#8226;   <a href="#src.wiki.wiki_home">src.wiki.wiki_home</a>
  &#8226;   <a href="#src.wiki.wiki_section">src.wiki.wiki_section</a>
@@ -12591,6 +12653,8 @@ imported by:
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
+ &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
  &#8226;   <a href="#src.search.search">src.search.search</a>
  &#8226;   <a href="#src.search.search_widgets">src.search.search_widgets</a>
  &#8226;   <a href="#src.title.create_title">src.title.create_title</a>

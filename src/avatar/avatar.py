@@ -2,10 +2,12 @@ from src.connection.handle_users import add_user, update_user
 
 
 class Avatar:
-    def __init__(self, name, type_, health, adrenaline, class_, items, physical_ability, titles, abilities,
-                 proficiency, description):
+    def __init__(self, name, type_, strength_lv, magic_lv, health, adrenaline, class_, items, physical_ability, titles,
+                 abilities, proficiency, description):
         self.name = name
         self.type_ = type_
+        self.strength_lv = strength_lv
+        self.magic_lv = magic_lv
         self.health = health
         self.adrenaline = adrenaline
         self.class_ = class_
@@ -19,6 +21,8 @@ class Avatar:
         self.avatar = {
             'name': self.name,
             'type': self.type_,
+            'strength_lv': self.strength_lv,
+            'magic_lv': self.magic_lv,
             'health': self.health,
             'adrenaline': self.adrenaline,
             'class': self.class_,

@@ -97,6 +97,9 @@ class AvatarScroll(tk.Canvas):
         type_ = widgets.type.get()
         type_result = get_user_types_ids(type_)
 
+        strength_lv = int(widgets.strength_lv.get()[6])
+        magic_lv = int(widgets.magic_lv.get()[6])
+
         health = widgets.health.get()
         adrenaline = widgets.adrenaline.get()
 
@@ -127,7 +130,7 @@ class AvatarScroll(tk.Canvas):
         if weapon:
             items += get_entities_ids(widgets.weapons_total, weapon)
 
-        avatar = Avatar(name, type_result, health, adrenaline, class_result, items,
+        avatar = Avatar(name, type_result, strength_lv, magic_lv, health, adrenaline, class_result, items,
                         physical_ability, title_result, ability_result, proficiency_result, description)
 
         create_avatar = avatar.create_character()

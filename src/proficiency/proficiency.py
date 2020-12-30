@@ -2,15 +2,13 @@ from src.connection.handle_proficiencies import add_proficiency, update_proficie
 
 
 class Proficiency:
-    def __init__(self, name, description, topics):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.topics = topics
 
         self.proficiency = {
             'name': self.name,
-            'description': self.description,
-            'topics': self.topics
+            'description': self.description
         }
 
     def create_proficiency(self):

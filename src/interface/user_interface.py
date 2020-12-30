@@ -19,6 +19,8 @@ class UserInterface(ttk.Frame):
 
         self.name = entity['name']
         self.type_ = entity['type']
+        self.strength_lv = f'Strength Level:  {entity["strength_lv"]}'
+        self.magic_lv = f'Magic Level:  {entity["magic_lv"]}'
         self.health = 'Health:  ' + entity['health']
         self.adrenaline = 'Adrenaline:  ' + entity['adrenaline']
         self.class_ = get_user_classes(self.name)
@@ -29,8 +31,9 @@ class UserInterface(ttk.Frame):
         self.proficiency = get_user_proficiencies(self.name)
         self.description = 'Description:  ' + entity['description']
 
-        self.avatar = Avatar(self.name, self.type_, self.health, self.adrenaline, self.class_, self.items,
-                             self.physical_ability, self.titles, self.abilities, self.proficiency, self.description)
+        self.avatar = Avatar(self.name, self.type_, self.strength_lv, self.magic_lv, self.health, self.adrenaline,
+                             self.class_, self.items, self.physical_ability, self.titles, self.abilities,
+                             self.proficiency, self.description)
 
         self.create_widgets()
 
@@ -48,59 +51,71 @@ class UserInterface(ttk.Frame):
         )
         name_separator.grid(row=1, column=0, columnspan=1, sticky="EW")
 
+        strength_lv = ttk.Label(
+            self,
+            text=self.strength_lv
+        )
+        strength_lv.grid(row=2, column=0, sticky='EW')
+
+        magic_lv = ttk.Label(
+            self,
+            text=self.magic_lv
+        )
+        magic_lv.grid(row=3, column=0, sticky='EW')
+
         health = ttk.Label(
             self,
             text=self.health
         )
-        health.grid(row=2, column=0, sticky="EW")
+        health.grid(row=4, column=0, sticky="EW")
 
         adrenaline = ttk.Label(
             self,
             text=self.adrenaline
         )
-        adrenaline.grid(row=3, column=0, sticky="NSEW")
+        adrenaline.grid(row=5, column=0, sticky="NSEW")
 
         class_ = ttk.Label(
             self,
             text=generate_classes(self.class_)
         )
-        class_.grid(row=4, column=0, sticky="NSEW")
+        class_.grid(row=6, column=0, sticky="NSEW")
 
         items = ttk.Label(
             self,
             text=generate_items(self.items, self.item_types)
         )
-        items.grid(row=5, column=0, sticky="NSEW")
+        items.grid(row=7, column=0, sticky="NSEW")
 
         physical_ability = ttk.Label(
             self,
             text=self.physical_ability
         )
-        physical_ability.grid(row=6, column=0, sticky="NSEW")
+        physical_ability.grid(row=8, column=0, sticky="NSEW")
 
         title = ttk.Label(
             self,
             text=generate_titles(self.titles)
         )
-        title.grid(row=7, column=0, sticky="NSEW")
+        title.grid(row=9, column=0, sticky="NSEW")
 
         abilities = ttk.Label(
             self,
             text=generate_abilities(self.abilities)
         )
-        abilities.grid(row=8, column=0, sticky="NSEW")
+        abilities.grid(row=10, column=0, sticky="NSEW")
 
         proficiency = ttk.Label(
             self,
             text=generate_proficiencies(self.proficiency)
         )
-        proficiency.grid(row=9, column=0, sticky="NSEW")
+        proficiency.grid(row=11, column=0, sticky="NSEW")
 
         description = ttk.Label(
             self,
             text=self.description
         )
-        description.grid(row=10, column=0, sticky="NSEW")
+        description.grid(row=12, column=0, sticky="NSEW")
 
         def reconfigure_labels(event):
             physical_ability.configure(wraplength=self.winfo_width() - 25)
@@ -130,6 +145,15 @@ class UserInterface(ttk.Frame):
             cursor="hand2"
         )
         abilities_button.grid(column=0, sticky="EW")
+
+        titles_button = ttk.Button(
+            self,
+            text="Verify Titles",
+            command=lambda: show_interface_verification(self.titles, 'Title'),
+            state=button_state(self.titles),
+            cursor="hand2"
+        )
+        titles_button.grid(column=0, sticky="EW")
 
         edit_button = ttk.Button(
             self,
