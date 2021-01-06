@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.connection.database import get_search_entities
-from src.ability.ability_property import get_items_names
+from src.connection.handle_items import get_items
 
 
 class AbilityWidget(ttk.Frame):
@@ -16,7 +16,7 @@ class AbilityWidget(ttk.Frame):
         self.characters = ['None', 'Character'] + get_search_entities('', 'Character')
         self.npcs = ['None', 'NPC'] + get_search_entities('', 'NPC')
         self.monsters = ['None', 'Monster'] + get_search_entities('', 'Monster')
-        self.items = ['None', 'Item'] + get_items_names()
+        self.items = ['None', 'Item'] + [items['name'] for items in get_items()]
 
         # --- Attributes ---
         self.ability = 'Ability ' + ability_frame_number

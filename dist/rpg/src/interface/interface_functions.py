@@ -1,4 +1,7 @@
 # --- User ---
+from src.connection.database import get_entity
+
+
 def generate_items(items, item_types):
     text = '\n\t'
     item_result = []
@@ -87,3 +90,8 @@ def button_state(entity_list):
         return 'disabled'
 
     return 'normal'
+
+
+def interface(name, type_, show_interface, search_name, search_type):
+    new_entity = get_entity(name, type_)
+    show_interface(new_entity, type_, search_name, search_type)

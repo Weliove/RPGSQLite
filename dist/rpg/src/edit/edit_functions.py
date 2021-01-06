@@ -33,6 +33,6 @@ def set_stored_items(listbox_widget, stored_entities, total_list):
             listbox_widget.select_set(entity_index)
 
 
-def interface(name, type_, show_interface):
-    new_ability = get_entity(name, type_)
-    show_interface(new_ability, type_)
+def interface(name, type_, show_interface, search_name, search_type):
+    new_entity = get_entity(name, type_)
+    show_interface(new_entity, type_, search_name, search_type)

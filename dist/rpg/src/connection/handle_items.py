@@ -33,7 +33,9 @@ def add_item(item, user_name):
             for ability in abilities_id:
                 cursor.execute('INSERT INTO items_abilities (ability_id, item_id) VALUES (?, ?)', (ability, item_id))
 
-        if user_name != '':
+        user_types = ['Character', 'NPC', 'Monster']
+
+        if user_name != '' and user_name not in user_types:
             cursor.execute('INSERT INTO users_items (item_id, user_name) VALUES (?, ?)', (item_id, user_name))
 
 

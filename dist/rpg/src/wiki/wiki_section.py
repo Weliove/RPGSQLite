@@ -58,6 +58,13 @@ class WikiSection(ttk.Frame):
             )
             chapter_button.grid(column=0, sticky="EW")
 
+        def reconfigure_labels(event):
+            title.configure(wraplength=self.winfo_width() - 25)
+            if len(section_description) > 0:
+                description.configure(wraplength=self.winfo_width() - 25)
+
+        self.bind("<Configure>", reconfigure_labels)
+
     def create_buttons(self):
         wiki_separator = ttk.Separator(
             self

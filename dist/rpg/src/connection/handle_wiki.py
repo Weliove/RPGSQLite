@@ -21,11 +21,12 @@ def create_section(name, description, category_id) -> bool:
     return True
 
 
-def create_chapter(name, section_id) -> bool:
+def create_chapter(name, description, section_id) -> bool:
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('INSERT INTO wiki_chapters (name, section_id) VALUES (?, ?)', (name, section_id))
+        cursor.execute('INSERT INTO wiki_chapters (name, description, section_id) VALUES (?, ?, ?)',
+                       (name, description, section_id))
 
     return True
 
@@ -138,7 +139,8 @@ def get_chapters_attributes(cursor):
     return [{
         'id': row[0],
         'name': row[1],
-        'section_id': row[2]
+        'description': row[2],
+        'section_id': row[3]
     } for row in cursor.fetchall()]
 
 

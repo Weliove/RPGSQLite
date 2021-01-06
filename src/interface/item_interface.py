@@ -2,15 +2,24 @@ import tkinter as tk
 from tkinter import ttk
 
 from src.connection.handle_items import get_item_abilities
-from src.interface.interface_functions import generate_abilities, button_state
+from src.interface.interface_functions import generate_abilities, button_state, interface
 from src.item.item import Item
 
 
 class ItemInterface(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification):
+    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification,
+                 parent_name=None, parent_type=None, ver=False, search_entities_name=None, search_type=None):
         super().__init__(container)
 
-        print(f'>> entity: {entity}')
+        print(show_search)
+
+        self.container = container
+
+        self.parent_name = parent_name
+        self.parent_type = parent_type
+        self.ver = ver
+        self.search_entities_name = search_entities_name
+        self.search_type = search_type
 
         self.entity = entity
         self.entity_type = type_
@@ -141,10 +150,13 @@ class ItemInterface(ttk.Frame):
         )
         abilities_button.grid(column=0, sticky="EW")
 
+        print(self.parent_name)
+
         edit_button = ttk.Button(
             self,
             text="Edit",
-            command=lambda: show_edit(self.entity, self.entity_type),
+            command=lambda: show_edit(self.entity, self.entity_type, self.parent_name, self.parent_type,
+                                      self.search_entities_name, self.search_type),
             cursor="hand2"
         )
         edit_button.grid(column=0, sticky="EW")
@@ -152,7 +164,7 @@ class ItemInterface(ttk.Frame):
         back_button = ttk.Button(
             self,
             text="← Back",
-            command=show_search,
+            command=lambda: self.back(show_search),
             cursor="hand2"
         )
         back_button.grid(column=0, sticky="EW")
@@ -164,3 +176,9 @@ class ItemInterface(ttk.Frame):
             cursor="hand2"
         )
         home_button.grid(column=0, sticky="EW")
+
+    def back(self, show_search):
+        if self.ver:
+            interface(self.parent_name, self.parent_type, show_search, self.search_entities_name, self.search_type)
+        else:
+            show_search()

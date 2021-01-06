@@ -8,12 +8,17 @@ from src.edit.edit_user import EditUser
 
 
 class EditWidget(ttk.Frame):
-    def __init__(self, container, entity, entity_type, show_interface, show_home):
+    def __init__(self, container, entity, entity_type, parent_name, parent_type, show_interface, search_entities_name,
+                 search_type, show_home):
         super().__init__(container)
 
         self.entity = entity
         self.entity_type = entity_type
+        self.parent_name = parent_name
+        self.parent_type = parent_type
         self.show_interface = show_interface
+        self.search_entities_name = search_entities_name
+        self.search_type = search_type
         self.show_home = show_home
 
         self.edit_widget_frame = None
@@ -29,13 +34,15 @@ class EditWidget(ttk.Frame):
         type_ = search_database[entity_type]
 
         if type_ == 'users':
-            self.edit_widget_frame = EditUser(self, entity, show_interface)
+            self.edit_widget_frame = EditUser(self, entity, self.search_entities_name, self.search_type, show_interface)
         elif type_ == 'items':
-            self.edit_widget_frame = EditItem(self, entity, show_interface)
+            self.edit_widget_frame = EditItem(self, entity, self.search_entities_name, self.search_type, show_interface)
         elif type_ == 'abilities':
-            self.edit_widget_frame = EditAbility(self, entity, show_interface)
+            self.edit_widget_frame = EditAbility(self, entity, self.search_entities_name, self.search_type,
+                                                 show_interface)
         elif type_ == 'titles':
-            self.edit_widget_frame = EditTitle(self, entity, show_interface)
+            self.edit_widget_frame = EditTitle(self, entity, self.search_entities_name, self.search_type,
+                                               show_interface)
 
         self.edit_widget_frame.grid(row=0, column=0, sticky="NSEW")
         self.edit_widget_frame.columnconfigure(0, weight=1)
@@ -64,7 +71,7 @@ class EditWidget(ttk.Frame):
         back_button = ttk.Button(
             buttons_frame,
             text='← Back',
-            command=lambda: self.show_interface(self.entity, self.entity_type),
+            command=lambda: self.show_interface(self.entity, self.entity_type, self.parent_name, self.parent_type),
             cursor='hand2'
         )
         back_button.grid(row=2, column=0)

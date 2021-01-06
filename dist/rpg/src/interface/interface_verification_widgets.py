@@ -8,14 +8,23 @@ from src.interface.user_interface import UserInterface
 
 
 class InterfaceVerificationWidget(ttk.Frame):
-    def __init__(self, container, entities, type_, show_entity, show_home, show_edit, show_interface_verification):
+    def __init__(self, parent, container, entities, type_, show_entity, show_home, show_edit,
+                 show_interface_verification, parent_name, parent_type, search_entities_name, search_type):
         super().__init__(container)
+
+        self.parent = parent
+
+        print(container)
 
         self.entities = entities
         self.type_ = type_
         self.show_entity = show_entity
         self.show_home = show_home
         self.show_edit = show_edit
+        self.parent_name = parent_name
+        self.parent_type = parent_type
+        self.search_entities_name = search_entities_name
+        self.search_type = search_type
         self.show_interface_verification = show_interface_verification
 
         self.frame_number = 0
@@ -32,12 +41,16 @@ class InterfaceVerificationWidget(ttk.Frame):
 
             if self.entity_type == 'items':
                 new_frame = ItemInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
-                                          self.show_interface_verification)
+                                          self.show_interface_verification, self.parent_name, self.parent_type, True,
+                                          self.search_entities_name, self.search_type)
             elif self.entity_type == 'abilities':
                 new_frame = AbilityInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
-                                             self.show_interface_verification)
+                                             self.parent_name, self.parent_type, True, self.search_entities_name,
+                                             self.search_type)
             elif self.entity_type == 'titles':
-                new_frame = TitleInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit)
+                new_frame = TitleInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
+                                           self.parent_name, self.parent_type, True, self.search_entities_name,
+                                           self.search_type)
             else:
                 new_frame = None
 
@@ -48,3 +61,5 @@ class InterfaceVerificationWidget(ttk.Frame):
                 child.grid_configure(padx=5, pady=5)
 
             self.interface_widget_frames.append(new_frame)
+
+        self.parent.yview_moveto(0)

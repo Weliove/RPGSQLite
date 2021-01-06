@@ -11,7 +11,7 @@ class Proficiency:
             'description': self.description
         }
 
-    def create_proficiency(self):
+    def create_proficiency(self) -> bool:
         return add_proficiency(self.proficiency)
 
     def update_proficiency(self, current_name):

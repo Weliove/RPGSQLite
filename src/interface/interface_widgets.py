@@ -8,7 +8,8 @@ from src.interface.user_interface import UserInterface
 
 
 class InterfaceWidget(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification):
+    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification,
+                 search_entities_name, search_type):
         super().__init__(container)
 
         self.entity = entity
@@ -20,7 +21,7 @@ class InterfaceWidget(ttk.Frame):
 
         if entity_type == 'users':
             interface_widget_frame = UserInterface(self, entity, type_, show_search, show_home, show_edit,
-                                                   show_interface_verification)
+                                                   show_interface_verification, search_entities_name, search_type)
         elif entity_type == 'items':
             interface_widget_frame = ItemInterface(self, entity, type_, show_search, show_home, show_edit,
                                                    show_interface_verification)

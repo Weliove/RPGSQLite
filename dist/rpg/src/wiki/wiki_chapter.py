@@ -1,4 +1,4 @@
-from tkinter import ttk, RAISED
+from tkinter import ttk, RAISED, font
 
 from src.wiki.wiki import Wiki
 
@@ -26,6 +26,9 @@ class WikiChapter(ttk.Frame):
 
     def create_widgets(self, chapter, topics):
         chapter_name = chapter['name']
+        chapter_description = chapter['description']
+
+        topic_description_list = []
 
         title = ttk.Label(
             self,
@@ -38,6 +41,14 @@ class WikiChapter(ttk.Frame):
         )
         title_separator.grid(column=0, columnspan=1, sticky="EW")
 
+        if len(chapter_description) > 0:
+            description = ttk.Label(
+                self,
+                text=chapter_description,
+                font=font.Font(size=11)
+            )
+            description.grid(column=0, sticky='EW')
+
         for topic in topics:
             topic_name = topic['name']
             topic_description = topic['description']
@@ -49,11 +60,24 @@ class WikiChapter(ttk.Frame):
             )
             name.grid(column=0, sticky="EW")
 
-            description = ttk.Label(
+            t_description = ttk.Label(
                 self,
                 text=topic_description
             )
-            description.grid(column=0, sticky="EW")
+            t_description.grid(column=0, sticky="EW")
+
+            topic_description_list.append(t_description)
+
+        def reconfigure_labels(event):
+            title.configure(wraplength=self.winfo_width() - 25)
+
+            if len(chapter_description) > 0:
+                description.configure(wraplength=self.winfo_width() - 25)
+
+            for local_topic_description in topic_description_list:
+                local_topic_description.configure(wraplength=self.winfo_width() - 25)
+
+        self.bind("<Configure>", reconfigure_labels)
 
     def create_buttons(self):
         wiki_separator = ttk.Separator(

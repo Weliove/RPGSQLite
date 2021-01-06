@@ -11,6 +11,8 @@ class WikiHome(ttk.Frame):
         self.parent = container
         self.wiki = wiki
 
+        self.categories_descriptions = []
+
         wiki.last_section = {}
         wiki.last_chapter = {}
         wiki.last_topic = {}
@@ -39,6 +41,8 @@ class WikiHome(ttk.Frame):
                 font=font.Font(size=11)
             )
             description.grid(column=0, sticky='EW')
+
+            self.categories_descriptions.append(description)
 
         title_separator = ttk.Separator(
             self
@@ -109,3 +113,9 @@ class WikiHome(ttk.Frame):
             sections = self.wiki.get_sections(category_id)
 
             self.create_widgets(category, sections)
+
+        def reconfigure_labels(event):
+            for category_label in self.categories_descriptions:
+                category_label.configure(wraplength=self.winfo_width() - 25)
+
+        self.bind("<Configure>", reconfigure_labels)

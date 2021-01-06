@@ -5,12 +5,12 @@ from src.connection.handle_titles import get_titles_by_id
 from .handle_classes import get_classes_attributes
 
 
-def get_list(cursor):
+def get_list(cursor) -> list:
     return [row[0] for row in cursor.fetchall()]
 
 
 # --- USERS ---
-def add_user(user):
+def add_user(user) -> None:
     name = user['name']
     type_ = user['type']
     strength_lv = user['strength_lv']
@@ -54,7 +54,7 @@ def add_user(user):
                                (proficiency, name))
 
 
-def update_user(user, current_name):
+def update_user(user, current_name) -> None:
     name = user['name']
     type_ = user['type']
     strength_lv = user['strength_lv']
@@ -178,7 +178,7 @@ def get_user_types():
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute(f'SELECT * FROM users_types')
+        cursor.execute('SELECT * FROM users_types')
 
         entity = get_user_types_attributes(cursor)
 

@@ -6,16 +6,11 @@ from src.connection.handle_titles import get_titles
 from src.connection.handle_users import get_user_types
 
 
-def get_entities_names(entities):
-    result = []
-
-    for entity in entities:
-        result.append(entity['name'])
-
-    return result
+def get_entities_names(entities: list) -> list:
+    return [entity['name'] for entity in entities]
 
 
-def get_entities_ids(entities, entities_names):
+def get_entities_ids(entities: list, entities_names: list) -> list:
     result = []
 
     for entity_name in entities_names:
@@ -27,14 +22,15 @@ def get_entities_ids(entities, entities_names):
     return result
 
 
-def get_user_types_ids(type_name):
+def get_user_types_ids(type_name: str) -> int:
     type_result = -1
-    types_ = get_user_types()
+    types = get_user_types()
 
-    print(types_)
+    print(types)
 
-    for stored_type in types_:
+    for stored_type in types:
         if stored_type['name'] == type_name:
             type_result = stored_type['id']
+            break
 
     return type_result

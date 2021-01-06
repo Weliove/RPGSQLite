@@ -243,7 +243,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>'org.python'</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#copy">copy</a>
+    <a href="#pickle">pickle</a>
  &#8226;   <a href="#xml.sax">xml.sax</a>
 
   </div>
@@ -2817,8 +2817,8 @@ imported by:
   <a target="code" href="///C:/Users/USER/AppData/Local/Programs/Python/Python38/lib/copy.py" type="text/plain"><tt>copy</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#'org.python'">'org.python'</a>
- &#8226;   <a href="#copyreg">copyreg</a>
+    <a href="#copyreg">copyreg</a>
+ &#8226;   <a href="#org">org</a>
  &#8226;   <a href="#types">types</a>
  &#8226;   <a href="#weakref">weakref</a>
 
@@ -9099,7 +9099,7 @@ imported by:
   <a target="code" href="" type="text/plain"><tt>org</tt></a>
 <span class="moduletype">MissingModule</span>  <div class="import">
 imported by:
-    <a href="#pickle">pickle</a>
+    <a href="#copy">copy</a>
 
   </div>
 
@@ -9308,7 +9308,8 @@ imported by:
   <a target="code" href="///C:/Users/USER/AppData/Local/Programs/Python/Python38/lib/pickle.py" type="text/plain"><tt>pickle</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#_compat_pickle">_compat_pickle</a>
+    <a href="#'org.python'">'org.python'</a>
+ &#8226;   <a href="#_compat_pickle">_compat_pickle</a>
  &#8226;   <a href="#_pickle">_pickle</a>
  &#8226;   <a href="#argparse">argparse</a>
  &#8226;   <a href="#codecs">codecs</a>
@@ -9317,7 +9318,6 @@ imports:
  &#8226;   <a href="#functools">functools</a>
  &#8226;   <a href="#io">io</a>
  &#8226;   <a href="#itertools">itertools</a>
- &#8226;   <a href="#org">org</a>
  &#8226;   <a href="#pprint">pprint</a>
  &#8226;   <a href="#re">re</a>
  &#8226;   <a href="#struct">struct</a>
@@ -10210,7 +10210,6 @@ imports:
   <div class="import">
 imported by:
     <a href="#src.ability.ability">src.ability.ability</a>
- &#8226;   <a href="#src.ability.ability_property">src.ability.ability_property</a>
  &#8226;   <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
  &#8226;   <a href="#src.ability.create_ability">src.ability.create_ability</a>
 
@@ -10238,30 +10237,13 @@ imported by:
 </div>
 
 <div class="node">
-  <a name="src.ability.ability_property"></a>
-  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/ability/ability_property.py" type="text/plain"><tt>src.ability.ability_property</tt></a>
-<span class="moduletype">SourceModule</span>  <div class="import">
-imports:
-    <a href="#src.ability">src.ability</a>
- &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
-
-  </div>
-  <div class="import">
-imported by:
-    <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
-
-  </div>
-
-</div>
-
-<div class="node">
   <a name="src.ability.ability_widget"></a>
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/ability/ability_widget.py" type="text/plain"><tt>src.ability.ability_widget</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.ability">src.ability</a>
- &#8226;   <a href="#src.ability.ability_property">src.ability.ability_property</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.connection.handle_items">src.connection.handle_items</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.font">tkinter.font</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
@@ -10456,6 +10438,7 @@ imported by:
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
  &#8226;   <a href="#src.home.home">src.home.home</a>
+ &#8226;   <a href="#src.interface.interface_functions">src.interface.interface_functions</a>
  &#8226;   <a href="#src.interface.interface_verification_widgets">src.interface.interface_verification_widgets</a>
  &#8226;   <a href="#src.interface.interface_widgets">src.interface.interface_widgets</a>
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
@@ -10539,7 +10522,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#src.ability.ability_property">src.ability.ability_property</a>
+    <a href="#src.ability.ability_widget">src.ability.ability_widget</a>
  &#8226;   <a href="#src.avatar.avatar_properties">src.avatar.avatar_properties</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
@@ -10563,6 +10546,7 @@ imports:
 imported by:
     <a href="#src.avatar.avatar_properties">src.avatar.avatar_properties</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
 
   </div>
 
@@ -10895,6 +10879,7 @@ imported by:
 imports:
     <a href="#src.ability.ability">src.ability.ability</a>
  &#8226;   <a href="#src.interface">src.interface</a>
+ &#8226;   <a href="#src.interface.interface_functions">src.interface.interface_functions</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -10932,12 +10917,15 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/interface/interface_functions.py" type="text/plain"><tt>src.interface.interface_functions</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.interface">src.interface</a>
+    <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.interface">src.interface</a>
 
   </div>
   <div class="import">
 imported by:
-    <a href="#src.interface.item_interface">src.interface.item_interface</a>
+    <a href="#src.interface.ability_interface">src.interface.ability_interface</a>
+ &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
 
   </div>
@@ -11037,6 +11025,7 @@ imported by:
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
     <a href="#src.interface">src.interface</a>
+ &#8226;   <a href="#src.interface.interface_functions">src.interface.interface_functions</a>
  &#8226;   <a href="#src.title.title">src.title.title</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
@@ -11192,6 +11181,7 @@ imported by:
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.home.home">src.home.home</a>
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
+ &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
  &#8226;   <a href="#src.title.create_title">src.title.create_title</a>
  &#8226;   <a href="#src.wiki.create_category">src.wiki.create_category</a>
  &#8226;   <a href="#src.wiki.create_chapter">src.wiki.create_chapter</a>
@@ -11213,6 +11203,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
  &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
 
   </div>
@@ -11224,7 +11215,9 @@ imported by:
   <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/proficiency/create_proficiency.py" type="text/plain"><tt>src.proficiency.create_proficiency</tt></a>
 <span class="moduletype">SourceModule</span>  <div class="import">
 imports:
-    <a href="#src.proficiency">src.proficiency</a>
+    <a href="#src.popup_info">src.popup_info</a>
+ &#8226;   <a href="#src.proficiency">src.proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
  &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
@@ -11233,6 +11226,23 @@ imports:
   <div class="import">
 imported by:
     <a href="#rpg.py">rpg.py</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.proficiency.proficiency"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/proficiency/proficiency.py" type="text/plain"><tt>src.proficiency.proficiency</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
+ &#8226;   <a href="#src.proficiency">src.proficiency</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
 
   </div>
 
@@ -11675,6 +11685,7 @@ imports:
     <a href="#src.wiki">src.wiki</a>
  &#8226;   <a href="#src.wiki.wiki">src.wiki.wiki</a>
  &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.font">tkinter.font</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
   </div>
@@ -12595,6 +12606,7 @@ imported by:
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
  &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
  &#8226;   <a href="#src.title.title_widget">src.title.title_widget</a>
+ &#8226;   <a href="#src.wiki.wiki_chapter">src.wiki.wiki_chapter</a>
  &#8226;   <a href="#src.wiki.wiki_home">src.wiki.wiki_home</a>
  &#8226;   <a href="#src.wiki.wiki_section">src.wiki.wiki_section</a>
 

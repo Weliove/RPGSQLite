@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from src.popup_info import popup_showinfo
+from src.proficiency.proficiency import Proficiency
 from src.proficiency.proficiency_widgets import ProficiencyWidget
 
 
@@ -111,4 +113,15 @@ class ProficiencyScroll(tk.Canvas):
         self.proficiency_buttons.grid_configure(row=current_rows)
 
     def create_proficiency(self):
-        pass
+        for proficiency_frame in self.proficiency_frames:
+            name = proficiency_frame.name.get()
+            description = self.get_text_data(proficiency_frame.description_entry)
+
+            proficiency = Proficiency(name, description)
+
+            create_proficiency = proficiency.create_proficiency()
+
+            self.container.show_home() if not create_proficiency else popup_showinfo(create_proficiency)
+
+    def get_text_data(self, text_widget):
+        return text_widget.get("1.0", 'end-1c')

@@ -7,10 +7,12 @@ from src.popup_info import popup_showinfo
 
 
 class EditAbility(ttk.Frame):
-    def __init__(self, container, entity, show_interface):
+    def __init__(self, container, entity, search_entities_name, search_type, show_interface):
         super().__init__(container)
 
         self.font = font.Font(size=11)
+        self.search_entities_name = search_entities_name
+        self.search_type = search_type
         self.show_interface = show_interface
 
         # --- Ability ---
@@ -199,4 +201,7 @@ class EditAbility(ttk.Frame):
 
         update_ability = ability.update_ability(self.id)
 
-        interface(name, 'Ability', self.show_interface) if not update_ability else popup_showinfo(update_ability)
+        if not update_ability:
+            interface(name, 'Ability', self.show_interface, self.search_entities_name, self.search_type)
+        else:
+            popup_showinfo(update_ability)

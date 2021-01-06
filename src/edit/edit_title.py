@@ -7,10 +7,12 @@ from src.title.title import Title
 
 
 class EditTitle(ttk.Frame):
-    def __init__(self, container, entity, show_interface):
+    def __init__(self, container, entity, search_entities_name, search_type, show_interface):
         super().__init__(container)
 
         self.font = font.Font(size=11)
+        self.search_entities_name = search_entities_name
+        self.search_type = search_type
         self.show_interface = show_interface
 
         # --- Title ---
@@ -105,4 +107,7 @@ class EditTitle(ttk.Frame):
 
         edit_title = title.update_title(self.id)
 
-        interface(name, 'Title', self.show_interface) if not edit_title else popup_showinfo(edit_title)
+        if not edit_title:
+            interface(name, 'Title', self.show_interface, self.search_entities_name, self.search_type)
+        else:
+            popup_showinfo(edit_title)

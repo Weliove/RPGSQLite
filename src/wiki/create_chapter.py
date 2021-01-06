@@ -51,10 +51,11 @@ class CreateChapter(ttk.Frame):
 
     def create_chapter(self):
         name = self.widgets_frame.name.get()
+        description = self.get_text_data(self.widgets_frame.description_entry)
         section = self.widgets_frame.get_section()
         section_id = section['id']
 
-        create = self.wiki.create_chapter(name, section_id)
+        create = self.wiki.create_chapter(name, description, section_id)
 
         self.parent.create_frame('section', section) if create else popup_showinfo('Error!')
 

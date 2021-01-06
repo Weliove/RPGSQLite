@@ -9,11 +9,15 @@ from src.interface.interface_functions import button_state, generate_classes, ge
 
 
 class UserInterface(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification):
+    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification,
+                 search_entities_name, search_type):
         super().__init__(container)
 
         self.entity = entity
         self.entity_type = type_
+
+        self.search_entities_name = search_entities_name
+        self.search_type = search_type
 
         self.item_types = {1: 'Armor', 2: 'Weapon'}
 
@@ -131,7 +135,8 @@ class UserInterface(ttk.Frame):
         items_button = ttk.Button(
             self,
             text="Verify Items",
-            command=lambda: show_interface_verification(self.items, 'Item'),
+            command=lambda: show_interface_verification(self.items, 'Item', self.name, self.entity_type,
+                                                        self.search_entities_name, self.search_type),
             state=button_state(self.items),
             cursor="hand2"
         )
@@ -140,7 +145,8 @@ class UserInterface(ttk.Frame):
         abilities_button = ttk.Button(
             self,
             text="Verify Abilities",
-            command=lambda: show_interface_verification(self.abilities, 'Ability'),
+            command=lambda: show_interface_verification(self.abilities, 'Ability', self.name, self.entity_type,
+                                                        self.search_entities_name, self.search_type),
             state=button_state(self.abilities),
             cursor="hand2"
         )
@@ -149,7 +155,8 @@ class UserInterface(ttk.Frame):
         titles_button = ttk.Button(
             self,
             text="Verify Titles",
-            command=lambda: show_interface_verification(self.titles, 'Title'),
+            command=lambda: show_interface_verification(self.titles, 'Title', self.name, self.entity_type,
+                                                        self.search_entities_name, self.search_type),
             state=button_state(self.titles),
             cursor="hand2"
         )
@@ -158,7 +165,8 @@ class UserInterface(ttk.Frame):
         edit_button = ttk.Button(
             self,
             text="Edit",
-            command=lambda: show_edit(self.entity, self.entity_type),
+            command=lambda: show_edit(self.entity, self.entity_type, self.name, self.entity_type,
+                                      self.search_entities_name, self.search_type),
             cursor="hand2"
         )
         edit_button.grid(column=0, sticky="EW")

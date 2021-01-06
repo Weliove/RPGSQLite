@@ -18,6 +18,8 @@ class CreateChapterFrame(ttk.Frame):
         self.name = tk.StringVar()
         self.section_name = tk.StringVar(value=self.sections[0])
 
+        self.description_entry = tk.Text
+
         self.create_widgets()
 
         for child in self.winfo_children():
@@ -50,6 +52,19 @@ class CreateChapterFrame(ttk.Frame):
             state="readonly"
         )
         section_menu.grid(row=1, column=1)
+
+        description_label = ttk.Label(
+            self,
+            text='Description'
+        )
+        description_label.grid(row=2, column=0)
+
+        self.description_entry = tk.Text(
+            self,
+            width=1,
+            height=8
+        )
+        self.description_entry.grid(row=2, column=1)
 
     def get_section(self) -> dict:
         section_name = self.section_name.get()

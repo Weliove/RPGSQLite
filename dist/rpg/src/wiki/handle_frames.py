@@ -12,9 +12,10 @@ from src.wiki.wiki_section import WikiSection
 
 
 class WikiWidget(ttk.Frame):
-    def __init__(self, container, session, show_home):
+    def __init__(self, parent, container, session, show_home):
         super().__init__(container)
 
+        self.parent = parent
         self.session = session
         self.show_home = show_home
 
@@ -28,11 +29,13 @@ class WikiWidget(ttk.Frame):
         self.check_frame_existence(self.wiki_widget_frame)
 
         self.wiki_widget_frame = self.select_frame(session, entity)
-        self.wiki_widget_frame.grid(row=0, column=0, sticky="NSEW")
+        self.wiki_widget_frame.grid(row=0, column=0, sticky='NSEW')
         self.wiki_widget_frame.columnconfigure(0, weight=1)
 
         for child in self.wiki_widget_frame.winfo_children():
             child.grid_configure(padx=5, pady=5)
+
+        self.parent.yview_moveto(0)
 
     def select_frame(self, session, entity=None) -> Union[WikiHome, WikiSection, WikiChapter, CreateCategory,
                                                           CreateSection, CreateChapter, CreateTopic]:

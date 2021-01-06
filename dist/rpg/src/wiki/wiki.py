@@ -24,8 +24,8 @@ class Wiki:
     def create_section(self, name, description, category_id) -> bool:
         return create_section(name, description, category_id)
 
-    def create_chapter(self, name, section_id) -> bool:
-        return create_chapter(name, section_id)
+    def create_chapter(self, name, description, section_id) -> bool:
+        return create_chapter(name, description, section_id)
 
     def create_topic(self, name, description, chapter_id) -> bool:
         return create_topic(name, description, chapter_id)

@@ -66,4 +66,4 @@ class SearchScroll(tk.Canvas):
 
     def search_result(self, entity_name):
         entity = get_entity(entity_name, self.type_)
-        self.container.parent.show_interface(entity, self.type_)
+        self.container.parent.show_interface(entity, self.type_, self.entities_name, self.type_)

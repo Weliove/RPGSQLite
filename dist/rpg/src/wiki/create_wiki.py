@@ -57,7 +57,7 @@ class WikiScroll(tk.Canvas):
 
     def create_wiki_container(self):
         # --- Create Widgets ---
-        self.wiki_widget_frame = WikiWidget(self.screen, 'home', self.container.show_home)
+        self.wiki_widget_frame = WikiWidget(self, self.screen, 'home', self.container.show_home)
         self.wiki_widget_frame.grid(row=0, column=0, sticky="NSEW")
         self.wiki_widget_frame.columnconfigure(0, weight=1)
 
