@@ -9,10 +9,8 @@ def add_proficiency(proficiency):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        for level in range(5):
-            proficiency_level = ' ' + str(level + 1)
-            cursor.execute('INSERT INTO proficiencies (name, description) VALUES (?, ?)',
-                           (proficiency_name + proficiency_level, proficiency_description))
+        cursor.execute('INSERT INTO proficiencies (name, description) VALUES (?, ?)',
+                       (proficiency_name, proficiency_description))
 
 
 def update_proficiency(proficiency, current_name):
@@ -23,7 +21,7 @@ def get_proficiencies():
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute(f'SELECT * FROM proficiencies')
+        cursor.execute(f'SELECT * FROM proficiencies ORDER BY name')
 
         entity = get_proficiencies_attributes(cursor)
 

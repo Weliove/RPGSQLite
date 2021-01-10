@@ -2,18 +2,22 @@ import tkinter as tk
 from tkinter import ttk, font
 
 from src.ability.ability import Ability
+from src.connection.handle_users import get_user_abilities
 from src.edit.edit_functions import get_text_data, interface
 from src.popup_info import popup_showinfo
 
 
 class EditAbility(ttk.Frame):
-    def __init__(self, container, entity, search_entities_name, search_type, show_interface):
+    def __init__(self, container, entity, search_entities_name, search_type, show_interface,
+                 show_interface_verification=None, interface_verification_dict=None):
         super().__init__(container)
 
         self.font = font.Font(size=11)
         self.search_entities_name = search_entities_name
         self.search_type = search_type
         self.show_interface = show_interface
+        self.show_interface_verification = show_interface_verification
+        self.interface_verification_dict = interface_verification_dict
 
         # --- Ability ---
         self.id = entity['id']
@@ -202,6 +206,14 @@ class EditAbility(ttk.Frame):
         update_ability = ability.update_ability(self.id)
 
         if not update_ability:
-            interface(name, 'Ability', self.show_interface, self.search_entities_name, self.search_type)
+            if self.show_interface_verification is None:
+                interface(name, 'Ability', self.show_interface, self.search_entities_name, self.search_type)
+            else:
+                user_name = self.interface_verification_dict['name']
+                user_type = self.interface_verification_dict['type']
+                abilities = get_user_abilities(user_name)
+
+                self.show_interface_verification(abilities, 'Ability', user_name, user_type, self.search_entities_name,
+                                                 self.search_type)
         else:
             popup_showinfo(update_ability)

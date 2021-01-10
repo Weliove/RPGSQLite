@@ -237,8 +237,6 @@ class EditUser(ttk.Frame):
         )
         self.weapon_entry.grid(row=8, column=1, sticky="EW")
 
-        print(f'>>{self.weapons}')
-
         set_stored_items(self.weapon_entry, self.get_user_weapons(), self.weapons)
 
         # self.weapon_entry.select_set(0)

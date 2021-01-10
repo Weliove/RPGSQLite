@@ -13,7 +13,7 @@ def generate_items(items, item_types):
         item_type = item_types[item['type']]
         item_name = item['name']
 
-        item_string = f'\t{item_type}  -  {item_name}'
+        item_string = f'{item_type}  -  {item_name}'
 
         item_result.append(item_string)
 

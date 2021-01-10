@@ -9,7 +9,8 @@ from src.interface.user_interface import UserInterface
 
 class InterfaceVerificationWidget(ttk.Frame):
     def __init__(self, parent, container, entities, type_, show_entity, show_home, show_edit,
-                 show_interface_verification, parent_name, parent_type, search_entities_name, search_type):
+                 show_interface_verification, parent_name, parent_type, search_entities_name, search_type,
+                 interface_verification_dict):
         super().__init__(container)
 
         self.parent = parent
@@ -21,11 +22,12 @@ class InterfaceVerificationWidget(ttk.Frame):
         self.show_entity = show_entity
         self.show_home = show_home
         self.show_edit = show_edit
+        self.show_interface_verification = show_interface_verification
         self.parent_name = parent_name
         self.parent_type = parent_type
         self.search_entities_name = search_entities_name
         self.search_type = search_type
-        self.show_interface_verification = show_interface_verification
+        self.interface_verification_dict = interface_verification_dict
 
         self.frame_number = 0
 
@@ -42,15 +44,18 @@ class InterfaceVerificationWidget(ttk.Frame):
             if self.entity_type == 'items':
                 new_frame = ItemInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
                                           self.show_interface_verification, self.parent_name, self.parent_type, True,
-                                          self.search_entities_name, self.search_type)
+                                          self.search_entities_name, self.search_type,
+                                          self.interface_verification_dict)
             elif self.entity_type == 'abilities':
                 new_frame = AbilityInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
-                                             self.parent_name, self.parent_type, True, self.search_entities_name,
-                                             self.search_type)
+                                             self.show_interface_verification, self.parent_name, self.parent_type, True,
+                                             self.search_entities_name, self.search_type,
+                                             self.interface_verification_dict)
             elif self.entity_type == 'titles':
                 new_frame = TitleInterface(self, entity, self.type_, self.show_entity, self.show_home, self.show_edit,
-                                           self.parent_name, self.parent_type, True, self.search_entities_name,
-                                           self.search_type)
+                                           self.show_interface_verification, self.parent_name, self.parent_type, True,
+                                           self.search_entities_name, self.search_type,
+                                           self.interface_verification_dict)
             else:
                 new_frame = None
 

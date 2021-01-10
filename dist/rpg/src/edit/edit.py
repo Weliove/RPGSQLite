@@ -6,7 +6,7 @@ from src.edit.edit_widget import EditWidget
 
 class Edit(ttk.Frame):
     def __init__(self, parent, entity, type_, parent_name, parent_type, show_interface, search_entities_name,
-                 search_type, show_home):
+                 search_type, show_interface_verification, interface_verification_dict, show_home):
         super().__init__(parent)
 
         # --- Create Widget Frame ---
@@ -17,7 +17,8 @@ class Edit(ttk.Frame):
         self.edit_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
 
         self.edit_scroll.edit_container(entity, type_, parent_name, parent_type, show_interface, search_entities_name,
-                                        search_type, show_home)
+                                        search_type, show_interface_verification, interface_verification_dict,
+                                        show_home)
 
 
 class EditScroll(tk.Canvas):
@@ -55,9 +56,10 @@ class EditScroll(tk.Canvas):
         self.yview_scroll(-int(event.delta/120), "units")
 
     def edit_container(self, entity, type_, parent_name, parent_type, show_interface, search_entities_name,
-                       search_type, show_home):
+                       search_type, show_interface_verification, interface_verification_dict, show_home):
         # --- Create Widgets ---
         self.edit_widgets_frame = EditWidget(self.screen, entity, type_, parent_name, parent_type, show_interface,
-                                             search_entities_name, search_type, show_home)
+                                             search_entities_name, search_type, show_interface_verification,
+                                             interface_verification_dict, show_home)
         self.edit_widgets_frame.grid(row=0, column=0, sticky="NSEW")
         self.edit_widgets_frame.columnconfigure(0, weight=1)

@@ -3,6 +3,7 @@ from tkinter import ttk, font
 
 from src.connection.handle_abilities import get_abilities_name_by_type
 from src.connection.handle_items import get_item_abilities
+from src.connection.handle_users import get_user_items
 from src.edit.edit_functions import get_text_data, set_stored_items, handle_selection_change, interface
 from src.item.item import Item
 from src.item.item_properties import get_entity_ids
@@ -10,13 +11,16 @@ from src.popup_info import popup_showinfo
 
 
 class EditItem(ttk.Frame):
-    def __init__(self, container, entity, search_entities_name, search_type, show_interface):
+    def __init__(self, container, entity, search_entities_name, search_type, show_interface,
+                 show_interface_verification=None, interface_verification_dict=None):
         super().__init__(container)
 
         self.font = font.Font(size=11)
         self.search_entities_name = search_entities_name
         self.search_type = search_type
         self.show_interface = show_interface
+        self.show_interface_verification = show_interface_verification
+        self.interface_verification_dict = interface_verification_dict
 
         self.types_ = ('Armor', 'Weapon')
 
@@ -182,10 +186,6 @@ class EditItem(ttk.Frame):
         )
         self.abilities_entry.grid(row=7, column=1, sticky="EW")
 
-        print(self.abilities_entry)
-        print(self.item_abilities)
-        print(self.abilities)
-
         set_stored_items(self.abilities_entry, self.item_abilities, self.abilities)
 
         # self.abilities_entry.select_set(0)
@@ -270,6 +270,14 @@ class EditItem(ttk.Frame):
         update_item = item.update_item(self.id)
 
         if not update_item:
-            interface(name, self.type_.get(), self.show_interface, self.search_entities_name, self.search_type)
+            if self.show_interface_verification is None:
+                interface(name, self.type_.get(), self.show_interface, self.search_entities_name, self.search_type)
+            else:
+                user_name = self.interface_verification_dict['name']
+                user_type = self.interface_verification_dict['type']
+                items = get_user_items(user_name)
+
+                self.show_interface_verification(items, 'Item', user_name, user_type, self.search_entities_name,
+                                                 self.search_type)
         else:
             popup_showinfo(update_item)

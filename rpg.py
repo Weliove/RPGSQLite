@@ -41,17 +41,17 @@ class RPG(tk.Tk):
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
 
-        self.search_frame = Search(self, [], '', lambda: self.show_frame(Home))
+        self.search_frame = None
 
-        self.create_avatar_frame = CreateAvatar(self, lambda: self.show_frame(Home))
+        self.create_avatar_frame = None
 
-        self.create_item_frame = CreateItem(self, lambda: self.show_frame(Home))
+        self.create_item_frame = None
 
-        self.create_ability_frame = CreateAbility(self, lambda: self.show_frame(Home))
+        self.create_ability_frame = None
 
-        self.create_title_frame = CreateTitle(self, lambda: self.show_frame(Home))
+        self.create_title_frame = None
 
-        self.create_proficiency_frame = CreateProficiency(self, lambda: self.show_frame(Home))
+        self.create_proficiency_frame = None
 
         self.interface_frame = None
 
@@ -59,7 +59,7 @@ class RPG(tk.Tk):
 
         self.interface_verification_frame = None
 
-        self.wiki_frame = CreateWiki(self, lambda: self.show_frame(Home))
+        self.wiki_frame = None
 
         self.frames = {
             Home: self.home_frame,
@@ -122,8 +122,6 @@ class RPG(tk.Tk):
     def show_search(self, entities_name, type_):
         self.check_frame_existence(self.search_frame)
 
-        print('uiushdiuwehg')
-
         self.search_frame = Search(self, entities_name, type_, lambda: self.show_frame(Home))
         self.search_frame.grid(row=0, column=0, sticky="NSEW")
 
@@ -185,11 +183,13 @@ class RPG(tk.Tk):
         self.frames[Interface] = self.interface_frame
         self.show_frame(Interface)
 
-    def show_edit(self, entity, type_, parent_name, parent_type, search_entities_name, search_type):
+    def show_edit(self, entity, type_, parent_name, parent_type, search_entities_name, search_type,
+                  show_interface_verification=None, interface_verification_dict=None):
         self.check_frame_existence(self.edit_frame)
 
         self.edit_frame = Edit(self, entity, type_, parent_name, parent_type, self.show_interface,
-                               search_entities_name, search_type, lambda: self.show_frame(Home))
+                               search_entities_name, search_type, show_interface_verification,
+                               interface_verification_dict, lambda: self.show_frame(Home))
         self.edit_frame.grid(row=0, column=0, sticky="NSEW")
 
         self.frames[Edit] = self.edit_frame
@@ -197,6 +197,12 @@ class RPG(tk.Tk):
 
     def show_interface_verification(self, entity, type_, parent_name, parent_type, search_entities_name, search_type):
         self.check_frame_existence(self.interface_verification_frame)
+
+        interface_verification_dict = {
+            'name': parent_name,
+            'type': parent_type,
+            'entity_type': type_
+        }
 
         self.interface_verification_frame = InterfaceVerification(
             self,
@@ -209,7 +215,8 @@ class RPG(tk.Tk):
             parent_name,
             parent_type,
             search_entities_name,
-            search_type
+            search_type,
+            interface_verification_dict
         )
         self.interface_verification_frame.grid(row=0, column=0, sticky="NSEW")
 

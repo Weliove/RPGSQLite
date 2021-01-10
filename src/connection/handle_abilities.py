@@ -76,7 +76,7 @@ def get_abilities_name_by_type(ability_type):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute(f'SELECT name FROM abilities WHERE type=?', (ability_type,))
+        cursor.execute(f'SELECT name FROM abilities WHERE type=? ORDER BY name', (ability_type,))
 
         entity = get_list(cursor)
 

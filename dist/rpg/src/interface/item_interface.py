@@ -7,11 +7,10 @@ from src.item.item import Item
 
 
 class ItemInterface(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification,
-                 parent_name=None, parent_type=None, ver=False, search_entities_name=None, search_type=None):
+    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification=None,
+                 parent_name=None, parent_type=None, ver=False, search_entities_name=None, search_type=None,
+                 interface_verification_dict=None):
         super().__init__(container)
-
-        print(show_search)
 
         self.container = container
 
@@ -20,6 +19,7 @@ class ItemInterface(ttk.Frame):
         self.ver = ver
         self.search_entities_name = search_entities_name
         self.search_type = search_type
+        self.interface_verification_dict = interface_verification_dict
 
         self.entity = entity
         self.entity_type = type_
@@ -38,7 +38,6 @@ class ItemInterface(ttk.Frame):
         self.description = entity['description']
 
         self.abilities = get_item_abilities(self.id)
-        print(f'>>>> abilities: {self.abilities}')
 
         self.item = Item(self.name, self.name, self.type, self.reduction, self.damage, self.range, self.health,
                          self.area, self.abilities, self.effects, self.description)
@@ -154,7 +153,8 @@ class ItemInterface(ttk.Frame):
             self,
             text="Edit",
             command=lambda: show_edit(self.entity, self.entity_type, self.parent_name, self.parent_type,
-                                      self.search_entities_name, self.search_type),
+                                      self.search_entities_name, self.search_type, show_interface_verification,
+                                      self.interface_verification_dict),
             cursor="hand2"
         )
         edit_button.grid(column=0, sticky="EW")

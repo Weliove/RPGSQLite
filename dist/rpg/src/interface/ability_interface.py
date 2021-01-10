@@ -5,8 +5,9 @@ from src.interface.interface_functions import interface
 
 
 class AbilityInterface(ttk.Frame):
-    def __init__(self, container, entity, type_, show_search, show_home, show_edit, parent_name=None, parent_type=None,
-                 ver=False, search_entities_name=None, search_type=None):
+    def __init__(self, container, entity, type_, show_search, show_home, show_edit, show_interface_verification=None,
+                 parent_name=None, parent_type=None, ver=False, search_entities_name=None, search_type=None,
+                 interface_verification_dict=None):
         super().__init__(container)
 
         print(f'Abilities: {entity}')
@@ -14,11 +15,13 @@ class AbilityInterface(ttk.Frame):
         self.entity = entity
         self.entity_type = type_
 
+        self.show_interface_verification = show_interface_verification
         self.parent_name = parent_name
         self.parent_type = parent_type
         self.ver = ver
         self.search_entities_name = search_entities_name
         self.search_type = search_type
+        self.interface_verification_dict = interface_verification_dict
 
         self.abilities_type = {1: 'Character Ability', 2: 'NPC Ability', 3: 'Monster Ability', 4: 'Item Ability'}
 
@@ -124,7 +127,8 @@ class AbilityInterface(ttk.Frame):
             self,
             text="Edit",
             command=lambda: show_edit(self.entity, self.entity_type, self.parent_name, self.parent_type,
-                                      self.search_entities_name, self.search_type),
+                                      self.search_entities_name, self.search_type, self.show_interface_verification,
+                                      self.interface_verification_dict),
             cursor="hand2"
         )
         edit_button.grid(column=0, sticky="EW")

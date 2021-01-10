@@ -1,19 +1,23 @@
 import tkinter as tk
 from tkinter import ttk, font
 
+from src.connection.handle_users import get_user_titles
 from src.edit.edit_functions import get_text_data, interface
 from src.popup_info import popup_showinfo
 from src.title.title import Title
 
 
 class EditTitle(ttk.Frame):
-    def __init__(self, container, entity, search_entities_name, search_type, show_interface):
+    def __init__(self, container, entity, search_entities_name, search_type, show_interface,
+                 show_interface_verification=None, interface_verification_dict=None):
         super().__init__(container)
 
         self.font = font.Font(size=11)
         self.search_entities_name = search_entities_name
         self.search_type = search_type
         self.show_interface = show_interface
+        self.show_interface_verification = show_interface_verification
+        self.interface_verification_dict = interface_verification_dict
 
         # --- Title ---
         self.id = entity['id']
@@ -108,6 +112,14 @@ class EditTitle(ttk.Frame):
         edit_title = title.update_title(self.id)
 
         if not edit_title:
-            interface(name, 'Title', self.show_interface, self.search_entities_name, self.search_type)
+            if self.show_interface_verification is None:
+                interface(name, 'Title', self.show_interface, self.search_entities_name, self.search_type)
+            else:
+                user_name = self.interface_verification_dict['name']
+                user_type = self.interface_verification_dict['type']
+                abilities = get_user_titles(user_name)
+
+                self.show_interface_verification(abilities, 'Title', user_name, user_type, self.search_entities_name,
+                                                 self.search_type)
         else:
             popup_showinfo(edit_title)

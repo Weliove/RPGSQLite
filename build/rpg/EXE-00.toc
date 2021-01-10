@@ -40,7 +40,7 @@
  [],
  False,
  False,
- 1609850621,
+ 1609958493,
  [('run.exe',
    'c:\\users\\user\\pycharmprojects\\rpgsqlite\\venv\\lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit\\run.exe',
    'EXECUTABLE')])

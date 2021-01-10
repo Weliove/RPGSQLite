@@ -24,12 +24,14 @@ class InterfaceWidget(ttk.Frame):
                                                    show_interface_verification, search_entities_name, search_type)
         elif entity_type == 'items':
             interface_widget_frame = ItemInterface(self, entity, type_, show_search, show_home, show_edit,
-                                                   show_interface_verification)
+                                                   show_interface_verification, None, None, False, search_entities_name,
+                                                   search_type)
         elif entity_type == 'abilities':
             interface_widget_frame = AbilityInterface(self, entity, type_, show_search, show_home, show_edit,
-                                                      show_interface_verification)
+                                                      None, None, False, search_entities_name, search_type)
         elif entity_type == 'titles':
-            interface_widget_frame = TitleInterface(self, entity, type_, show_search, show_home, show_edit)
+            interface_widget_frame = TitleInterface(self, entity, type_, show_search, show_home, show_edit,
+                                                    None, None, False, search_entities_name, search_type)
 
         interface_widget_frame.grid(row=0, column=0, sticky="NSEW")
         interface_widget_frame.columnconfigure(0, weight=1)

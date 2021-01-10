@@ -48,6 +48,8 @@ def get_entity(name, type_):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
+        print('>get_entity method<')
+
         cursor.execute(f'SELECT * FROM {db_entity} WHERE name=?', (name,))
         if db_entity == 'users':
             entity = get_user_attributes(cursor)
@@ -87,7 +89,7 @@ def get_search_entities(name, type_):
 
         if entity_name == '' or entity_name == '*':
             if db_entity == 'users' or db_entity == 'items':
-                cursor.execute(f'SELECT name FROM {db_entity} WHERE type=?', (db_type,))
+                cursor.execute(f'SELECT name FROM {db_entity} WHERE type=? ORDER BY name', (db_type,))
                 entity = get_list(cursor)
             elif db_entity == 'abilities':
                 characters_abilities = get_abilities_name_by_type(1)
