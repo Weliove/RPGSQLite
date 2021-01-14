@@ -301,8 +301,6 @@ class ItemWidget(ttk.Frame):
     def selected_value(self, event):
         selected_entity = str(event.widget).split(".")[-1]
 
-        print(selected_entity)
-
         if selected_entity == 'character':
             self.npc_menu.current(0)
             self.monster_menu.current(0)

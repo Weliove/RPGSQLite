@@ -10,8 +10,6 @@ class AbilityInterface(ttk.Frame):
                  interface_verification_dict=None):
         super().__init__(container)
 
-        print(f'Abilities: {entity}')
-
         self.entity = entity
         self.entity_type = type_
 

@@ -7,10 +7,12 @@ from src import Home
 from src import CreateAvatar
 from src.ability.create_ability import CreateAbility
 from src.edit.edit import Edit
+from src.edit.edit_user import EditUser
 from src.interface.interface import Interface
 from src.interface.interface_verification import InterfaceVerification
 from src.item.create_item import CreateItem
 from src.proficiency.create_proficiency import CreateProficiency
+from src.proficiency.proficiency_level import ProficiencyLevel
 from src.search.search import Search
 from src.title.create_title import CreateTitle
 from src.wiki.create_wiki import CreateWiki
@@ -32,12 +34,12 @@ class RPG(tk.Tk):
         # --- Create Frames ---
         self.home_frame = Home(
             self,
-            lambda: self.show_create_avatar(),
-            lambda: self.show_create_item(),
-            lambda: self.show_create_ability(),
-            lambda: self.show_create_title(),
-            lambda: self.show_create_proficiency(),
-            lambda: self.show_wiki()
+            self.show_create_avatar,
+            self.show_create_item,
+            self.show_create_ability,
+            self.show_create_title,
+            self.show_create_proficiency,
+            self.show_wiki
         )
         self.home_frame.grid(row=0, column=0, sticky="NSEW")
 
@@ -97,7 +99,7 @@ class RPG(tk.Tk):
         self.create_title_frame.rowconfigure(0, weight=1)
         self.create_title_frame.columnconfigure(0, weight=1)
 
-    def show_frame(self, container):
+    def show_frame(self, container) -> None:
         local_title = " "
 
         if type(type):
@@ -110,7 +112,7 @@ class RPG(tk.Tk):
         frame = self.frames[container]
         frame.tkraise()
 
-    def show_create_avatar(self):
+    def show_create_avatar(self) -> None:
         self.check_frame_existence(self.create_avatar_frame)
 
         self.create_avatar_frame = CreateAvatar(self, lambda: self.show_frame(Home))
@@ -119,7 +121,10 @@ class RPG(tk.Tk):
         self.frames[CreateAvatar] = self.create_avatar_frame
         self.show_frame(CreateAvatar)
 
-    def show_search(self, entities_name, type_):
+    def show_proficiencies_level(self, proficiencies, proficiency_result, edit: EditUser = None) -> None:
+        ProficiencyLevel(self, proficiencies, proficiency_result, self.create_avatar_frame, edit)
+
+    def show_search(self, entities_name, type_) -> None:
         self.check_frame_existence(self.search_frame)
 
         self.search_frame = Search(self, entities_name, type_, lambda: self.show_frame(Home))
@@ -128,7 +133,7 @@ class RPG(tk.Tk):
         self.frames[Search] = self.search_frame
         self.show_frame(Search)
 
-    def show_create_item(self):
+    def show_create_item(self) -> None:
         self.check_frame_existence(self.create_item_frame)
 
         self.create_item_frame = CreateItem(self, lambda: self.show_frame(Home))
@@ -137,7 +142,7 @@ class RPG(tk.Tk):
         self.frames[CreateItem] = self.create_item_frame
         self.show_frame(CreateItem)
 
-    def show_create_ability(self):
+    def show_create_ability(self) -> None:
         self.check_frame_existence(self.create_ability_frame)
 
         self.create_ability_frame = CreateAbility(self, lambda: self.show_frame(Home))
@@ -146,7 +151,7 @@ class RPG(tk.Tk):
         self.frames[CreateAbility] = self.create_ability_frame
         self.show_frame(CreateAbility)
 
-    def show_create_title(self):
+    def show_create_title(self) -> None:
         self.check_frame_existence(self.create_title_frame)
 
         self.create_title_frame = CreateTitle(self, lambda: self.show_frame(Home))
@@ -155,7 +160,7 @@ class RPG(tk.Tk):
         self.frames[CreateTitle] = self.create_title_frame
         self.show_frame(CreateTitle)
 
-    def show_create_proficiency(self):
+    def show_create_proficiency(self) -> None:
         self.check_frame_existence(self.create_proficiency_frame)
 
         self.create_proficiency_frame = CreateProficiency(self, lambda: self.show_frame(Home))
@@ -164,7 +169,7 @@ class RPG(tk.Tk):
         self.frames[CreateProficiency] = self.create_proficiency_frame
         self.show_frame(CreateProficiency)
 
-    def show_interface(self, entity, type_, search_entities_name, search_type):
+    def show_interface(self, entity, type_, search_entities_name, search_type) -> None:
         self.check_frame_existence(self.interface_frame)
 
         self.interface_frame = Interface(
@@ -184,7 +189,7 @@ class RPG(tk.Tk):
         self.show_frame(Interface)
 
     def show_edit(self, entity, type_, parent_name, parent_type, search_entities_name, search_type,
-                  show_interface_verification=None, interface_verification_dict=None):
+                  show_interface_verification=None, interface_verification_dict=None) -> None:
         self.check_frame_existence(self.edit_frame)
 
         self.edit_frame = Edit(self, entity, type_, parent_name, parent_type, self.show_interface,
@@ -223,7 +228,7 @@ class RPG(tk.Tk):
         self.frames[InterfaceVerification] = self.interface_verification_frame
         self.show_frame(InterfaceVerification)
 
-    def show_wiki(self):
+    def show_wiki(self) -> None:
         self.check_frame_existence(self.wiki_frame)
 
         self.wiki_frame = CreateWiki(self, lambda: self.show_frame(Home))
@@ -232,7 +237,7 @@ class RPG(tk.Tk):
         self.frames[CreateWiki] = self.wiki_frame
         self.show_frame(CreateWiki)
 
-    def check_frame_existence(self, frame):
+    def check_frame_existence(self, frame) -> None:
         if frame is not None and frame.winfo_exists():
             frame.destroy()
 

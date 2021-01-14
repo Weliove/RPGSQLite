@@ -14,5 +14,5 @@ class Proficiency:
     def create_proficiency(self) -> bool:
         return add_proficiency(self.proficiency)
 
-    def update_proficiency(self, current_name):
-        return update_proficiency(self.proficiency, current_name)
+    def update_proficiency(self, id_):
+        return update_proficiency(self.proficiency, id_)

@@ -60,7 +60,7 @@ def generate_proficiencies(proficiencies):
         return 'Proficiencies:  None'
 
     for proficiency in proficiencies:
-        proficiencies_result.append(proficiency['name'])
+        proficiencies_result.append(proficiency['name'] + ' ' + proficiency['level'])
 
     text = f'Proficiencies:  {text.join(proficiencies_result)}'
 

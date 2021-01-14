@@ -206,7 +206,7 @@ class EditAbility(ttk.Frame):
         update_ability = ability.update_ability(self.id)
 
         if not update_ability:
-            if self.show_interface_verification is None:
+            if self.show_interface_verification is None or self.interface_verification_dict is None:
                 interface(name, 'Ability', self.show_interface, self.search_entities_name, self.search_type)
             else:
                 user_name = self.interface_verification_dict['name']

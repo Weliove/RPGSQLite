@@ -112,14 +112,14 @@ class EditTitle(ttk.Frame):
         edit_title = title.update_title(self.id)
 
         if not edit_title:
-            if self.show_interface_verification is None:
+            if self.show_interface_verification is None or self.interface_verification_dict is None:
                 interface(name, 'Title', self.show_interface, self.search_entities_name, self.search_type)
             else:
                 user_name = self.interface_verification_dict['name']
                 user_type = self.interface_verification_dict['type']
-                abilities = get_user_titles(user_name)
+                titles = get_user_titles(user_name)
 
-                self.show_interface_verification(abilities, 'Title', user_name, user_type, self.search_entities_name,
+                self.show_interface_verification(titles, 'Title', user_name, user_type, self.search_entities_name,
                                                  self.search_type)
         else:
             popup_showinfo(edit_title)

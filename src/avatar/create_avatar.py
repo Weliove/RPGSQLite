@@ -11,6 +11,7 @@ class CreateAvatar(ttk.Frame):
     def __init__(self, parent, show_home):
         super().__init__(parent)
 
+        self.parent = parent
         self.show_home = show_home
 
         # --- Create Widget Frame ---
@@ -75,7 +76,8 @@ class AvatarScroll(tk.Canvas):
         create_avatar_button = ttk.Button(
             container,
             text="Create",
-            command=self.create_avatar,
+            command=self.set_proficiencies,
+            # command=self.create_avatar,
             cursor="hand2"
         )
         create_avatar_button.grid(row=0, column=0)
@@ -88,7 +90,20 @@ class AvatarScroll(tk.Canvas):
         )
         back_button.grid(row=1, column=0)
 
-    def create_avatar(self):
+    def set_proficiencies(self):
+        widgets = self.avatar_widgets_frame
+        proficiency = self.handle_selection_change(widgets.proficiency_entry, widgets.proficiencies)
+        proficiency_result = get_entities_ids(widgets.proficiencies_total, proficiency)
+
+        if len(proficiency) > 0:
+            self.container.parent.show_proficiencies_level(proficiency, proficiency_result)
+        else:
+            self.create_avatar()
+
+    def create_avatar(self, proficiencies=None):
+        if proficiencies is None:
+            proficiencies = []
+
         widgets = self.avatar_widgets_frame
         items = []
 
@@ -116,8 +131,8 @@ class AvatarScroll(tk.Canvas):
         ability = self.handle_selection_change(widgets.ability_entry, widgets.abilities)
         ability_result = get_entities_ids(widgets.abilities_total, ability)
 
-        proficiency = self.handle_selection_change(widgets.proficiency_entry, widgets.proficiencies)
-        proficiency_result = get_entities_ids(widgets.proficiencies_total, proficiency)
+        # proficiency = self.handle_selection_change(widgets.proficiency_entry, widgets.proficiencies)
+        # proficiency_result = get_entities_ids(widgets.proficiencies_total, proficiency)
 
         description = self.get_text_data(widgets.description_entry)
 
@@ -131,7 +146,7 @@ class AvatarScroll(tk.Canvas):
             items += get_entities_ids(widgets.weapons_total, weapon)
 
         avatar = Avatar(name, type_result, strength_lv, magic_lv, health, adrenaline, class_result, items,
-                        physical_ability, title_result, ability_result, proficiency_result, description)
+                        physical_ability, title_result, ability_result, proficiencies, description)
 
         create_avatar = avatar.create_character()
 

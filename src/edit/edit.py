@@ -9,6 +9,8 @@ class Edit(ttk.Frame):
                  search_type, show_interface_verification, interface_verification_dict, show_home):
         super().__init__(parent)
 
+        self.parent = parent
+
         # --- Create Widget Frame ---
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
@@ -58,7 +60,7 @@ class EditScroll(tk.Canvas):
     def edit_container(self, entity, type_, parent_name, parent_type, show_interface, search_entities_name,
                        search_type, show_interface_verification, interface_verification_dict, show_home):
         # --- Create Widgets ---
-        self.edit_widgets_frame = EditWidget(self.screen, entity, type_, parent_name, parent_type, show_interface,
+        self.edit_widgets_frame = EditWidget(self, self.screen, entity, type_, parent_name, parent_type, show_interface,
                                              search_entities_name, search_type, show_interface_verification,
                                              interface_verification_dict, show_home)
         self.edit_widgets_frame.grid(row=0, column=0, sticky="NSEW")

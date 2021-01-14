@@ -162,6 +162,16 @@ class UserInterface(ttk.Frame):
         )
         titles_button.grid(column=0, sticky="EW")
 
+        proficiencies_button = ttk.Button(
+            self,
+            text="Verify Proficiencies",
+            command=lambda: show_interface_verification(self.proficiency, 'Proficiency', self.name, self.entity_type,
+                                                        self.search_entities_name, self.search_type),
+            state=button_state(self.proficiency),
+            cursor="hand2"
+        )
+        proficiencies_button.grid(column=0, sticky="EW")
+
         edit_button = ttk.Button(
             self,
             text="Edit",

@@ -7,7 +7,7 @@ class HomeWidget(ttk.Frame):
         super().__init__(container)
 
         # --- Type values for search ---
-        self.type_values = ("Character", "NPC", "Monster", "Armor", "Weapon", "Title", "Ability", "Wiki")
+        self.type_values = ('Character', 'NPC', 'Monster', 'Proficiency', 'Armor', 'Weapon', 'Title', 'Ability', 'Wiki')
 
         # --- Attributes ---
         self.name = tk.StringVar()
@@ -33,7 +33,7 @@ class HomeWidget(ttk.Frame):
         name_entry = ttk.Entry(
             container,
             textvariable=self.name,
-            width=80
+            width=90
         )
         name_entry.grid(row=0, column=1, sticky="EW")
 

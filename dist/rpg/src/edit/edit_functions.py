@@ -23,13 +23,10 @@ def set_stored_items(listbox_widget, stored_entities, total_list):
         listbox_widget.select_set(0)
         return
 
-    print(f'>>>>>>>>> {total_list}')
-
     for entity in stored_entities:
         if entity in stored_entities:
             entity_name = entity['name']
             entity_index = total_list.index(entity_name)
-            print(entity_index)
             listbox_widget.select_set(entity_index)
 
 

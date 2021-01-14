@@ -1,17 +1,21 @@
 from tkinter import ttk
 
 from src.connection.database import search_database
-from src.connection.handle_users import get_user_items, get_user_abilities, get_user_titles
+from src.connection.handle_users import get_user_items, get_user_abilities, get_user_titles, get_user_proficiencies
 from src.edit.edit_ability import EditAbility
 from src.edit.edit_item import EditItem
+from src.edit.edit_proficiency import EditProficiency
 from src.edit.edit_title import EditTitle
 from src.edit.edit_user import EditUser
 
 
 class EditWidget(ttk.Frame):
-    def __init__(self, container, entity, entity_type, parent_name, parent_type, show_interface, search_entities_name,
-                 search_type, show_interface_verification, interface_verification_dict, show_home):
+    def __init__(self, parent, container, entity, entity_type, parent_name, parent_type, show_interface,
+                 search_entities_name, search_type, show_interface_verification, interface_verification_dict,
+                 show_home):
         super().__init__(container)
+
+        self.parent = parent
 
         self.entity = entity
         self.entity_type = entity_type
@@ -24,30 +28,34 @@ class EditWidget(ttk.Frame):
         self.interface_verification_dict = interface_verification_dict
         self.show_home = show_home
 
+        self.type = search_database[entity_type]
+
         self.edit_widget_frame = None
 
-        self.create_frame(entity, entity_type, show_interface)
+        self.create_frame(entity, show_interface)
 
         self.create_buttons()
 
-    def create_frame(self, entity, entity_type, show_interface):
+    def create_frame(self, entity, show_interface):
         self.check_frame_existence(self.edit_widget_frame)
 
-        type_ = search_database[entity_type]
-
-        if type_ == 'users':
+        if self.type == 'users':
             self.edit_widget_frame = EditUser(self, entity, self.search_entities_name, self.search_type, show_interface)
-        elif type_ == 'items':
+        elif self.type == 'items':
             self.edit_widget_frame = EditItem(self, entity, self.search_entities_name, self.search_type, show_interface,
                                               self.show_interface_verification, self.interface_verification_dict)
-        elif type_ == 'abilities':
+        elif self.type == 'abilities':
             self.edit_widget_frame = EditAbility(self, entity, self.search_entities_name, self.search_type,
                                                  show_interface, self.show_interface_verification,
                                                  self.interface_verification_dict)
-        elif type_ == 'titles':
+        elif self.type == 'titles':
             self.edit_widget_frame = EditTitle(self, entity, self.search_entities_name, self.search_type,
                                                show_interface, self.show_interface_verification,
                                                self.interface_verification_dict)
+        elif self.type == 'proficiencies':
+            self.edit_widget_frame = EditProficiency(self, entity, self.search_entities_name, self.search_type,
+                                                     show_interface, self.show_interface_verification,
+                                                     self.interface_verification_dict)
 
         self.edit_widget_frame.grid(row=0, column=0, sticky="NSEW")
         self.edit_widget_frame.columnconfigure(0, weight=1)
@@ -68,7 +76,7 @@ class EditWidget(ttk.Frame):
         save_button = ttk.Button(
             buttons_frame,
             text='Save',
-            command=self.edit_widget_frame.edit_entity,
+            command=self.save,
             cursor='hand2'
         )
         save_button.grid(row=1, column=0)
@@ -84,6 +92,21 @@ class EditWidget(ttk.Frame):
         for child in buttons_frame.winfo_children():
             child.grid_configure(padx=5, pady=5, sticky="EW")
 
+    def save(self):
+        if self.type == 'users':
+            proficiency = self.edit_widget_frame.set_proficiencies()
+
+            if proficiency is not None:
+                self.parent.container.parent.show_proficiencies_level(
+                    proficiency['proficiency'],
+                    proficiency['proficiency_result'],
+                    proficiency['self']
+                )
+            else:
+                self.edit_widget_frame.edit_entity()
+        else:
+            self.edit_widget_frame.edit_entity()
+
     def back(self):
         if self.parent_name is not None and self.interface_verification_dict is not None:
             entities = None
@@ -97,6 +120,8 @@ class EditWidget(ttk.Frame):
                 entities = get_user_abilities(user_name)
             elif entity_type == 'Title':
                 entities = get_user_titles(user_name)
+            elif entity_type == 'Proficiency':
+                entities = get_user_proficiencies(user_name)
 
             self.show_interface_verification(entities, entity_type, user_name, user_type, self.search_entities_name,
                                              self.search_type)

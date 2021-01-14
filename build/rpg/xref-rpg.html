@@ -204,10 +204,12 @@ imports:
  &#8226;   <a href="#src">src</a>
  &#8226;   <a href="#src.ability.create_ability">src.ability.create_ability</a>
  &#8226;   <a href="#src.edit.edit">src.edit.edit</a>
+ &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.interface.interface">src.interface.interface</a>
  &#8226;   <a href="#src.interface.interface_verification">src.interface.interface_verification</a>
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
  &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_level">src.proficiency.proficiency_level</a>
  &#8226;   <a href="#src.search.search">src.search.search</a>
  &#8226;   <a href="#src.title.create_title">src.title.create_title</a>
  &#8226;   <a href="#src.wiki.create_wiki">src.wiki.create_wiki</a>
@@ -10191,6 +10193,7 @@ imported by:
  &#8226;   <a href="#src.item">src.item</a>
  &#8226;   <a href="#src.popup_info">src.popup_info</a>
  &#8226;   <a href="#src.proficiency">src.proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_level">src.proficiency.proficiency_level</a>
  &#8226;   <a href="#src.search">src.search</a>
  &#8226;   <a href="#src.title">src.title</a>
  &#8226;   <a href="#src.wiki">src.wiki</a>
@@ -10546,6 +10549,7 @@ imports:
 imported by:
     <a href="#src.avatar.avatar_properties">src.avatar.avatar_properties</a>
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
+ &#8226;   <a href="#src.connection.handle_users">src.connection.handle_users</a>
  &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
 
   </div>
@@ -10581,6 +10585,7 @@ imports:
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.connection.handle_abilities">src.connection.handle_abilities</a>
  &#8226;   <a href="#src.connection.handle_classes">src.connection.handle_classes</a>
+ &#8226;   <a href="#src.connection.handle_proficiencies">src.connection.handle_proficiencies</a>
  &#8226;   <a href="#src.connection.handle_titles">src.connection.handle_titles</a>
 
   </div>
@@ -10591,6 +10596,7 @@ imported by:
  &#8226;   <a href="#src.connection.database">src.connection.database</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
@@ -10631,6 +10637,7 @@ imported by:
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_functions">src.edit.edit_functions</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
@@ -10694,8 +10701,10 @@ imports:
 imported by:
     <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
 
   </div>
 
@@ -10714,6 +10723,29 @@ imports:
  &#8226;   <a href="#src.item.item">src.item.item</a>
  &#8226;   <a href="#src.item.item_properties">src.item.item_properties</a>
  &#8226;   <a href="#src.popup_info">src.popup_info</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.font">tkinter.font</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.edit.edit_proficiency"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/edit/edit_proficiency.py" type="text/plain"><tt>src.edit.edit_proficiency</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.connection.handle_users">src.connection.handle_users</a>
+ &#8226;   <a href="#src.edit">src.edit</a>
+ &#8226;   <a href="#src.edit.edit_functions">src.edit.edit_functions</a>
+ &#8226;   <a href="#src.popup_info">src.popup_info</a>
+ &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.font">tkinter.font</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
@@ -10770,7 +10802,9 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
+    <a href="#rpg.py">rpg.py</a>
+ &#8226;   <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
+ &#8226;   <a href="#src.proficiency.proficiency_level">src.proficiency.proficiency_level</a>
 
   </div>
 
@@ -10786,6 +10820,7 @@ imports:
  &#8226;   <a href="#src.edit">src.edit</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#tkinter">tkinter</a>
@@ -10873,6 +10908,7 @@ imported by:
  &#8226;   <a href="#src.interface.interface_verification_widgets">src.interface.interface_verification_widgets</a>
  &#8226;   <a href="#src.interface.interface_widgets">src.interface.interface_widgets</a>
  &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
  &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
 
@@ -10968,6 +11004,7 @@ imports:
  &#8226;   <a href="#src.interface">src.interface</a>
  &#8226;   <a href="#src.interface.ability_interface">src.interface.ability_interface</a>
  &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
  &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
  &#8226;   <a href="#tkinter">tkinter</a>
@@ -10991,6 +11028,7 @@ imports:
  &#8226;   <a href="#src.interface">src.interface</a>
  &#8226;   <a href="#src.interface.ability_interface">src.interface.ability_interface</a>
  &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
  &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
  &#8226;   <a href="#tkinter">tkinter</a>
@@ -11014,6 +11052,26 @@ imports:
  &#8226;   <a href="#src.interface">src.interface</a>
  &#8226;   <a href="#src.interface.interface_functions">src.interface.interface_functions</a>
  &#8226;   <a href="#src.item.item">src.item.item</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#src.interface.interface_verification_widgets">src.interface.interface_verification_widgets</a>
+ &#8226;   <a href="#src.interface.interface_widgets">src.interface.interface_widgets</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.interface.proficiency_interface"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/interface/proficiency_interface.py" type="text/plain"><tt>src.interface.proficiency_interface</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src.edit.edit_functions">src.edit.edit_functions</a>
+ &#8226;   <a href="#src.interface">src.interface</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
 
@@ -11185,6 +11243,7 @@ imported by:
  &#8226;   <a href="#src.avatar.create_avatar">src.avatar.create_avatar</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.home.home">src.home.home</a>
@@ -11212,6 +11271,7 @@ imports:
 imported by:
     <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
  &#8226;   <a href="#src.proficiency.proficiency">src.proficiency.proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_level">src.proficiency.proficiency_level</a>
  &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
 
   </div>
@@ -11250,7 +11310,28 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+    <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
+ &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="src.proficiency.proficiency_level"></a>
+  <a target="code" href="///C:/Users/USER/PycharmProjects/RPGSQLite/src/proficiency/proficiency_level.py" type="text/plain"><tt>src.proficiency.proficiency_level</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#src">src</a>
+ &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
+ &#8226;   <a href="#src.proficiency">src.proficiency</a>
+ &#8226;   <a href="#tkinter">tkinter</a>
+ &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#rpg.py">rpg.py</a>
 
   </div>
 
@@ -12514,6 +12595,7 @@ imported by:
  &#8226;   <a href="#src.edit.edit">src.edit.edit</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
@@ -12525,12 +12607,14 @@ imported by:
  &#8226;   <a href="#src.interface.interface_verification_widgets">src.interface.interface_verification_widgets</a>
  &#8226;   <a href="#src.interface.interface_widgets">src.interface.interface_widgets</a>
  &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
  &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
  &#8226;   <a href="#src.popup_info">src.popup_info</a>
  &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_level">src.proficiency.proficiency_level</a>
  &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
  &#8226;   <a href="#src.search.search">src.search.search</a>
  &#8226;   <a href="#src.search.search_widgets">src.search.search_widgets</a>
@@ -12609,6 +12693,7 @@ imported by:
  &#8226;   <a href="#src.avatar.avatar_widget">src.avatar.avatar_widget</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
@@ -12658,6 +12743,7 @@ imported by:
  &#8226;   <a href="#src.edit.edit">src.edit.edit</a>
  &#8226;   <a href="#src.edit.edit_ability">src.edit.edit_ability</a>
  &#8226;   <a href="#src.edit.edit_item">src.edit.edit_item</a>
+ &#8226;   <a href="#src.edit.edit_proficiency">src.edit.edit_proficiency</a>
  &#8226;   <a href="#src.edit.edit_title">src.edit.edit_title</a>
  &#8226;   <a href="#src.edit.edit_user">src.edit.edit_user</a>
  &#8226;   <a href="#src.edit.edit_widget">src.edit.edit_widget</a>
@@ -12669,11 +12755,13 @@ imported by:
  &#8226;   <a href="#src.interface.interface_verification_widgets">src.interface.interface_verification_widgets</a>
  &#8226;   <a href="#src.interface.interface_widgets">src.interface.interface_widgets</a>
  &#8226;   <a href="#src.interface.item_interface">src.interface.item_interface</a>
+ &#8226;   <a href="#src.interface.proficiency_interface">src.interface.proficiency_interface</a>
  &#8226;   <a href="#src.interface.title_interface">src.interface.title_interface</a>
  &#8226;   <a href="#src.interface.user_interface">src.interface.user_interface</a>
  &#8226;   <a href="#src.item.create_item">src.item.create_item</a>
  &#8226;   <a href="#src.item.item_widget">src.item.item_widget</a>
  &#8226;   <a href="#src.proficiency.create_proficiency">src.proficiency.create_proficiency</a>
+ &#8226;   <a href="#src.proficiency.proficiency_level">src.proficiency.proficiency_level</a>
  &#8226;   <a href="#src.proficiency.proficiency_widgets">src.proficiency.proficiency_widgets</a>
  &#8226;   <a href="#src.search.search">src.search.search</a>
  &#8226;   <a href="#src.search.search_widgets">src.search.search_widgets</a>

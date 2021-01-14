@@ -13,8 +13,15 @@ def add_proficiency(proficiency):
                        (proficiency_name, proficiency_description))
 
 
-def update_proficiency(proficiency, current_name):
-    pass
+def update_proficiency(proficiency, id_):
+    name = proficiency['name']
+    description = proficiency['description']
+
+    with DatabaseConnection('data.db') as connection:
+        cursor = connection.cursor()
+
+        cursor.execute('UPDATE proficiencies SET name=?, description=? WHERE id=?',
+                       (name, description, id_))
 
 
 def get_proficiencies():
@@ -31,8 +38,17 @@ def get_proficiencies():
 def get_proficiencies_attributes(cursor):
     return [{
         'id': row[0],
-        'name': row[1]
+        'name': row[1],
+        'description': row[2]
     } for row in cursor.fetchall()]
+
+
+def get_proficiency_attributes(cursor):
+    return [{
+        'id': row[0],
+        'name': row[1],
+        'description': row[2]
+    } for row in cursor.fetchall()][0]
 
 
 def get_proficiencies_by_id(proficiency_id):

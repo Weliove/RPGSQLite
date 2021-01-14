@@ -3,6 +3,7 @@ from tkinter import ttk
 from src.connection.database import search_database
 from src.interface.ability_interface import AbilityInterface
 from src.interface.item_interface import ItemInterface
+from src.interface.proficiency_interface import ProficiencyInterface
 from src.interface.title_interface import TitleInterface
 from src.interface.user_interface import UserInterface
 
@@ -28,10 +29,13 @@ class InterfaceWidget(ttk.Frame):
                                                    search_type)
         elif entity_type == 'abilities':
             interface_widget_frame = AbilityInterface(self, entity, type_, show_search, show_home, show_edit,
-                                                      None, None, False, search_entities_name, search_type)
+                                                      None, None, None, False, search_entities_name, search_type)
         elif entity_type == 'titles':
-            interface_widget_frame = TitleInterface(self, entity, type_, show_search, show_home, show_edit,
-                                                    None, None, False, search_entities_name, search_type)
+            interface_widget_frame = TitleInterface(self, entity, type_, show_search, show_home, show_edit, None, None,
+                                                    None, False, search_entities_name, search_type)
+        elif entity_type == 'proficiencies':
+            interface_widget_frame = ProficiencyInterface(self, entity, type_, show_search, show_home, show_edit, None,
+                                                          None, None, False, search_entities_name, search_type)
 
         interface_widget_frame.grid(row=0, column=0, sticky="NSEW")
         interface_widget_frame.columnconfigure(0, weight=1)

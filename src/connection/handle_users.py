@@ -2,6 +2,7 @@ from .database import *
 from .database import DatabaseConnection, get_items_attributes
 from src.connection.handle_abilities import get_abilities_by_id
 from src.connection.handle_titles import get_titles_by_id
+from src.connection.handle_proficiencies import get_proficiencies_by_id
 from .handle_classes import get_classes_attributes
 
 
@@ -50,8 +51,8 @@ def add_user(user) -> None:
 
         if len(proficiencies_id) > 0:
             for proficiency in proficiencies_id:
-                cursor.execute('INSERT INTO users_proficiencies (proficiency_id, user_name) VALUES (?, ?)',
-                               (proficiency, name))
+                cursor.execute('INSERT INTO users_proficiencies (proficiency_id, level, user_name) VALUES (?, ?, ?)',
+                               (proficiency[0], proficiency[1], name))
 
 
 def update_user(user, current_name) -> None:
@@ -101,8 +102,8 @@ def update_user(user, current_name) -> None:
         cursor.execute('DELETE FROM users_proficiencies WHERE user_name=?', (current_name,))
         if len(proficiencies_id) > 0:
             for proficiency in proficiencies_id:
-                cursor.execute('INSERT INTO users_proficiencies (proficiency_id, user_name) VALUES (?, ?)',
-                               (proficiency, name))
+                cursor.execute('INSERT INTO users_proficiencies (proficiency_id, level, user_name) VALUES (?, ?, ?)',
+                               (proficiency[0], proficiency[1], name))
 
 
 def get_users_name(name, type_):
@@ -213,13 +214,26 @@ def get_user_proficiencies(user_name):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
-        cursor.execute('SELECT proficiency_id FROM users_proficiencies WHERE user_name=?', (user_name,))
-        proficiencies_id = get_list(cursor)
+        cursor.execute('SELECT proficiency_id, level FROM users_proficiencies WHERE user_name=?', (user_name,))
+        proficiencies_id = get_user_proficiencies_attributes(cursor)
 
         for proficiency in proficiencies_id:
-            proficiencies += get_proficiencies_by_id(proficiency)
+            proficiencies += get_proficiencies_by_id(proficiency['proficiency_id'])
+
+        for proficiency in proficiencies:
+            for proficiency_level in proficiencies_id:
+                if proficiency['id'] == proficiency_level['proficiency_id']:
+                    proficiency['level'] = proficiency_level['level']
+                    break
 
     return proficiencies
+
+
+def get_user_proficiencies_attributes(cursor):
+    return [{
+        'proficiency_id': row[0],
+        'level': row[1]
+    } for row in cursor.fetchall()]
 
 
 def get_user_titles(user_name):

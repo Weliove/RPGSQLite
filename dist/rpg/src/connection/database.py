@@ -22,6 +22,8 @@ search_database = {
     'Weapon': 'items',
     'items': 'items',
     # others
+    'Proficiency': 'proficiencies',
+    'proficiencies': 'proficiencies',
     'Title': 'titles',
     'titles': 'titles',
     'Ability': 'abilities',
@@ -36,6 +38,7 @@ search_types = {
     'Monster': 3,
     'Armor': 1,
     'Weapon': 2,
+    'Proficiency':None,
     'Title': None,
     'Ability': None,
     'Wiki': None
@@ -48,6 +51,8 @@ def get_entity(name, type_):
     with DatabaseConnection('data.db') as connection:
         cursor = connection.cursor()
 
+        print('>get_entity method<')
+
         cursor.execute(f'SELECT * FROM {db_entity} WHERE name=?', (name,))
         if db_entity == 'users':
             entity = get_user_attributes(cursor)
@@ -57,6 +62,8 @@ def get_entity(name, type_):
             entity = get_ability_attributes(cursor)
         elif db_entity == 'titles':
             entity = get_title_attributes(cursor)
+        elif db_entity == 'proficiencies':
+            entity = get_proficiency_attributes(cursor)
 
     return entity
 
@@ -87,7 +94,7 @@ def get_search_entities(name, type_):
 
         if entity_name == '' or entity_name == '*':
             if db_entity == 'users' or db_entity == 'items':
-                cursor.execute(f'SELECT name FROM {db_entity} WHERE type=?', (db_type,))
+                cursor.execute(f'SELECT name FROM {db_entity} WHERE type=? ORDER BY name', (db_type,))
                 entity = get_list(cursor)
             elif db_entity == 'abilities':
                 characters_abilities = get_abilities_name_by_type(1)
@@ -113,15 +120,3 @@ def get_search_entities(name, type_):
                 entity = get_list(cursor)
 
     return entity
-
-
-def convert_list_to_string(items):
-    if len(items) == 0:
-        return 'None'
-
-    result = ','.join(map(str, items))
-    return result
-
-
-def convert_string_to_array(items):
-    return tuple(items.split(','))

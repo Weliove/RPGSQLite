@@ -270,7 +270,7 @@ class EditItem(ttk.Frame):
         update_item = item.update_item(self.id)
 
         if not update_item:
-            if self.show_interface_verification is None:
+            if self.show_interface_verification is None or self.interface_verification_dict is None:
                 interface(name, self.type_.get(), self.show_interface, self.search_entities_name, self.search_type)
             else:
                 user_name = self.interface_verification_dict['name']

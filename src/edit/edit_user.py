@@ -15,6 +15,8 @@ class EditUser(ttk.Frame):
     def __init__(self, container, entity, search_entities_name, search_type, show_interface):
         super().__init__(container)
 
+        self.container = container
+
         self.font = font.Font(size=11)
 
         self.search_entities_name = search_entities_name
@@ -375,6 +377,16 @@ class EditUser(ttk.Frame):
 
         self.description_entry.insert(tk.END, self.user_description)
 
+    def set_proficiencies(self) -> dict:
+        proficiency = handle_selection_change(self.proficiency_entry, self.proficiencies)
+        proficiency_result = get_entities_ids(self.proficiencies_total, proficiency)
+
+        print(proficiency)
+
+        if len(proficiency) > 0:
+            result = {'proficiency': proficiency, 'proficiency_result': proficiency_result, 'self': self}
+            return result
+
     def get_user_weapons(self):
         weapons = []
 
@@ -384,7 +396,10 @@ class EditUser(ttk.Frame):
 
         return weapons
 
-    def edit_entity(self):
+    def edit_entity(self, proficiencies=None):
+        if proficiencies is None:
+            proficiencies = []
+
         items = []
 
         name = self.name.get()
@@ -411,9 +426,6 @@ class EditUser(ttk.Frame):
         ability = handle_selection_change(self.ability_entry, self.abilities)
         ability_result = get_entities_ids(self.abilities_total, ability)
 
-        proficiency = handle_selection_change(self.proficiency_entry, self.proficiencies)
-        proficiency_result = get_entities_ids(self.proficiencies_total, proficiency)
-
         description = get_text_data(self.description_entry)
 
         if len(armor) == 1 and armor[0] == 'None':
@@ -426,7 +438,7 @@ class EditUser(ttk.Frame):
             items += get_entities_ids(self.weapons_total, weapon)
 
         avatar = Avatar(name, type_result, strength_lv, magic_lv, health, adrenaline, class_result, items,
-                        physical_ability, title_result, ability_result, proficiency_result, description)
+                        physical_ability, title_result, ability_result, proficiencies, description)
 
         edit_avatar = avatar.update_user(self.user_name)
 
