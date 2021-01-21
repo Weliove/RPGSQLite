@@ -1,59 +1,119 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, font
 
-from src.wiki.edit.wiki_edit_widget import WikiEditWidget
+from src.wiki.wiki import Wiki
 
 
 class WikiEdit(ttk.Frame):
-    def __init__(self, parent, entity, type_, show_interface, show_home):
-        super().__init__(parent)
+    def __init__(self, container, wiki: Wiki):
+        super().__init__(container)
 
-        # --- Create Widget Frame ---
-        self.rowconfigure(0, weight=1)
-        self.columnconfigure(0, weight=1)
+        self.parent = container
+        self.wiki = wiki
 
-        self.edit_scroll = EditScroll(self)
-        self.edit_scroll.grid(row=0, column=0, padx=10, pady=10, sticky="NSEW")
+        self.wiki.update()
 
-        self.edit_scroll.edit_container(entity, type_, show_interface, show_home)
+        self.categories = ['None'] + [category['name'] for category in self.wiki.categories]
+        self.sections = ['None'] + [section['name'] for section in self.wiki.sections]
+        self.chapters = ['None'] + [chapter['name'] for chapter in self.wiki.chapters]
+        self.topics = ['None'] + [topic['name'] for topic in self.wiki.topics]
 
+        # --- Variables ---
+        self.category = tk.StringVar(value=self.categories[0])
+        self.section = tk.StringVar(value=self.sections[0])
+        self.chapter = tk.StringVar(value=self.chapters[0])
+        self.topic = tk.StringVar(value=self.topics[0])
 
-class EditScroll(tk.Canvas):
-    def __init__(self, container):
-        super().__init__(container, highlightthickness=0)
+        self.create_widgets()
 
-        # --- Custom ---
+        self.create_buttons()
 
-        self.container = container
+    def create_widgets(self):
+        title = ttk.Label(
+            self,
+            text='Wiki Edition',
+            font=font.Font(size=13)
+        )
+        title.grid(row=0, column=0, sticky='EW')
 
-        self.screen = tk.Frame(container)
-        self.screen.columnconfigure(0, weight=1)
+        title_separator = ttk.Separator(self)
+        title_separator.grid(row=1, column=0, columnspan=1, sticky='EW')
 
-        self.edit_widgets_frame = None
+        category_list = ttk.Combobox(
+            self,
+            textvariable=self.category,
+            values=self.categories,
+            state="readonly"
+        )
+        category_list.grid(row=2, column=0, sticky='EW')
 
-        self.scrollable_window = self.create_window((0, 0), window=self.screen, anchor="nw")
+        section_list = ttk.Combobox(
+            self,
+            textvariable=self.section,
+            values=self.sections,
+            state="readonly"
+        )
+        section_list.grid(row=3, column=0, sticky='EW')
 
-        def configure_scroll_region(event):
-            self.configure(scrollregion=self.bbox("all"))
+        chapter_list = ttk.Combobox(
+            self,
+            textvariable=self.chapter,
+            values=self.chapters,
+            state="readonly"
+        )
+        chapter_list.grid(row=4, column=0, sticky='EW')
 
-        def configure_window_size(event):
-            self.itemconfig(self.scrollable_window, width=self.winfo_width())
+        topic_list = ttk.Combobox(
+            self,
+            textvariable=self.topic,
+            values=self.topics,
+            state="readonly"
+        )
+        topic_list.grid(row=5, column=0, sticky='EW')
 
-        self.bind("<Configure>", configure_window_size)
-        self.screen.bind("<Configure>", configure_scroll_region)
-        self.bind_all("<MouseWheel>", self._on_mouse_wheel)
+    def create_buttons(self):
+        wiki_separator = ttk.Separator(self)
+        wiki_separator.grid(row=6, column=0, columnspan=1, sticky="EW")
 
-        scrollbar = ttk.Scrollbar(container, orient="vertical", command=self.yview)
-        scrollbar.grid(row=0, column=1, sticky="NS")
+        edit_category_button = ttk.Button(
+            self,
+            text='Edit Category',
+            command=lambda: self.parent.create_frame('create_category'),
+            cursor='hand2'
+        )
+        edit_category_button.grid(row=7, column=0, sticky="EW")
 
-        self.configure(yscrollcommand=scrollbar.set)
-        self.yview_moveto(1.0)
+        edit_section_button = ttk.Button(
+            self,
+            text='Edit Section',
+            command=lambda: self.parent.create_frame('create_category'),
+            cursor='hand2'
+        )
+        edit_section_button.grid(row=8, column=0, sticky="EW")
 
-    def _on_mouse_wheel(self, event):
-        self.yview_scroll(-int(event.delta/120), "units")
+        edit_chapter_button = ttk.Button(
+            self,
+            text='Edit Chapter',
+            command=lambda: self.parent.create_frame('create_category'),
+            cursor='hand2'
+        )
+        edit_chapter_button.grid(row=9, column=0, sticky="EW")
 
-    def edit_container(self, entity):
-        # --- Create Widgets ---
-        self.edit_widgets_frame = WikiEditWidget(self.screen, entity)
-        self.edit_widgets_frame.grid(row=0, column=0, sticky="NSEW")
-        self.edit_widgets_frame.columnconfigure(0, weight=1)
+        edit_topic_button = ttk.Button(
+            self,
+            text='Edit Topic',
+            command=lambda: self.parent.create_frame('create_category'),
+            cursor='hand2'
+        )
+        edit_topic_button.grid(row=10, column=0, sticky="EW")
+
+        back_button = ttk.Button(
+            self,
+            text='← Back',
+            command=lambda: self.parent.create_frame('home'),
+            cursor='hand2'
+        )
+        back_button.grid(row=11, column=0, sticky='EW')
+
+    def select_section(self, section):
+        self.parent.create_frame('section', section)

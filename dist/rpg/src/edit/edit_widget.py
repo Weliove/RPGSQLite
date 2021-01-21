@@ -100,7 +100,8 @@ class EditWidget(ttk.Frame):
                 self.parent.container.parent.show_proficiencies_level(
                     proficiency['proficiency'],
                     proficiency['proficiency_result'],
-                    proficiency['self']
+                    proficiency['self'],
+                    proficiency['user_proficiencies']
                 )
             else:
                 self.edit_widget_frame.edit_entity()

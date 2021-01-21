@@ -86,7 +86,7 @@ class Home(ttk.Frame):
 
         create_wiki_button = ttk.Button(
             container,
-            text="Create Wiki",
+            text="Wiki",
             command=self.create_wiki,
             cursor="hand2"
         )

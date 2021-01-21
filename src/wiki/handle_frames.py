@@ -5,6 +5,7 @@ from src.wiki.create_category import CreateCategory
 from src.wiki.create_chapter import CreateChapter
 from src.wiki.create_section import CreateSection
 from src.wiki.create_topic import CreateTopic
+from src.wiki.edit.wiki_edit import WikiEdit
 from src.wiki.wiki import Wiki
 from src.wiki.wiki_chapter import WikiChapter
 from src.wiki.wiki_home import WikiHome
@@ -49,7 +50,8 @@ class WikiWidget(ttk.Frame):
             'home',
             'create_category',
             'create_section',
-            'create_chapter'
+            'create_chapter',
+            'edit'
         )
 
         frames = {
@@ -57,6 +59,7 @@ class WikiWidget(ttk.Frame):
             'category': None,
             'section': WikiSection,
             'chapter': WikiChapter,
+            'edit': WikiEdit,
             'create_category': CreateCategory,
             'create_section': CreateSection,
             'create_chapter': CreateChapter,

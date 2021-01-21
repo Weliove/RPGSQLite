@@ -6,8 +6,8 @@ from src.edit.edit_user import EditUser
 
 
 class ProficiencyLevel(tk.Toplevel):
-    def __init__(self, parent, proficiencies, proficiency_result, avatar_frame: CreateAvatar,
-                 edit_user: EditUser = None):
+    def __init__(self, parent, proficiencies: list, proficiency_result: list, avatar_frame: CreateAvatar,
+                 edit_user: EditUser = None, user_proficiencies: list = None):
         super().__init__(parent)
 
         parent.eval(f'tk::PlaceWindow {str(self)} center')
@@ -21,6 +21,7 @@ class ProficiencyLevel(tk.Toplevel):
         self.proficiency_result = proficiency_result
         self.avatar_frame = avatar_frame
         self.edit_user = edit_user
+        self.user_proficiencies = user_proficiencies
 
         self.levels = (1, 2, 3, 4, 5)
         self.proficiencies_list = []
@@ -31,7 +32,7 @@ class ProficiencyLevel(tk.Toplevel):
 
         index = 0
         for proficiency in proficiencies:
-            proficiency_variable = tk.StringVar(value=self.levels[0])
+            proficiency_variable = tk.StringVar(value=self.levels[self.set_level(proficiency) - 1])
 
             proficiency_label = ttk.Label(
                 proficiency_frame,
@@ -67,6 +68,16 @@ class ProficiencyLevel(tk.Toplevel):
 
         for child in proficiency_frame.winfo_children():
             child.grid_configure(padx=5, pady=5, sticky='EW')
+
+    def set_level(self, proficiency_name: str) -> int:
+        if self.user_proficiencies is None:
+            return 1
+
+        for proficiency in self.user_proficiencies:
+            if proficiency['name'] == proficiency_name:
+                return int(proficiency['level'])
+
+        return 1
 
     def get_proficiencies(self) -> None:
         proficiencies_result = []

@@ -66,6 +66,15 @@ class WikiHome(ttk.Frame):
         )
         wiki_separator.grid(column=0, columnspan=1, sticky="EW")
 
+        edit_button = ttk.Button(
+            self,
+            text='Edit',
+            command=lambda: self.parent.create_frame('edit'),
+            state=tk.DISABLED if len(self.wiki.get_categories()) == 0 else tk.NORMAL,
+            cursor='hand2'
+        )
+        edit_button.grid(column=0, sticky="EW")
+
         create_category_button = ttk.Button(
             self,
             text='Create Category',

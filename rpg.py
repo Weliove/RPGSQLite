@@ -121,8 +121,9 @@ class RPG(tk.Tk):
         self.frames[CreateAvatar] = self.create_avatar_frame
         self.show_frame(CreateAvatar)
 
-    def show_proficiencies_level(self, proficiencies, proficiency_result, edit: EditUser = None) -> None:
-        ProficiencyLevel(self, proficiencies, proficiency_result, self.create_avatar_frame, edit)
+    def show_proficiencies_level(self, proficiencies: list, proficiency_result: list, edit: EditUser = None,
+                                 user_proficiencies: list = None) -> None:
+        ProficiencyLevel(self, proficiencies, proficiency_result, self.create_avatar_frame, edit, user_proficiencies)
 
     def show_search(self, entities_name, type_) -> None:
         self.check_frame_existence(self.search_frame)

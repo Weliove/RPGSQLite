@@ -382,9 +382,12 @@ class EditUser(ttk.Frame):
         proficiency_result = get_entities_ids(self.proficiencies_total, proficiency)
 
         print(proficiency)
+        print(self.user_proficiencies)
+        print(proficiency_result)
 
         if len(proficiency) > 0:
-            result = {'proficiency': proficiency, 'proficiency_result': proficiency_result, 'self': self}
+            result = {'proficiency': proficiency, 'proficiency_result': proficiency_result, 'self': self,
+                      'user_proficiencies': self.user_proficiencies}
             return result
 
     def get_user_weapons(self):
